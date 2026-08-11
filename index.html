@@ -375,14 +375,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 #desktop[data-theme="dark"]{
   color-scheme:dark;
   --desk-ink:#f3f6fb;--desk-muted:rgba(235,241,249,.64);
-  --desk-a:#000;--desk-b:#000;--desk-c:#000;--desk-d:#000;--desk-e:#000;--desk-f:#000;
-  --blob-a:transparent;--blob-b:transparent;--blob-c:transparent;--grain-opacity:0;
+  --desk-a:#323232;--desk-b:#484848;--desk-c:#606060;--desk-d:#787878;--desk-e:#929292;--desk-f:#acacac;
+  --blob-a:transparent;--blob-b:transparent;--blob-c:transparent;--grain-opacity:.17;
   --bar-bg:rgba(10,14,22,.52);--bar-border:rgba(255,255,255,.1);--bar-ink:#f5f7fb;--bar-muted:rgba(245,247,251,.68);--bar-hover:rgba(255,255,255,.1);--bar-search:rgba(255,255,255,.08);--bar-key:rgba(255,255,255,.09);--system-icon-filter:brightness(0) invert(1);
   --glass-a:rgba(28,35,48,.68);--glass-b:rgba(15,20,30,.48);--glass-border:rgba(255,255,255,.15);--glass-border-low:rgba(255,255,255,.06);--glass-highlight:rgba(255,255,255,.12);--surface-ink:#f4f7fb;--surface-muted:rgba(235,241,249,.62);--surface-faint:rgba(235,241,249,.4);--orb-bg:#151922;--orb-ink:#f8f9fb;--orb-border:rgba(255,255,255,.17);
   --action-bg:rgba(255,255,255,.09);--action-border:rgba(255,255,255,.14);--primary-bg:rgba(246,248,252,.92);--primary-ink:#111a27;--icon-hover:rgba(255,255,255,.09);--label-shadow:rgba(0,0,0,.72);
   --dock-a:rgba(36,43,56,.72);--dock-b:rgba(13,18,27,.42);--dock-border:rgba(255,255,255,.17);--dock-low:rgba(255,255,255,.05);--dock-divider:rgba(255,255,255,.16);--dock-indicator:rgba(255,255,255,.78);
   --spot-bg:rgba(22,28,39,.9);--spot-border:rgba(255,255,255,.16);--spot-ink:#f4f7fb;--spot-muted:rgba(235,241,249,.48);--spot-hover:rgba(126,167,218,.15);
-  background:#000
+  background:linear-gradient(180deg,
+    var(--desk-a) 0%,
+    var(--desk-b) 20%,
+    var(--desk-c) 40%,
+    var(--desk-d) 60%,
+    var(--desk-e) 80%,
+    var(--desk-f) 100%)
 }
 #desktop::before{content:'';position:absolute;z-index:0;inset:-18%;pointer-events:none;
   background:
@@ -402,10 +408,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
     radial-gradient(38% 46% at 84% 16%,rgba(232,184,215,.46),transparent 74%),
     radial-gradient(48% 46% at 58% 92%,rgba(173,220,208,.42),transparent 75%);
   filter:blur(46px) saturate(1.08);animation:desktopDrift 22s ease-in-out infinite alternate}
-#welcome[data-theme="dark"]{background:#000}
+#welcome[data-theme="dark"]{background:linear-gradient(180deg,#323232 0%,#484848 20%,#606060 40%,#787878 60%,#929292 80%,#acacac 100%)}
 #welcome[data-theme="dark"]::before{background:none}
 #welcome::after{inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");filter:none;opacity:.18;mix-blend-mode:soft-light;animation:none}
-#welcome[data-theme="dark"]::after{opacity:0}
+#welcome[data-theme="dark"]::after{opacity:.17}
 .lock-screen{position:relative;z-index:3;width:min(760px,88vw);height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 20px 38px}
 .lock-date{font-size:20px;font-weight:500;letter-spacing:-.2px;text-shadow:0 2px 18px rgba(28,45,69,.22)}
 .lock-time{font-size:clamp(112px,14vw,194px);font-weight:200;line-height:.9;letter-spacing:-8px;margin-top:8px;font-variant-numeric:tabular-nums;text-shadow:0 10px 40px rgba(28,45,69,.18)}
