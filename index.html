@@ -453,7 +453,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 .widget-kicker{font-size:8px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--surface-faint)}
 .weather-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.weather-card{position:relative;min-width:0;height:130px;border-radius:14px;padding:10px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,255,255,.55);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(0,0,0,.08);box-shadow:0 10px 30px rgba(30,50,80,.14)}#desktop[data-theme="dark"] .weather-card{background:rgba(0,0,0,.55);border-color:rgba(255,255,255,.14);color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.2)}.weather-city{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--surface-muted);white-space:nowrap}.weather-city::after{content:'↗';font-size:8px;margin-left:4px;opacity:.7}.weather-temp{font-size:34px;line-height:1;font-weight:700;letter-spacing:-.7px;margin-top:4px;font-variant-numeric:tabular-nums}.weather-meta{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--surface-muted);white-space:nowrap}.weather-symbol{font-size:14px;line-height:1}
 .music-widget{padding:0;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}.languages-widget{border-radius:22px;padding:13px}.languages-widget .widget-kicker{margin:0 1px 8px}.music-embed{border-radius:12px;overflow:hidden;background:transparent}.music-embed iframe{width:100%;height:220px;border:0;display:block;background:transparent}
-.language-row{padding:8px 1px 7px;border-bottom:.5px solid var(--glass-border-low)}.language-row:last-of-type{border-bottom:0}.language-line{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:5px}.language-flag{font-size:12px}.language-name{font-size:10px;font-weight:650}.language-level{font-size:8px;color:var(--surface-faint);text-transform:lowercase}.language-meter{height:2px;border-radius:2px;background:var(--glass-border-low);margin:6px 0 0 23px;overflow:hidden}.language-meter span{display:block;height:100%;border-radius:inherit;background:var(--surface-muted)}.language-footer{display:flex;justify-content:space-between;margin-top:8px;padding:0 1px;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--surface-faint)}
+.language-row{padding:6px 1px 5px;border-bottom:.5px solid var(--glass-border-low)}.language-row:last-of-type{border-bottom:0}.language-line{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:5px}.language-flag{font-size:12px}.language-name{font-size:10px;font-weight:650}.language-level{font-size:8px;color:var(--surface-faint);text-transform:lowercase}.language-meter{height:2px;border-radius:2px;background:var(--glass-border-low);margin:5px 0 0 23px;overflow:hidden}.language-meter span{display:block;height:100%;border-radius:inherit;background:var(--surface-muted)}.language-footer{display:flex;justify-content:space-between;margin-top:7px;padding:0 1px;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--surface-faint)}
 
 .desktop-icons{z-index:2;right:auto;left:clamp(92px,11vw,170px);top:clamp(350px,48vh,430px);display:grid;grid-template-columns:repeat(6,82px);gap:12px 21px}.desktop-icons::before{content:'SELECTED WORK';position:absolute;left:6px;bottom:calc(100% + 10px);font-size:9px;font-weight:750;letter-spacing:.14em;color:var(--desk-muted)}
 .desk-ic{appearance:none;border:0;background:transparent;width:82px;min-height:88px;color:var(--desk-ink);font:inherit;padding:7px 4px;border-radius:14px;gap:5px}.desk-ic:hover,.desk-ic:focus-visible{background:var(--icon-hover);outline:none;box-shadow:inset 0 1px 0 var(--glass-highlight)}.desk-ic:active{transform:scale(.96)}
@@ -766,7 +766,9 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇷🇺</span><span class="language-name">Russian</span><span class="language-level">native</span></div><div class="language-meter"><span style="width:100%"></span></div></div>
     <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇬🇧</span><span class="language-name">English</span><span class="language-level">fluent</span></div><div class="language-meter"><span style="width:88%"></span></div></div>
     <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇺🇦</span><span class="language-name">Ukrainian</span><span class="language-level">native</span></div><div class="language-meter"><span style="width:100%"></span></div></div>
-    <div class="language-footer"><span>3 languages</span><span>4+ years · 12+ products</span></div>
+    <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇳🇴</span><span class="language-name">Norwegian</span><span class="language-level">B1</span></div><div class="language-meter"><span style="width:58%"></span></div></div>
+    <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇳🇱</span><span class="language-name">Dutch</span><span class="language-level">A1 · learning</span></div><div class="language-meter"><span style="width:25%"></span></div></div>
+    <div class="language-footer"><span>5 languages</span><span>4+ years · 12+ products</span></div>
   </section>
 </aside>
 
@@ -904,6 +906,8 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
           <span class="nc-tag">🇷🇺 Russian — Native</span>
           <span class="nc-tag">🇬🇧 English — Fluent</span>
           <span class="nc-tag">🇺🇦 Ukrainian — Native</span>
+          <span class="nc-tag">🇳🇴 Norwegian — B1</span>
+          <span class="nc-tag">🇳🇱 Dutch — A1 · Learning</span>
         </div>
         <div class="nc-h2">⚡ Daily tools</div>
         <div style="margin-top:6px">
@@ -1473,6 +1477,8 @@ const ABOUT_HTML=`
       <span class="nc-tag">🇷🇺 Russian — Native</span>
       <span class="nc-tag">🇬🇧 English — Fluent</span>
       <span class="nc-tag">🇺🇦 Ukrainian — Native</span>
+      <span class="nc-tag">🇳🇴 Norwegian — B1</span>
+      <span class="nc-tag">🇳🇱 Dutch — A1 · Learning</span>
     </div>
     <div class="ios-h3">Daily tools</div>
     <div>
