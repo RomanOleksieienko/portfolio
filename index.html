@@ -442,17 +442,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .appearance-orb{position:relative;width:64px;height:64px;flex:0 0 64px;border-radius:50%;border:.5px solid var(--orb-border);background:var(--orb-bg);color:var(--orb-ink);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 28px rgba(0,0,0,.16);transition:background .38s ease,color .38s ease,transform .26s cubic-bezier(.22,1,.36,1),box-shadow .38s ease}
 .appearance-orb:hover{transform:scale(1.04);box-shadow:inset 0 1px 0 rgba(255,255,255,.36),0 16px 34px rgba(0,0,0,.2)}.appearance-orb:active{transform:scale(.94)}.appearance-orb:focus-visible{outline:2.5px solid rgba(10,132,255,.66);outline-offset:3px}
 .appearance-orb::after{content:'';position:absolute;inset:-5px;border:1px solid currentColor;border-radius:50%;opacity:0;transform:scale(.84);pointer-events:none}.appearance-orb.is-animating::after{animation:appearancePulse .65s cubic-bezier(.22,1,.36,1)}
-.appearance-glyph{position:relative;width:30px;height:30px;border:2.25px solid currentColor;border-radius:50%;overflow:hidden;display:block;transition:transform .7s cubic-bezier(.22,1,.36,1)}
-.appearance-glyph-fill{position:absolute;inset:3.5px;border-radius:50%;background:linear-gradient(90deg,currentColor 0 50%,transparent 50% 100%);box-shadow:inset 0 0 0 1.5px currentColor}
-.appearance-glyph-fill::after{content:'';position:absolute;left:50%;top:3px;width:4px;height:16px;transform:translateX(-50%);border-radius:4px;background:var(--orb-bg);transition:background .38s ease}
+.appearance-glyph{position:relative;width:30px;height:30px;border-radius:50%;overflow:hidden;display:block;background:currentColor;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.appearance-glyph::before{content:'';position:absolute;inset:3.5px;border-radius:50%;background:var(--orb-bg);clip-path:inset(0 0 0 50%);transition:background .38s ease}
+.appearance-glyph-fill{position:absolute;z-index:1;left:50%;top:9px;width:6px;height:12px;transform:translateX(-50%);border-radius:6px;background:currentColor}
 #desktop[data-theme="dark"] .appearance-glyph{transform:rotate(180deg)}
 @keyframes appearancePulse{0%{opacity:.5;transform:scale(.82)}100%{opacity:0;transform:scale(1.28)}}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-new(root){clip-path:circle(0 at var(--theme-x,85vw) var(--theme-y,15vh));animation:appearanceReveal .68s cubic-bezier(.2,.75,.2,1) both}
 @keyframes appearanceReveal{to{clip-path:circle(150vmax at var(--theme-x,85vw) var(--theme-y,15vh))}}
 html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!important}
-.experience-card{border-radius:22px;padding:16px}.widget-kicker{font-size:9px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:var(--surface-faint);margin-bottom:13px}.experience-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.experience-stat{min-width:0}.experience-value{font-size:26px;line-height:1;font-weight:700;letter-spacing:-1px}.experience-label{font-size:9px;color:var(--surface-muted);margin-top:5px;white-space:nowrap}
-.now-card{border-radius:22px;padding:16px}.now-title{font-size:15px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:center;gap:7px}.now-dot{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 0 5px rgba(48,209,88,.12)}.now-copy{font-size:12px;line-height:1.55;color:var(--surface-muted);margin-top:10px}.now-place{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--surface-faint);padding-top:12px;margin-top:12px;border-top:.5px solid var(--glass-border-low)}
+.widget-kicker{font-size:8px;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--surface-faint)}
+.weather-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.weather-card{position:relative;min-width:0;height:108px;border-radius:20px;padding:13px 13px 12px;overflow:hidden}.weather-card::after{content:'';position:absolute;right:-22px;bottom:-32px;width:96px;height:96px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.34),transparent 68%);pointer-events:none}.weather-city{font-size:8px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:var(--surface-muted);white-space:nowrap}.weather-city::after{content:'↗';font-size:7px;margin-left:4px;opacity:.65}.weather-temp{font-size:34px;line-height:1;font-weight:650;letter-spacing:-2px;margin-top:19px;font-variant-numeric:tabular-nums}.weather-meta{position:absolute;left:13px;right:10px;bottom:11px;display:flex;align-items:center;gap:6px;font-size:9px;color:var(--surface-muted);white-space:nowrap}.weather-symbol{font-size:12px;line-height:1;filter:saturate(.72)}
+.music-widget,.languages-widget{border-radius:22px;padding:13px}.music-widget .widget-kicker,.languages-widget .widget-kicker{margin:0 1px 8px}.music-panel{padding:11px;border-radius:15px;background:#17181a;color:#f5f5f7;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 9px 24px rgba(0,0,0,.14)}.music-head{height:20px;display:flex;align-items:flex-start;justify-content:space-between;font-size:11px;font-weight:600;color:rgba(255,255,255,.72)}.music-brand{font-size:12px;letter-spacing:-.15px}.music-open{padding:3px 7px;border-radius:9px;background:rgba(255,255,255,.11);color:rgba(255,255,255,.72);font-size:8px;text-decoration:none}.music-track{display:grid;grid-template-columns:37px minmax(0,1fr) 20px;gap:9px;align-items:center;min-height:45px;color:#f5f5f7;text-decoration:none;border-radius:9px}.music-track+.music-track{margin-top:5px}.music-track:hover,.music-track:focus-visible{background:rgba(255,255,255,.075);outline:none}.music-cover{width:37px;height:37px;border-radius:6px;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,.38)}.music-track-copy{min-width:0;display:flex;flex-direction:column}.music-title{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.music-artist{font-size:9px;color:rgba(255,255,255,.48);margin-top:2px}.music-more{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#b80c46;color:#fff;font-size:10px;letter-spacing:1px}.music-footer{display:block;margin:8px 1px 0;color:var(--surface-faint);font-size:7.5px;letter-spacing:.14em;text-decoration:none;text-transform:lowercase}.music-footer:hover{text-decoration:underline}
+.language-row{padding:8px 1px 7px;border-bottom:.5px solid var(--glass-border-low)}.language-row:last-of-type{border-bottom:0}.language-line{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:5px}.language-flag{font-size:12px}.language-name{font-size:10px;font-weight:650}.language-level{font-size:8px;color:var(--surface-faint);text-transform:lowercase}.language-meter{height:2px;border-radius:2px;background:var(--glass-border-low);margin:6px 0 0 23px;overflow:hidden}.language-meter span{display:block;height:100%;border-radius:inherit;background:var(--surface-muted)}.language-footer{display:flex;justify-content:space-between;margin-top:8px;padding:0 1px;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--surface-faint)}
 
 .desktop-icons{z-index:2;right:auto;left:clamp(92px,11vw,170px);top:clamp(350px,48vh,430px);display:grid;grid-template-columns:repeat(6,82px);gap:12px 21px}.desktop-icons::before{content:'SELECTED WORK';position:absolute;left:6px;bottom:calc(100% + 10px);font-size:9px;font-weight:750;letter-spacing:.14em;color:var(--desk-muted)}
 .desk-ic{appearance:none;border:0;background:transparent;width:82px;min-height:88px;color:var(--desk-ink);font:inherit;padding:7px 4px;border-radius:14px;gap:5px}.desk-ic:hover,.desk-ic:focus-visible{background:var(--icon-hover);outline:none;box-shadow:inset 0 1px 0 var(--glass-highlight)}.desk-ic:active{transform:scale(.96)}
@@ -473,6 +475,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 }
 @media (max-height:700px) and (min-width:901px){
   .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px}.di img{width:42px;height:42px}.di-3p{width:50px!important;height:50px!important}
+  .desktop-widgets{top:45px;gap:7px}.appearance-widget{min-height:54px}.appearance-orb{width:52px;height:52px;flex-basis:52px}.appearance-glyph{width:26px;height:26px}.appearance-glyph-fill{top:8px;width:5px;height:10px}.weather-card{height:84px;padding:10px}.weather-temp{font-size:27px;margin-top:11px}.weather-meta{left:10px;bottom:8px}.music-widget,.languages-widget{padding:9px;border-radius:18px}.music-widget .widget-kicker,.languages-widget .widget-kicker{margin-bottom:6px}.music-panel{padding:8px}.music-track{grid-template-columns:31px minmax(0,1fr) 18px;min-height:35px}.music-cover{width:31px;height:31px}.music-footer{margin-top:6px}.language-row{padding:5px 1px 4px}.language-meter{margin-top:4px}.language-footer{margin-top:5px}
 }
 @media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
 
@@ -742,20 +745,40 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <span class="appearance-glyph" aria-hidden="true"><span class="appearance-glyph-fill"></span></span>
     </button>
   </div>
-  <div class="experience-card desk-glass">
-    <div class="widget-kicker">Experience at a glance</div>
-    <div class="experience-stats">
-      <div class="experience-stat"><div class="experience-value">4+</div><div class="experience-label">years</div></div>
-      <div class="experience-stat"><div class="experience-value">12+</div><div class="experience-label">products</div></div>
-      <div class="experience-stat"><div class="experience-value">20M+</div><div class="experience-label">users</div></div>
+  <div class="weather-grid" aria-label="Current weather">
+    <section class="weather-card desk-glass" aria-labelledby="weather-ghent-city">
+      <div class="weather-city" id="weather-ghent-city">Ghent</div>
+      <div class="weather-temp" id="weather-ghent-temp" aria-live="polite">16°</div>
+      <div class="weather-meta"><span class="weather-symbol" id="weather-ghent-symbol" aria-hidden="true">🌙</span><span id="weather-ghent-condition">Mostly clear</span></div>
+    </section>
+    <section class="weather-card desk-glass" aria-labelledby="weather-kyiv-city">
+      <div class="weather-city" id="weather-kyiv-city">Kyiv</div>
+      <div class="weather-temp" id="weather-kyiv-temp" aria-live="polite">21°</div>
+      <div class="weather-meta"><span class="weather-symbol" id="weather-kyiv-symbol" aria-hidden="true">🌙</span><span id="weather-kyiv-condition">Mostly clear</span></div>
+    </section>
+  </div>
+  <section class="music-widget desk-glass" aria-labelledby="music-widget-title">
+    <div class="widget-kicker" id="music-widget-title">Now playing</div>
+    <div class="music-panel">
+      <div class="music-head"><span class="music-brand">Music</span><a class="music-open" href="https://music.apple.com/us/album/astroworld/1421658111" target="_blank" rel="noopener">Open</a></div>
+      <a class="music-track" href="https://music.apple.com/us/song/1421658117" target="_blank" rel="noopener" aria-label="Open STARGAZING by Travis Scott in Apple Music">
+        <img class="music-cover" src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/300x300bb.jpg" alt="ASTROWORLD album cover">
+        <span class="music-track-copy"><span class="music-title">STARGAZING</span><span class="music-artist">Travis Scott</span></span><span class="music-more" aria-hidden="true">•••</span>
+      </a>
+      <a class="music-track" href="https://music.apple.com/us/song/1421658653" target="_blank" rel="noopener" aria-label="Open ASTROTHUNDER by Travis Scott in Apple Music">
+        <img class="music-cover" src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/300x300bb.jpg" alt="">
+        <span class="music-track-copy"><span class="music-title">ASTROTHUNDER</span><span class="music-artist">Travis Scott</span></span><span class="music-more" aria-hidden="true">•••</span>
+      </a>
     </div>
-  </div>
-  <div class="now-card desk-glass">
-    <div class="widget-kicker">Right now</div>
-    <div class="now-title"><span class="now-dot"></span>Available for work</div>
-    <p class="now-copy">Focused on thoughtful product systems, expressive interfaces, and digital experiences that ship.</p>
-    <div class="now-place"><span>Europe</span><span>Remote-friendly</span></div>
-  </div>
+    <a class="music-footer" href="https://music.apple.com/us/album/astroworld/1421658111" target="_blank" rel="noopener">open in Apple Music →</a>
+  </section>
+  <section class="languages-widget desk-glass" aria-labelledby="languages-widget-title">
+    <div class="widget-kicker" id="languages-widget-title">Languages</div>
+    <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇷🇺</span><span class="language-name">Russian</span><span class="language-level">native</span></div><div class="language-meter"><span style="width:100%"></span></div></div>
+    <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇬🇧</span><span class="language-name">English</span><span class="language-level">fluent</span></div><div class="language-meter"><span style="width:88%"></span></div></div>
+    <div class="language-row"><div class="language-line"><span class="language-flag" aria-hidden="true">🇺🇦</span><span class="language-name">Ukrainian</span><span class="language-level">native</span></div><div class="language-meter"><span style="width:100%"></span></div></div>
+    <div class="language-footer"><span>3 languages</span><span>4+ years · 12+ products</span></div>
+  </section>
 </aside>
 
 <!-- Kept for the lightweight clock/date runtime used by both layouts. -->
@@ -1160,6 +1183,38 @@ function toggleDesktopAppearance(button){
     transition.finished.finally(()=>root.classList.remove('theme-snapshot')).catch(()=>{});
   }else setDesktopTheme(next);
 }
+
+// Live desktop weather. The visible values remain useful if the network is unavailable.
+const desktopWeatherPlaces=[
+  {id:'ghent',latitude:51.0543,longitude:3.7174},
+  {id:'kyiv',latitude:50.4501,longitude:30.5234}
+];
+function desktopWeatherPresentation(code,isDay){
+  if(code===0)return{label:'Clear',symbol:isDay?'☀️':'🌙'};
+  if(code===1)return{label:'Mostly clear',symbol:isDay?'🌤️':'🌙'};
+  if(code===2)return{label:'Partly cloudy',symbol:isDay?'⛅':'☁️'};
+  if(code===3)return{label:'Overcast',symbol:'☁️'};
+  if(code===45||code===48)return{label:'Fog',symbol:'🌫️'};
+  if(code>=51&&code<=57)return{label:'Drizzle',symbol:'🌦️'};
+  if((code>=61&&code<=67)||(code>=80&&code<=82))return{label:'Rain',symbol:'🌧️'};
+  if((code>=71&&code<=77)||(code>=85&&code<=86))return{label:'Snow',symbol:'🌨️'};
+  if(code>=95)return{label:'Thunderstorm',symbol:'⛈️'};
+  return{label:'Current weather',symbol:'☁️'};
+}
+async function loadDesktopWeather(){
+  await Promise.allSettled(desktopWeatherPlaces.map(async place=>{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,weather_code,is_day&timezone=auto`;
+    const response=await fetch(url,{cache:'no-store'});
+    if(!response.ok)throw new Error('Weather unavailable');
+    const data=await response.json(),current=data.current;
+    if(!current||!Number.isFinite(current.temperature_2m))throw new Error('Weather unavailable');
+    const presentation=desktopWeatherPresentation(current.weather_code,current.is_day===1);
+    document.getElementById(`weather-${place.id}-temp`).textContent=`${Math.round(current.temperature_2m)}°`;
+    document.getElementById(`weather-${place.id}-condition`).textContent=presentation.label;
+    document.getElementById(`weather-${place.id}-symbol`).textContent=presentation.symbol;
+  }));
+}
+if(window.matchMedia('(min-width:901px)').matches)loadDesktopWeather();
 function openSpotlight(){
   if(window.matchMedia('(max-width:900px)').matches)return;
   const overlay=document.getElementById('spotlight'),input=document.getElementById('spotlight-input');
