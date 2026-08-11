@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roman — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── WELCOME (boot "hello") — liquid glass ──────────── */
+#welcome{position:fixed;inset:0;z-index:100000;overflow:hidden;
+  --mx:50%;--my:50%;
+  background:#0b0d12;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .9s ease;cursor:pointer}
+#welcome.gone{opacity:0;pointer-events:none}
+
+/* слой 1 — обои сайта, сильно размытые: то, что стекло преломляет */
+#welcome::before{content:'';position:absolute;inset:-8%;
+  background:url('wallpaper.jpg?v=2') center/cover no-repeat;
+  filter:blur(70px) saturate(1.35) brightness(.62);transform:scale(1.14);
+  animation:welDrift 26s ease-in-out infinite alternate}
+/* слой 2 — медленные цветные пятна, дают стеклу переливы */
+#welcome::after{content:'';position:absolute;inset:-20%;pointer-events:none;
+  background:
+    radial-gradient(38% 44% at 24% 32%,rgba(120,175,255,.55),transparent 70%),
+    radial-gradient(34% 40% at 76% 26%,rgba(255,138,190,.42),transparent 72%),
+    radial-gradient(44% 46% at 62% 78%,rgba(126,255,224,.34),transparent 70%);
+  filter:blur(46px);opacity:.9;
+  animation:welBlobs 22s ease-in-out infinite alternate}
+@keyframes welDrift{to{transform:scale(1.2) translate3d(1.6%,-1.4%,0)}}
+@keyframes welBlobs{
+  33%{transform:translate3d(-3%,2.5%,0) scale(1.08)}
+  66%{transform:translate3d(2.6%,-2%,0) scale(1.04)}
+  to {transform:translate3d(-1.4%,-3%,0) scale(1.1)}}
+
+/* Lottie "welcome" — парит прямо над жидким фоном, без панели/рамки */
+#lottie-welcome{position:relative;z-index:2;
+  width:min(60vw,560px);max-width:92vw;
+  filter:drop-shadow(0 0 40px rgba(160,210,255,.55)) drop-shadow(0 18px 44px rgba(0,0,0,.5));
+  opacity:0;transform:scale(.96);
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.22,1,.36,1)}
+#lottie-welcome.in{opacity:1;transform:scale(1)}
+#lottie-welcome svg{width:100%;height:auto;display:block;overflow:visible}
+/* мягкое ледяное свечение позади штриха — без рамки, только blur-halo */
+#lottie-welcome::before{content:'';position:absolute;z-index:-1;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  width:130%;height:220%;pointer-events:none;
+  background:radial-gradient(45% 55% at 50% 50%,rgba(190,220,255,.5),transparent 70%);
+  filter:blur(46px);mix-blend-mode:screen;
+  opacity:0;animation:glowIn 1.4s .3s ease forwards}
+@keyframes glowIn{to{opacity:.85}}
+/* бегущий световой блик по стеклу — стартует после отрисовки штриха */
+#lottie-welcome::after{content:'';position:absolute;inset:-6% -30%;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,
+    transparent 40%,rgba(255,255,255,.65) 49%,transparent 58%);
+  mix-blend-mode:screen;opacity:0;
+  animation:glassSweep 2.2s 6s cubic-bezier(.4,0,.2,1) 1}
+@keyframes glassSweep{
+  0%{transform:translateX(-60%);opacity:0}
+  12%{opacity:.9}
+  55%{opacity:.5}
+  100%{transform:translateX(60%);opacity:0}}
+
+#welcome-hint{position:absolute;bottom:38px;left:0;right:0;text-align:center;z-index:2;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;font-size:12px;letter-spacing:.06em;
+  color:rgba(255,255,255,.62);text-shadow:0 1px 12px rgba(0,0,0,.45);
+  opacity:0;transition:opacity .6s;animation:hintIn .6s 2.4s forwards}
+@keyframes hintIn{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  #lottie-welcome{transition:opacity .3s ease!important;transform:none!important}}
+
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Inter',sans-serif;overflow:hidden;width:100vw;height:100vh;-webkit-font-smoothing:antialiased}
+#desktop{position:fixed;inset:0;background:url('wallpaper.jpg?v=2') center/cover no-repeat}
+
+/* ── MENUBAR ─────────────────────────────────────── */
+#menubar{
+  position:fixed;top:0;left:0;right:0;height:28px;z-index:9999;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(22px) saturate(170%);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  border-bottom:.5px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;padding:0 12px;
+}
+.mb-l{display:flex;align-items:center;height:100%}
+.mb-apple{display:flex;align-items:center;margin-right:14px;cursor:default;padding:0 4px}
+.mb-apple img{width:15px;height:auto;filter:brightness(0) invert(1);opacity:.92}
+.mb-item{font-size:13px;font-weight:400;color:rgba(255,255,255,.82);cursor:default;padding:1px 8px;border-radius:5px;height:22px;display:flex;align-items:center}
+.mb-item.bold{font-weight:600;color:#fff}
+.mb-item:hover{background:rgba(255,255,255,.13)}
+.mb-r{margin-left:auto;display:flex;align-items:center;height:100%}
+.mb-icon{width:26px;height:100%;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:default;transition:background .1s}
+.mb-icon:hover{background:rgba(255,255,255,.13)}
+.mb-icon img{width:16px;height:16px;object-fit:contain}
+.mb-sep{width:.5px;height:14px;background:rgba(255,255,255,.18);margin:0 3px}
+.mb-o{height:15px;width:auto;filter:brightness(0) invert(1);opacity:.95}
+.mb-o-cc{height:16px}
+#mb-dt{font-size:13px;color:rgba(255,255,255,.88);white-space:nowrap;padding:0 8px;cursor:default;font-variant-numeric:tabular-nums}
+
+/* ── WIDGETS ─────────────────────────────────────── */
+#widget-clock{
+  position:absolute;top:44px;left:20px;width:152px;height:152px;border-radius:24px;
+  background:rgba(14,14,18,.88);
+  border:.5px solid rgba(255,255,255,.11);border-top-color:rgba(255,255,255,.2);
+  box-shadow:0 8px 32px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;overflow:hidden
+}
+#clock-canvas{position:absolute;inset:0;width:152px;height:152px}
+
+#widget-cal{
+  position:absolute;top:44px;left:182px;width:380px;border-radius:18px;
+  background:rgba(14,14,18,.82);
+  border:.5px solid rgba(255,255,255,.1);border-top-color:rgba(255,255,255,.2);
+  box-shadow:0 8px 36px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.1);
+  display:grid;grid-template-columns:1fr 1fr;overflow:hidden;color:#fff
+}
+.wcal-l{padding:16px 16px 18px;border-right:.5px solid rgba(255,255,255,.07)}
+.wcal-dayname{font-size:10px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.wcal-daynum{font-size:46px;font-weight:200;line-height:1;color:#fff;letter-spacing:-2px;margin-bottom:12px}
+.wcal-pill{margin-bottom:7px}
+.wcal-pill-inner{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.09);border:.5px solid rgba(255,255,255,.09);border-radius:8px;padding:5px 9px;font-size:11.5px;color:rgba(255,255,255,.76);font-weight:300}
+.wcal-dot{width:5px;height:5px;border-radius:50%;background:#3b82f6;flex-shrink:0}
+.wcal-dot.org{background:#f97316}.wcal-dot.grn{background:#22c55e}
+.wcal-r{padding:14px 14px 16px}
+.wcal-sl{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:7px;margin-top:10px}
+.wcal-sl:first-child{margin-top:0}
+.wcal-ev{display:flex;align-items:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,.56);font-weight:300;margin-bottom:5px}
+
+/* Reminders */
+#widget-rem{
+  position:absolute;top:44px;left:572px;width:196px;border-radius:16px;
+  background:rgba(28,22,12,.84);
+  border:.5px solid rgba(255,200,60,.13);border-top-color:rgba(255,200,60,.24);
+  box-shadow:0 8px 32px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,200,60,.1);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  color:#fff;padding:14px 14px 16px
+}
+.rem-header{display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.rem-icon{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#ff6b35,#ee4020);display:flex;align-items:center;justify-content:center;font-size:12px}
+.rem-title{font-size:12px;font-weight:600;color:rgba(255,255,255,.85)}
+.rem-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;cursor:pointer}
+.rem-circle{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,160,30,.55);flex-shrink:0;margin-top:1px;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.rem-circle.done{background:rgba(255,150,20,.7);border-color:rgba(255,150,20,.8)}
+.rem-circle.done::after{content:'✓';font-size:7.5px;color:#fff;font-weight:800;line-height:1}
+.rem-text{font-size:11.5px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.4;transition:color .15s}
+.rem-text.done{color:rgba(255,255,255,.28);text-decoration:line-through}
+
+/* ── WINDOWS base ────────────────────────────────── */
+.win{
+  position:absolute;
+  background:linear-gradient(160deg,rgba(255,255,255,.12) 0%,rgba(12,12,18,.84) 15%,rgba(8,8,14,.9) 100%);
+  backdrop-filter:blur(34px) saturate(190%);-webkit-backdrop-filter:blur(34px) saturate(190%);
+  border:.5px solid rgba(255,255,255,.14);border-top-color:rgba(255,255,255,.34);
+  border-radius:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 30px 100px rgba(0,0,0,.82),0 8px 30px rgba(0,0,0,.4);
+  overflow:hidden;display:flex;flex-direction:column
+}
+.wh{
+  height:40px;background:rgba(255,255,255,.03);border-bottom:.5px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;padding:0 14px;gap:8px;cursor:move;flex-shrink:0;position:relative;z-index:2
+}
+.tl{width:12px;height:12px;border-radius:50%;flex-shrink:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;line-height:1;color:transparent;
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.12)}
+.tl-r{background:#ff5f57}.tl-y{background:#febc2e}.tl-g{background:#28c840}
+.tl-r::before{content:'\00d7'}.tl-y::before{content:'\2212'}.tl-g::before{content:'\002b';font-size:8px}
+.wh:hover .tl-r{color:rgba(84,0,0,.55)}
+.wh:hover .tl-y{color:rgba(92,52,0,.6)}
+.wh:hover .tl-g{color:rgba(0,58,0,.55)}
+.tl:hover{filter:brightness(1.08)}
+.wh-title{font-size:13px;font-weight:500;color:rgba(255,255,255,.36);margin-left:6px;flex:1;text-align:center}
+.wb{flex:1;overflow:hidden;position:relative;z-index:1}
+.scroll{overflow-y:auto}
+.scroll::-webkit-scrollbar{width:4px}
+.scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+
+/* ── FINDER ──────────────────────────────────────── */
+.finder-body{display:grid;grid-template-columns:190px 1fr;height:100%}
+.finder-sb{border-right:.5px solid rgba(255,255,255,.07);padding:10px 0;overflow-y:auto;background:rgba(0,0,0,.1)}
+.finder-sb::-webkit-scrollbar{width:0}
+.sb-label{font-size:10.5px;font-weight:600;color:rgba(255,255,255,.24);padding:0 14px 4px;margin-top:12px;text-transform:uppercase;letter-spacing:.08em}
+.sb-label:first-child{margin-top:4px}
+.sb-row{
+  display:flex;align-items:center;gap:8px;padding:5px 10px 5px 12px;
+  font-size:13px;color:rgba(255,255,255,.62);cursor:pointer;border-radius:7px;margin:1px 6px;transition:background .1s
+}
+.sb-row:hover{background:rgba(255,255,255,.07)}
+.sb-row.active{background:rgba(59,130,246,.7);color:#fff}
+/* SVG icons: NO border-radius, NO drop-shadow creating white halo */
+.sb-row img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+
+.fc{padding:24px 22px 32px;overflow-y:auto;height:100%}
+.fc::-webkit-scrollbar{width:4px}
+.fc::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+
+/* Project header */
+.ph{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ph-thumb{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ph-name{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.3px;margin-bottom:3px}
+.ph-sub{font-size:12px;color:rgba(255,255,255,.36);font-weight:300}
+.ph-period{font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;display:flex;align-items:center;gap:5px}
+
+.pdesc{font-size:13px;color:rgba(255,255,255,.52);line-height:1.72;font-weight:300;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 15px;margin-bottom:16px}
+
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px}
+.t{font-size:11px;padding:3px 9px;border-radius:6px;font-weight:500}
+.tb{background:rgba(59,130,246,.14);color:#93c5fd}
+.tp{background:rgba(139,92,246,.14);color:#c4b5fd}
+.tg{background:rgba(34,197,94,.12);color:#86efac}
+.to{background:rgba(249,115,22,.14);color:#fdba74}
+.tpk{background:rgba(236,72,153,.13);color:#f9a8d4}
+.ty{background:rgba(234,179,8,.13);color:#fde047}
+
+.scr-label{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.24);margin-bottom:12px}
+
+/* Screen layouts — natural sizes, no cropping */
+.screens-wide{display:flex;flex-direction:column;gap:10px}
+.screens-wide img{width:100%;border-radius:10px;display:block;border:.5px solid rgba(255,255,255,.09)}
+
+.screens-phone{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.screens-phone img{height:320px;width:auto;border-radius:14px;display:block;flex-shrink:0;border:.5px solid rgba(255,255,255,.09)}
+
+.screens-mixed{display:flex;flex-direction:column;gap:10px}
+.screens-mixed img{width:100%;border-radius:10px;display:block;border:.5px solid rgba(255,255,255,.09)}
+.screens-mixed .phone-row{display:flex;gap:8px;align-items:flex-start}
+.screens-mixed .phone-row img{height:300px;width:auto;border-radius:12px;flex-shrink:0}
+
+/* ── TERMINAL ────────────────────────────────────── */
+.term{
+  background:rgba(8,8,10,.98);padding:16px 20px;height:100%;overflow-y:auto;
+  font-family:'SF Mono','Menlo','Monaco',monospace;font-size:12px;color:#d4d4d4;
+}
+.term::-webkit-scrollbar{width:4px}
+.term::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+.tp2{color:#27c93f}.tl2{margin-bottom:2px}
+.tk{color:#c4b5fd}.tv{color:#86efac}.ts{color:#3b82f6;font-weight:600}
+.tlo{color:#c4b5fd;line-height:1.3;font-size:10.5px;margin-bottom:14px;opacity:.75}
+.ti{display:flex;gap:0;margin-bottom:2px}
+.tik{color:#3b82f6;width:84px;flex-shrink:0}.tis{color:#555;margin-right:8px}.tiv{color:#fff}
+.tc{display:inline-block;width:7px;height:13px;background:rgba(255,255,255,.8);animation:blink 1.1s step-end infinite;vertical-align:text-bottom;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── NOTES ───────────────────────────────────────── */
+.notes-win{display:grid;grid-template-columns:200px 1fr;height:100%;overflow:hidden}
+.notes-sb{
+  background:rgba(28,24,16,.96);border-right:.5px solid rgba(255,200,40,.08);
+  display:flex;flex-direction:column;overflow:hidden
+}
+.notes-sb-top{
+  padding:10px 10px 8px;
+  background:rgba(255,200,40,.04);border-bottom:.5px solid rgba(255,200,40,.07)
+}
+.notes-search{
+  display:flex;align-items:center;gap:6px;padding:5px 9px;
+  background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.08);
+  border-radius:7px;font-size:12px;color:rgba(255,255,255,.3)
+}
+.notes-list{flex:1;overflow-y:auto;padding:6px 0}
+.notes-list::-webkit-scrollbar{width:0}
+.ni{padding:8px 10px;cursor:pointer;border-radius:8px;margin:1px 6px;transition:background .1s}
+.ni:hover{background:rgba(255,255,255,.06)}
+.ni.active{background:rgba(255,200,40,.14)}
+.ni-date{font-size:9.5px;color:rgba(255,255,255,.2);margin-bottom:2px}
+.ni-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.88);margin-bottom:2px}
+.ni-prev{font-size:11px;color:rgba(255,255,255,.28);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* Notes content — lined paper feel */
+.notes-content{
+  background:rgba(24,20,12,.94);
+  overflow-y:auto;padding:24px 26px;
+  background-image:repeating-linear-gradient(
+    transparent, transparent 27px,
+    rgba(255,200,40,.05) 27px, rgba(255,200,40,.05) 28px
+  );
+  background-position:0 52px;
+}
+.notes-content::-webkit-scrollbar{width:4px}
+.notes-content::-webkit-scrollbar-thumb{background:rgba(255,200,40,.15);border-radius:3px}
+.nc-title{font-size:22px;font-weight:700;color:rgba(255,255,255,.95);letter-spacing:-.4px;margin-bottom:3px;line-height:28px}
+.nc-date{font-size:11px;color:rgba(255,200,40,.4);margin-bottom:20px}
+.nc-h2{font-size:13.5px;font-weight:700;color:rgba(255,255,255,.88);margin:18px 0 6px}
+.nc-p{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.75;font-weight:300;margin-bottom:10px}
+.nc-tag{display:inline-flex;padding:3px 9px;border-radius:7px;background:rgba(255,200,40,.1);border:.5px solid rgba(255,200,40,.16);font-size:11.5px;color:rgba(255,200,40,.82);font-weight:500;margin:3px 4px 3px 0}
+.nc-chip{display:inline-flex;padding:3px 9px;border-radius:7px;background:rgba(255,255,255,.07);font-size:11.5px;color:rgba(255,255,255,.48);margin:3px 4px 3px 0}
+
+/* ── MAIL ────────────────────────────────────────── */
+.mail-win{display:grid;grid-template-columns:170px 1fr;height:100%;overflow:hidden}
+.mail-sb{background:rgba(12,12,18,.9);border-right:.5px solid rgba(255,255,255,.07);padding:10px 0}
+.mail-folder{display:flex;align-items:center;gap:8px;padding:6px 12px;font-size:13px;color:rgba(255,255,255,.62);cursor:pointer;border-radius:7px;margin:1px 5px;transition:background .1s}
+.mail-folder:hover{background:rgba(255,255,255,.07)}
+.mail-folder.active{background:rgba(59,130,246,.72);color:#fff}
+.mail-c{padding:24px;overflow-y:auto}
+.mail-c::-webkit-scrollbar{width:4px}
+.mail-c::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+.mail-from{font-size:12px;color:rgba(255,255,255,.32);margin-bottom:4px}
+.mail-subj{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.4px;margin-bottom:20px}
+.mail-sl{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.24);margin:20px 0 10px}
+.mail-sl:first-child{margin-top:0}
+.ml{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:.5px solid rgba(255,255,255,.09);border-top-color:rgba(255,255,255,.15);text-decoration:none;color:#fff;margin-bottom:7px;transition:background .12s}
+.ml:hover{background:rgba(255,255,255,.09)}
+.ml-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ml-lbl{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+.ml-val{font-size:12px;color:rgba(255,255,255,.36);font-weight:300}
+.ml-arr{color:rgba(255,255,255,.22);font-size:18px;margin-left:auto}
+
+/* ── DOCK ───────────────────────────────────────── */
+#dock{
+  position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2px;padding:6px 11px;
+  background:linear-gradient(175deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.09) 40%,rgba(255,255,255,.18) 100%);
+  backdrop-filter:blur(28px) saturate(220%) brightness(1.05) url(#liquid);
+  -webkit-backdrop-filter:blur(28px) saturate(220%) brightness(1.05);
+  border:.5px solid rgba(255,255,255,.24);border-top-color:rgba(255,255,255,.6);
+  border-bottom-color:rgba(255,255,255,.06);border-radius:24px;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 1px rgba(0,0,0,.1),
+    inset 0 0 22px rgba(255,255,255,.06),0 16px 54px rgba(0,0,0,.55);
+  z-index:9998
+}
+#dock::before{content:'';position:absolute;top:0;left:12px;right:12px;height:52%;background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,transparent 100%);border-radius:22px 22px 0 0;pointer-events:none}
+.di{position:relative;display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:2px 3px;transition:transform .2s cubic-bezier(.34,1.56,.64,1);will-change:transform}
+/* NO border-radius on img — macOS SVG icons have correct shape built in */
+.di img{width:52px;height:52px;object-fit:contain;pointer-events:none;position:relative;z-index:1;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.28))}
+/* сторонние PNG имеют squircle на 84% канваса (прозрачные поля) — 62px, чтобы
+   их squircle совпал по размеру с Apple-иконками (100% заполнения при 52px) */
+.di-3p{width:62px !important;height:62px !important}
+.di.on::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.78)}
+.badge{position:absolute;top:-2px;right:1px;min-width:18px;height:18px;padding:0 5px;
+  border-radius:9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:600;line-height:1;
+  display:flex;align-items:center;justify-content:center;z-index:4;font-variant-numeric:tabular-nums;
+  box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.di-tip{
+  position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:rgba(18,18,22,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:.5px solid rgba(255,255,255,.12);border-top-color:rgba(255,255,255,.2);
+  color:#fff;font-size:12.5px;font-weight:500;white-space:nowrap;
+  padding:5px 12px;border-radius:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.1);
+  pointer-events:none;opacity:0;transition:opacity .12s
+}
+.di:hover .di-tip{opacity:1}
+.d-sep{width:.5px;height:44px;align-self:center;margin:0 5px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.22) 30%,rgba(255,255,255,.22) 70%,transparent)}
+
+/* ── DESKTOP ICONS ──────────────────────────────── */
+.desktop-icons{position:absolute;right:14px;top:38px;display:grid;grid-template-columns:repeat(2,74px);gap:0}
+.desk-ic{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 6px;border-radius:10px;cursor:pointer;transition:background .12s}
+.desk-ic:hover{background:rgba(255,255,255,.11)}
+/* NO border-radius on folder img */
+.desk-ic img{width:52px;height:52px;object-fit:contain}
+.fi-lbl{font-size:11px;color:#fff;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 10px rgba(0,0,0,.9);line-height:1.3;max-width:70px;word-break:break-word}
+
+/* ══════════════════════════════════════════════════════
+   DESKTOP 2.0 — Roman's personal Mac
+   Calm chromatic wallpaper, tactile glass and an immediate introduction.
+   ══════════════════════════════════════════════════════ */
+#desktop{
+  --desk-ink:#162132;--desk-muted:rgba(22,33,50,.62);
+  --desk-a:#95b5d8;--desk-b:#c8d8e5;--desk-c:#dfd2e3;--desk-d:#a9c7c1;--desk-e:#dbe3e9;--desk-f:#b8cbd7;
+  isolation:isolate;overflow:hidden;
+  background:
+    radial-gradient(58% 72% at 8% 4%,var(--desk-a) 0%,transparent 70%),
+    radial-gradient(46% 58% at 92% 8%,var(--desk-c) 0%,transparent 72%),
+    radial-gradient(58% 58% at 58% 100%,var(--desk-d) 0%,transparent 74%),
+    linear-gradient(145deg,var(--desk-b),var(--desk-e) 54%,var(--desk-f))
+}
+#desktop[data-theme="lilac"]{--desk-a:#b8acd5;--desk-b:#d7d1e4;--desk-c:#e1bdcf;--desk-d:#b7c9d9;--desk-e:#ded9e9;--desk-f:#c8c7db;--desk-ink:#241d32}
+#desktop[data-theme="sage"]{--desk-a:#9eb9aa;--desk-b:#cedad2;--desk-c:#d8cdb8;--desk-d:#91b8b3;--desk-e:#d9ddd2;--desk-f:#b9cbc0;--desk-ink:#172823}
+#desktop[data-theme="midnight"]{--desk-a:#243e63;--desk-b:#17243a;--desk-c:#513c63;--desk-d:#24505a;--desk-e:#24324a;--desk-f:#142235;--desk-ink:#eef4ff;--desk-muted:rgba(238,244,255,.66)}
+#desktop::before{content:'';position:absolute;z-index:0;inset:-18%;pointer-events:none;
+  background:
+    radial-gradient(34% 36% at 28% 34%,rgba(255,255,255,.28),transparent 74%),
+    radial-gradient(28% 34% at 70% 23%,rgba(255,226,239,.24),transparent 72%),
+    radial-gradient(34% 34% at 58% 78%,rgba(199,255,235,.18),transparent 75%);
+  filter:blur(38px);animation:desktopDrift 24s ease-in-out infinite alternate}
+#desktop::after{content:'';position:absolute;z-index:1;inset:0;pointer-events:none;opacity:.17;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+  mix-blend-mode:soft-light}
+@keyframes desktopDrift{to{transform:translate3d(2.5%,-2%,0) scale(1.06)}}
+
+/* Lock screen — the same world, before the desktop wakes up. */
+#welcome{background:linear-gradient(145deg,#779bbf,#b7cada 48%,#b6a9c4);color:#fff;cursor:pointer}
+#welcome::before{inset:-18%;background:
+    radial-gradient(42% 48% at 16% 20%,rgba(159,205,239,.72),transparent 72%),
+    radial-gradient(38% 46% at 84% 16%,rgba(232,184,215,.46),transparent 74%),
+    radial-gradient(48% 46% at 58% 92%,rgba(173,220,208,.42),transparent 75%);
+  filter:blur(46px) saturate(1.08);animation:desktopDrift 22s ease-in-out infinite alternate}
+#welcome::after{inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");filter:none;opacity:.18;mix-blend-mode:soft-light;animation:none}
+.lock-screen{position:relative;z-index:3;width:min(760px,88vw);height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 20px 38px}
+.lock-date{font-size:20px;font-weight:500;letter-spacing:-.2px;text-shadow:0 2px 18px rgba(28,45,69,.22)}
+.lock-time{font-size:clamp(112px,14vw,194px);font-weight:200;line-height:.9;letter-spacing:-8px;margin-top:8px;font-variant-numeric:tabular-nums;text-shadow:0 10px 40px rgba(28,45,69,.18)}
+.lock-identity{margin-top:auto;display:flex;flex-direction:column;align-items:center}
+.lock-avatar{width:70px;height:70px;border-radius:25px;object-fit:cover;object-position:center 28%;border:1px solid rgba(255,255,255,.48);box-shadow:0 12px 34px rgba(31,51,75,.25)}
+.lock-name{font-size:18px;font-weight:650;margin-top:12px;letter-spacing:-.25px}.lock-role{font-size:13px;color:rgba(255,255,255,.7);margin-top:2px}
+.unlock-button{appearance:none;border:0;margin-top:18px;padding:10px 17px;border-radius:19px;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;font-size:12px;font-weight:600;line-height:1;letter-spacing:.02em;cursor:pointer;
+  background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(255,255,255,.10));backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);border:.5px solid rgba(255,255,255,.36);box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 10px 30px rgba(34,53,78,.18)}
+.unlock-button:hover{background:rgba(255,255,255,.25)}.unlock-button:active{transform:scale(.97)}
+.lock-footnote{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:15px}
+
+#menubar{height:38px;padding:0 15px;background:rgba(240,246,250,.52);border-bottom:.5px solid rgba(255,255,255,.45);box-shadow:0 1px 18px rgba(40,57,77,.08);color:#172234}
+.mb-apple{margin-right:8px;border:0;background:transparent}.mb-apple img{filter:none;opacity:.78}.mb-item{font-size:12.5px;color:rgba(23,34,52,.7);height:28px}.mb-item.bold{color:#172234}.mb-item:hover,.mb-icon:hover{background:rgba(255,255,255,.35)}
+.mb-o{filter:none;opacity:.68}.mb-icon{height:30px}.mb-r #mb-dt{font-size:12px;color:rgba(23,34,52,.72);padding-right:4px}
+.mb-search{position:absolute;left:50%;top:5px;transform:translateX(-50%);height:28px;min-width:278px;border:0;border-radius:14px;padding:0 12px;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;color:rgba(23,34,52,.62);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;font-size:11.5px;font-weight:500;line-height:1;background:rgba(255,255,255,.38);border:.5px solid rgba(255,255,255,.58);box-shadow:inset 0 1px 0 rgba(255,255,255,.45)}
+.mb-search img{width:13px;height:13px;opacity:.62}.mb-search kbd{font-family:inherit;font-size:10px;font-weight:600;line-height:1;color:rgba(23,34,52,.48);padding:3px 5px;border-radius:6px;background:rgba(255,255,255,.44);margin-left:5px}
+
+.desktop-profile{position:absolute;z-index:2;left:clamp(62px,8vw,126px);top:clamp(78px,11vh,112px);width:min(720px,57vw);display:grid;grid-template-columns:174px 1fr;gap:34px;align-items:center;color:var(--desk-ink)}
+.desktop-profile-photo-wrap{position:relative;width:174px;height:174px}
+.desktop-profile-photo{width:174px;height:174px;display:block;object-fit:cover;object-position:center 28%;border-radius:44% 56% 47% 53% / 50% 42% 58% 50%;border:1px solid rgba(255,255,255,.58);box-shadow:0 24px 70px rgba(35,58,78,.2),inset 0 1px 0 rgba(255,255,255,.5)}
+.desktop-profile-photo-wrap::after{content:'';position:absolute;right:8px;bottom:7px;width:17px;height:17px;border-radius:50%;background:#30d158;border:4px solid rgba(233,240,244,.92);box-shadow:0 4px 12px rgba(22,55,46,.25)}
+.desktop-eyebrow{font-size:11px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;opacity:.66;margin-bottom:8px}
+.desktop-profile h1{font-size:clamp(35px,3.4vw,54px);line-height:1.02;letter-spacing:-2.1px;font-weight:700;margin:0 0 11px}
+.desktop-profile p{font-size:clamp(14px,1.2vw,17px);line-height:1.55;letter-spacing:-.15px;color:var(--desk-muted);max-width:530px}
+.profile-actions{display:flex;align-items:center;gap:9px;margin-top:19px;flex-wrap:wrap}
+.profile-action{height:38px;border-radius:19px;padding:0 15px;border:.5px solid rgba(255,255,255,.5);background:rgba(255,255,255,.32);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 8px 24px rgba(32,54,74,.09);color:var(--desk-ink);font-family:inherit;font-size:12px;font-weight:600;line-height:1;text-decoration:none;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.profile-action.primary{background:rgba(20,29,44,.88);border-color:rgba(255,255,255,.14);color:#fff}.profile-action:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.44),0 12px 28px rgba(32,54,74,.15)}
+
+.desktop-widgets{position:absolute;z-index:2;right:clamp(22px,3.2vw,50px);top:58px;width:292px;display:flex;flex-direction:column;gap:10px}
+.desk-glass{background:linear-gradient(145deg,rgba(255,255,255,.54),rgba(255,255,255,.27));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);border:.5px solid rgba(255,255,255,.66);border-bottom-color:rgba(255,255,255,.26);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 16px 44px rgba(37,59,80,.11);color:#172234}
+.theme-card{height:49px;border-radius:17px;padding:0 13px;display:flex;align-items:center;justify-content:space-between}.theme-label{font-size:9px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:rgba(23,34,52,.48)}
+.theme-swatches{display:flex;gap:7px}.theme-swatch{width:23px;height:23px;border-radius:50%;border:2px solid rgba(255,255,255,.8);box-shadow:0 1px 5px rgba(25,39,58,.18);cursor:pointer}.theme-swatch.active{outline:1.5px solid rgba(21,31,47,.72);outline-offset:2px}.theme-swatch[data-theme="blue"]{background:linear-gradient(135deg,#8eafd4,#d6dce7)}.theme-swatch[data-theme="lilac"]{background:linear-gradient(135deg,#a99acb,#e1bfd3)}.theme-swatch[data-theme="sage"]{background:linear-gradient(135deg,#8eaf9e,#d8cfbb)}.theme-swatch[data-theme="midnight"]{background:linear-gradient(135deg,#1d3454,#543c64)}
+.experience-card{border-radius:22px;padding:16px}.widget-kicker{font-size:9px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:rgba(23,34,52,.43);margin-bottom:13px}.experience-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.experience-stat{min-width:0}.experience-value{font-size:26px;line-height:1;font-weight:700;letter-spacing:-1px}.experience-label{font-size:9px;color:rgba(23,34,52,.48);margin-top:5px;white-space:nowrap}
+.now-card{border-radius:22px;padding:16px}.now-title{font-size:15px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:center;gap:7px}.now-dot{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 0 5px rgba(48,209,88,.12)}.now-copy{font-size:12px;line-height:1.55;color:rgba(23,34,52,.58);margin-top:10px}.now-place{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(23,34,52,.42);padding-top:12px;margin-top:12px;border-top:.5px solid rgba(23,34,52,.1)}
+
+.desktop-icons{z-index:2;right:auto;left:clamp(92px,11vw,170px);top:clamp(350px,48vh,430px);display:grid;grid-template-columns:repeat(6,82px);gap:12px 21px}.desktop-icons::before{content:'SELECTED WORK';position:absolute;left:6px;bottom:calc(100% + 10px);font-size:9px;font-weight:750;letter-spacing:.14em;color:var(--desk-muted)}
+.desk-ic{appearance:none;border:0;background:transparent;width:82px;min-height:88px;color:var(--desk-ink);font:inherit;padding:7px 4px;border-radius:14px;gap:5px}.desk-ic:hover,.desk-ic:focus-visible{background:rgba(255,255,255,.25);outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}.desk-ic:active{transform:scale(.96)}
+.desk-ic img{width:58px;height:58px;filter:drop-shadow(0 7px 12px rgba(29,45,63,.2))}.fi-lbl{font-size:10px;font-weight:600;color:var(--desk-ink);text-shadow:0 1px 10px rgba(255,255,255,.7);line-height:1.2;max-width:82px}
+
+.win{background:linear-gradient(155deg,rgba(35,42,55,.90),rgba(10,14,22,.92));border-color:rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 38px 120px rgba(30,42,57,.38),0 8px 28px rgba(20,30,44,.22)}
+#dock{bottom:12px;padding:6px 10px;border-radius:22px;background:linear-gradient(170deg,rgba(255,255,255,.53),rgba(255,255,255,.22));border-color:rgba(255,255,255,.66);border-bottom-color:rgba(255,255,255,.22);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.62),0 18px 52px rgba(36,54,72,.2)}
+#dock::before{background:linear-gradient(180deg,rgba(255,255,255,.18),transparent)}.di img{width:48px;height:48px}.di-3p{width:57px!important;height:57px!important}.d-sep{height:39px;background:linear-gradient(180deg,transparent,rgba(31,45,61,.2) 30%,rgba(31,45,61,.2) 70%,transparent)}.di.on::after{background:rgba(22,34,50,.68)}
+
+.spotlight-overlay{position:fixed;z-index:20000;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;background:rgba(21,30,43,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.spotlight-overlay[hidden]{display:none}.spotlight-panel{width:min(590px,calc(100vw - 36px));border-radius:24px;overflow:hidden;background:rgba(242,247,250,.82);backdrop-filter:blur(38px) saturate(180%);-webkit-backdrop-filter:blur(38px) saturate(180%);border:.5px solid rgba(255,255,255,.8);box-shadow:0 40px 120px rgba(24,38,56,.3),inset 0 1px 0 rgba(255,255,255,.7)}
+.spotlight-input-row{height:62px;padding:0 18px;display:flex;align-items:center;gap:12px;border-bottom:.5px solid rgba(22,34,50,.1)}.spotlight-input-row img{width:20px;opacity:.48}.spotlight-input{flex:1;border:0;outline:0;background:transparent;color:#172234;font-family:inherit;font-size:18px;font-weight:500;line-height:1.2;letter-spacing:-.25px}.spotlight-input::placeholder{color:rgba(23,34,52,.38)}
+.spotlight-results{padding:9px}.spotlight-result{width:100%;border:0;background:transparent;border-radius:13px;padding:9px 11px;display:flex;align-items:center;gap:11px;text-align:left;color:#172234;cursor:pointer}.spotlight-result:hover,.spotlight-result:focus-visible{background:rgba(76,118,168,.12);outline:none}.spotlight-result img{width:34px;height:34px;object-fit:contain}.spotlight-result-copy{display:flex;flex-direction:column;gap:2px}.spotlight-result-name{font-size:13px;font-weight:650}.spotlight-result-meta{font-size:10.5px;color:rgba(23,34,52,.48)}.spotlight-empty{padding:22px;text-align:center;font-size:12px;color:rgba(23,34,52,.46)}
+
+.desktop-runtime{display:none!important}
+@media (max-width:1180px) and (min-width:901px){
+  .mb-item:not(.bold){display:none}.mb-search{min-width:230px}.desktop-profile{left:52px;width:61vw;grid-template-columns:138px 1fr;gap:25px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:138px;height:138px}.desktop-widgets{right:22px;width:254px}.desktop-icons{left:48px;grid-template-columns:repeat(4,82px);top:385px}.win{max-width:94vw;max-height:calc(100vh - 104px)}#win-finder{left:3vw!important;top:64px!important;width:94vw!important;height:calc(100vh - 142px)!important}#win-terminal,#win-notes,#win-mail{left:5vw!important;top:68px!important;width:90vw!important;height:calc(100vh - 150px)!important}
+}
+@media (max-height:700px) and (min-width:901px){
+  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px}.di img{width:42px;height:42px}.di-3p{width:50px!important;height:50px!important}
+}
+@media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic{transition:none!important}}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — iOS 26 Settings + Liquid Glass (≤900px)
+   Content uses standard material; controls float in glass.
+   ══════════════════════════════════════════════════════ */
+#mobile{
+  --ios-blue:#0a84ff;--ios-green:#30d158;--ios-orange:#ff9f0a;--ios-red:#ff453a;
+  --ios-teal:#64d2ff;--ios-purple:#bf5af2;--ios-indigo:#5e5ce6;--ios-gray:#8e8e93;
+  --ios-label:#fff;--ios-label2:rgba(255,255,255,.62);--ios-label3:rgba(255,255,255,.34);--ios-label4:rgba(255,255,255,.18);
+  --ios-fs-largetitle:34px;--ios-lh-largetitle:41px;
+  --ios-fs-title2:22px;--ios-lh-title2:28px;
+  --ios-fs-headline:17px;--ios-lh-headline:22px;
+  --ios-fs-body:17px;--ios-lh-body:22px;
+  --ios-fs-subhead:15px;--ios-lh-subhead:20px;
+  --ios-fs-footnote:13px;--ios-lh-footnote:18px;
+  --ios-fs-caption1:12px;--ios-lh-caption1:16px;
+  display:none;position:fixed;inset:0;flex-direction:column;isolation:isolate;
+  min-height:100dvh;background:#08080a;color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;
+  overflow:hidden;-webkit-font-smoothing:antialiased
+}
+#mobile::before{
+  content:'';position:absolute;z-index:-2;inset:-20%;pointer-events:none;
+  background:
+    radial-gradient(34% 26% at 10% 13%,rgba(58,120,210,.22),transparent 78%),
+    radial-gradient(30% 24% at 88% 4%,rgba(183,76,151,.16),transparent 80%),
+    radial-gradient(36% 28% at 56% 105%,rgba(59,153,127,.13),transparent 80%),#08080a;
+  filter:saturate(1.2)
+}
+#mobile::after{
+  content:'';position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.22;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+  mix-blend-mode:soft-light
+}
+.ios-status{
+  height:calc(44px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 22px 0;
+  flex-shrink:0;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:70;
+  font-size:15px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 1px 8px rgba(0,0,0,.45)
+}
+.ios-status-icons{display:flex;align-items:center;gap:6px}.ios-si{display:block}
+
+#ios-stack{position:relative;flex:1;overflow:hidden;z-index:1}
+.ios-screen{
+  position:absolute;inset:0;display:flex;flex-direction:column;background:transparent;
+  transition:transform .42s cubic-bezier(.32,.72,0,1),filter .38s ease,opacity .3s ease
+}
+.ios-screen.home{transform:translateX(0);z-index:1}
+.ios-screen.home.behind{transform:translateX(-22%) scale(.985);filter:brightness(.58) saturate(.7)}
+.ios-screen.detail{transform:translateX(101%);z-index:2;background:rgba(8,8,10,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.ios-screen.detail.active{transform:translateX(0)}
+#mobile.reduce-motion .ios-screen{transition:none}
+@media (prefers-reduced-motion:reduce){.ios-screen{transition:none!important}.ios-liquid,.ios-row,.ios-switch-knob{transition:none!important}}
+.ios-page-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none}
+.ios-page-scroll::-webkit-scrollbar{width:0;height:0}
+.ios-screen.home .ios-page-scroll{padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+.ios-screen.detail .ios-page-scroll{padding-top:58px;padding-bottom:calc(26px + env(safe-area-inset-bottom))}
+
+/* Functional Liquid Glass layer. */
+.ios-liquid{
+  --gx:50%;--gy:18%;position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,255,255,.19),rgba(255,255,255,.075) 46%,rgba(255,255,255,.105));
+  backdrop-filter:blur(28px) saturate(190%) brightness(1.04);-webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.04);
+  border:.5px solid rgba(255,255,255,.25);border-bottom-color:rgba(255,255,255,.10);
+  box-shadow:0 10px 32px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(255,255,255,.05)
+}
+.ios-liquid::before{
+  content:'';position:absolute;z-index:-1;inset:0;pointer-events:none;
+  background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,.24),transparent 34%);
+  opacity:.72;transition:opacity .2s ease
+}
+.ios-liquid:active::before,.ios-liquid:focus-within::before{opacity:1}
+
+.ios-navbar{
+  height:56px;position:absolute;z-index:20;left:0;right:0;top:0;display:flex;align-items:center;padding:6px 12px;
+  background:linear-gradient(180deg,rgba(8,8,10,.84),rgba(8,8,10,.42) 62%,transparent);pointer-events:none
+}
+.ios-navbar::after{content:'';position:absolute;left:0;right:0;bottom:-12px;height:20px;pointer-events:none;background:linear-gradient(180deg,rgba(8,8,10,.24),transparent);filter:blur(4px)}
+.ios-back{
+  width:44px;height:44px;border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;pointer-events:auto;
+  background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.09) 52%,rgba(255,255,255,.13));
+  border:.5px solid rgba(255,255,255,.28);border-bottom-color:rgba(255,255,255,.11);
+  box-shadow:0 7px 22px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.25),inset 0 -1px 0 rgba(255,255,255,.06)
+}
+.ios-back:active{transform:scale(.94)}
+.ios-back-glyph{width:13px;height:22px;display:block;transform:translateX(-1px)}
+.ios-navbar-title{position:absolute;left:68px;right:68px;text-align:center;font-size:var(--ios-fs-headline);line-height:var(--ios-lh-headline);font-weight:600;letter-spacing:-.18px;color:var(--ios-label);pointer-events:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+
+.ios-large-title{font-size:var(--ios-fs-largetitle);line-height:var(--ios-lh-largetitle);font-weight:700;letter-spacing:-.55px;padding:8px 20px 16px;color:var(--ios-label)}
+.ios-kicker{font-size:12px;line-height:16px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:rgba(132,198,255,.76);padding:2px 20px 0}
+
+/* Personal landing: immediate context before the Settings-style lists. */
+.ios-landing{padding:8px 16px 0}
+.ios-photo-card{height:244px;border-radius:30px;position:relative;overflow:hidden;background:#211a18;border:.5px solid rgba(255,255,255,.16);box-shadow:0 18px 46px rgba(0,0,0,.3)}
+.ios-photo-card::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.02) 42%,rgba(8,8,10,.48) 100%),radial-gradient(circle at 20% 0,rgba(255,218,162,.18),transparent 38%)}
+.ios-photo-card>img{width:100%;height:100%;object-fit:cover;object-position:center 31%;display:block;filter:saturate(.96) contrast(1.02)}
+.ios-photo-availability{position:absolute;z-index:2;right:12px;top:12px;height:34px;padding:0 12px;border-radius:18px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#fff}
+.ios-photo-role{position:absolute;z-index:2;left:15px;bottom:14px;font-size:12px;line-height:16px;font-weight:650;letter-spacing:.04em;color:rgba(255,255,255,.88);text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.ios-intro-title{font-size:32px;line-height:38px;font-weight:750;letter-spacing:-.75px;color:#fff;margin:18px 2px 7px}
+.ios-intro-copy{max-width:350px;font-size:17px;line-height:24px;color:var(--ios-label2);letter-spacing:-.15px;margin:0 2px}
+.ios-email-cta{width:max-content;max-width:100%;height:44px;border-radius:23px;margin:16px 0 20px;padding:0 15px 0 13px;display:inline-flex;align-items:center;gap:9px;color:#fff;text-decoration:none;font-size:15px;font-weight:600}
+.ios-email-cta svg{width:18px;height:18px;flex-shrink:0}
+.ios-email-cta:active{transform:scale(.975)}
+.ios-stats{margin:0 16px 22px;padding:14px 4px;border-radius:22px;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(31,31,34,.79);border:.5px solid rgba(255,255,255,.09)}
+.ios-stat{min-width:0;text-align:center;padding:1px 7px;position:relative}
+.ios-stat:not(:last-child)::after{content:'';position:absolute;right:0;top:2px;bottom:2px;width:.5px;background:rgba(255,255,255,.1)}
+.ios-stat-value{font-size:20px;line-height:24px;font-weight:720;letter-spacing:-.35px;color:#fff}
+.ios-stat-label{font-size:11px;line-height:15px;color:var(--ios-label2);margin-top:2px;white-space:nowrap}
+.ios-what{margin:0 16px 22px;padding:16px;border-radius:22px;background:linear-gradient(145deg,rgba(34,39,51,.86),rgba(31,31,34,.78));border:.5px solid rgba(255,255,255,.1)}
+.ios-what-title{font-size:20px;line-height:25px;font-weight:700;letter-spacing:-.3px;color:#fff}
+.ios-what-copy{font-size:15px;line-height:21px;color:var(--ios-label2);margin-top:5px}
+.ios-capabilities{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.ios-capability{font-size:12px;line-height:17px;font-weight:560;padding:6px 10px;border-radius:13px;color:rgba(255,255,255,.78);background:rgba(255,255,255,.075);border:.5px solid rgba(255,255,255,.095)}
+
+.ios-group{margin:0 16px 22px;border-radius:22px;overflow:hidden;background:rgba(31,31,34,.79);border:.5px solid rgba(255,255,255,.09);box-shadow:0 10px 28px rgba(0,0,0,.12)}
+.ios-profile-group{background:linear-gradient(135deg,rgba(38,53,80,.76),rgba(31,31,35,.82) 52%,rgba(52,33,57,.7));border-color:rgba(255,255,255,.13)}
+.ios-group-label{font-size:var(--ios-fs-footnote);line-height:var(--ios-lh-footnote);font-weight:600;text-transform:none;letter-spacing:0;color:var(--ios-label2);margin:0 28px 7px}
+
+.ios-row{
+  width:100%;display:flex;align-items:center;gap:12px;padding:10px 14px;min-height:56px;position:relative;
+  border:0;background:transparent;color:inherit;text-align:left;font:inherit;-webkit-tap-highlight-color:transparent
+}
+.ios-row.tappable{cursor:pointer;transition:background .12s ease,transform .14s cubic-bezier(.2,.8,.2,1)}
+.ios-row.tappable:active{background:rgba(255,255,255,.085);transform:scale(.995)}
+.ios-row:focus-visible,.ios-back:focus-visible,.ios-switch:focus-visible{outline:2px solid var(--ios-blue);outline-offset:-2px}
+.ios-row:not(:last-child)::after{content:'';position:absolute;left:60px;right:0;bottom:0;height:.5px;background:rgba(255,255,255,.09)}
+.ios-row.noicon:not(:last-child)::after{left:14px}
+.ios-profile-row{min-height:78px}
+.ios-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;font-weight:750;letter-spacing:-.02em;color:#fff;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.23),0 3px 9px rgba(0,0,0,.25);text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ios-row-icon-img{width:34px;height:34px;object-fit:contain;flex-shrink:0;display:block;filter:drop-shadow(0 2px 5px rgba(0,0,0,.22))}
+.ios-row-copy{flex:1;min-width:0}
+.ios-row-copy .ios-row-label,.ios-row-copy .ios-row-sub{display:block}
+.ios-row-label{flex:1;font-size:var(--ios-fs-body);line-height:var(--ios-lh-body);color:var(--ios-label);font-weight:400;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ios-row-sub{font-size:var(--ios-fs-subhead);line-height:var(--ios-lh-subhead);color:var(--ios-label2);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ios-row-value{font-size:var(--ios-fs-footnote);line-height:var(--ios-lh-footnote);color:var(--ios-label2);flex-shrink:0;margin-left:auto}
+.ios-chev{width:8px;height:8px;border-right:1.8px solid var(--ios-label3);border-top:1.8px solid var(--ios-label3);transform:rotate(45deg);margin:0 3px 0 1px;flex-shrink:0;font-size:0}
+
+.ios-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ios-green);flex-shrink:0;vertical-align:middle;box-shadow:0 0 7px rgba(48,209,88,.7)}
+.ios-availability{display:flex;align-items:center;gap:5px}
+
+/* Layered avatar, inspired by the new multi-layer icon construction. */
+.ios-avatar,.ios-avatar-lg{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;background:linear-gradient(145deg,#51a4ff 0%,#5266f5 48%,#bb5bd7 100%);box-shadow:inset 0 1px 1px rgba(255,255,255,.6),inset 0 -10px 20px rgba(29,17,101,.2),0 7px 20px rgba(44,87,225,.26)}
+.ios-avatar::before,.ios-avatar-lg::before{content:'';position:absolute;z-index:-1;inset:2px;border-radius:inherit;background:radial-gradient(circle at 29% 18%,rgba(255,255,255,.65),transparent 26%),linear-gradient(155deg,rgba(255,255,255,.15),transparent 50%);border:.5px solid rgba(255,255,255,.28)}
+.ios-avatar{width:50px;height:50px;border-radius:15px;font-size:19px;font-weight:750}
+.ios-avatar-lg{width:104px;height:104px;border-radius:30px;font-size:38px;font-weight:750;transform:rotate(-1.5deg);box-shadow:inset 0 1px 1px rgba(255,255,255,.65),inset 0 -14px 26px rgba(29,17,101,.22),0 18px 44px rgba(44,87,225,.28)}
+.ios-avatar-photo{width:110px;height:110px;border-radius:32px;display:block;object-fit:cover;object-position:center 28%;border:.5px solid rgba(255,255,255,.24);box-shadow:0 18px 44px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.25)}
+
+.ios-switch{width:51px;height:31px;padding:0;border:0;border-radius:16px;background:rgba(120,120,128,.42);position:relative;flex-shrink:0;cursor:pointer;transition:background .2s ease;-webkit-tap-highlight-color:transparent}
+.ios-switch.on{background:var(--ios-green)}
+.ios-switch-knob{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.32);transition:transform .24s cubic-bezier(.32,.72,0,1)}
+.ios-switch.on .ios-switch-knob{transform:translateX(20px)}
+
+/* Search stays inline with the project content, like iOS 26 Settings. */
+.ios-search{height:40px;margin:0 16px 20px;border-radius:12px;display:flex;align-items:center;gap:8px;padding:0 11px;pointer-events:auto;background:rgba(118,118,128,.24);border:.5px solid rgba(255,255,255,.055);transition:background .18s ease,border-color .18s ease;box-shadow:inset 0 .5px 0 rgba(255,255,255,.11)}
+.ios-search:focus-within{background:rgba(118,118,128,.31);border-color:rgba(255,255,255,.16)}
+.ios-search-symbol{width:16px;height:16px;object-fit:contain;flex-shrink:0;filter:brightness(0) invert(1);opacity:.58}
+.ios-search input{height:100%;background:none;border:none;outline:none;color:var(--ios-label);font-size:var(--ios-fs-body);font-family:inherit;flex:1;min-width:0;-webkit-appearance:none}
+.ios-search input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.ios-search input::placeholder{color:var(--ios-label2)}
+.ios-search-clear{width:22px;height:22px;padding:0;border:0;background:none;color:rgba(255,255,255,.5);display:none;align-items:center;justify-content:center;cursor:pointer}
+.ios-search-clear svg{width:18px;height:18px;display:block}
+.ios-search.has-query .ios-search-clear{display:flex}
+
+.ios-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 16px 20px}
+.ios-hero-name{font-size:var(--ios-fs-title2);line-height:var(--ios-lh-title2);font-weight:700;color:var(--ios-label);letter-spacing:-.35px;margin-top:17px}
+.ios-hero-sub{font-size:var(--ios-fs-subhead);color:var(--ios-label2);margin-top:4px;display:flex;align-items:center;gap:6px}
+.ios-hero-note{max-width:290px;font-size:var(--ios-fs-footnote);line-height:19px;color:var(--ios-label2);margin-top:10px}
+
+.ios-detail-cover{height:236px;margin:8px 14px 16px;border-radius:30px;position:relative;overflow:hidden;background:#222;box-shadow:0 18px 46px rgba(0,0,0,.34);border:.5px solid rgba(255,255,255,.16)}
+.ios-detail-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 35%,rgba(5,5,8,.88) 100%),radial-gradient(circle at 20% 0,rgba(255,255,255,.25),transparent 36%)}
+.ios-detail-cover>img{width:100%;height:100%;object-fit:cover;display:block;opacity:.7;filter:saturate(1.15);transform:scale(1.04)}
+.ios-detail-cover-copy{position:absolute;z-index:2;left:18px;right:18px;bottom:17px;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.ios-detail-overline{font-size:11px;line-height:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:3px}
+.ios-detail-name{font-size:28px;line-height:33px;font-weight:750;color:#fff;letter-spacing:-.65px}
+.ios-detail-sub{font-size:var(--ios-fs-subhead);line-height:var(--ios-lh-subhead);color:rgba(255,255,255,.75);margin-top:2px}
+.ios-detail-meta{display:flex;gap:7px;flex-wrap:wrap;margin:0 16px 14px}
+.ios-meta-pill{font-size:12px;line-height:17px;color:var(--ios-label2);padding:6px 10px;border-radius:12px;background:rgba(255,255,255,.075);border:.5px solid rgba(255,255,255,.1)}
+.ios-detail-desc{font-size:var(--ios-fs-subhead);line-height:1.58;color:var(--ios-label2);font-weight:400;padding:16px;margin:0 16px 14px;border-radius:20px;background:rgba(31,31,34,.78);border:.5px solid rgba(255,255,255,.08)}
+.ios-detail-tags{padding:0 16px 20px!important;margin:0!important;gap:7px!important}
+.ios-detail-tags .t{font-size:12px;padding:6px 10px;border-radius:12px}
+.ios-screens{display:flex;flex-direction:column;gap:14px;padding:0 14px 30px}
+.ios-screens img{width:100%;border-radius:22px;border:.5px solid rgba(255,255,255,.11);display:block;background:rgba(255,255,255,.04);box-shadow:0 14px 34px rgba(0,0,0,.24)}
+
+.ios-text-page{padding:0 16px 34px}
+.ios-p{font-size:var(--ios-fs-subhead);line-height:1.58;color:var(--ios-label2);font-weight:400;margin-bottom:8px}
+.ios-h3{font-size:var(--ios-fs-footnote);font-weight:650;text-transform:none;letter-spacing:0;color:var(--ios-label2);margin:22px 0 8px}
+.ios-copy-card{padding:16px;border-radius:20px;background:rgba(31,31,34,.78);border:.5px solid rgba(255,255,255,.08)}
+
+.ios-skillrow{padding:13px 14px}
+.ios-skillrow:not(:last-child){border-bottom:.5px solid rgba(255,255,255,.08)}
+.ios-skillrow-top{display:flex;justify-content:space-between;font-size:var(--ios-fs-subhead);color:var(--ios-label);margin-bottom:8px}
+.ios-skillrow-lvl{color:var(--ios-label2);font-size:var(--ios-fs-footnote)}
+.ios-bar-track{height:7px;border-radius:4px;background:rgba(255,255,255,.09);overflow:hidden}
+.ios-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--ios-blue),var(--ios-purple));box-shadow:0 0 12px rgba(94,92,230,.36)}
+.ios-contact{padding:4px 16px 30px}.ios-contact .ml{min-height:62px;border-radius:20px;background:rgba(31,31,34,.78);border-color:rgba(255,255,255,.09);margin-bottom:9px}.ios-contact .ml-ic{width:38px;height:38px;border-radius:11px}.ios-contact .ml-lbl{font-size:15px}.ios-contact .ml-val{font-size:13px;color:var(--ios-label2)}
+
+.ios-footer{text-align:center;font-size:var(--ios-fs-caption1);line-height:var(--ios-lh-caption1);color:var(--ios-label3);padding:2px 20px 28px}
+.ios-home-indicator{position:absolute;z-index:80;left:50%;bottom:calc(6px + env(safe-area-inset-bottom) + var(--ios-keyboard-offset,0px));transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(255,255,255,.72);box-shadow:0 1px 5px rgba(0,0,0,.3);pointer-events:none;transition:opacity .15s ease}
+#mobile.keyboard-open .ios-home-indicator{opacity:0}
+
+@media (max-width:900px){
+  #welcome{display:none !important}
+  #desktop{display:none !important}
+  #mobile{display:flex !important}
+}
+</style>
+</head>
+<body>
+<div id="welcome" aria-label="Enter Roman's portfolio">
+  <div class="lock-screen">
+    <div class="lock-date" id="lock-date">Tuesday, August 11</div>
+    <div class="lock-time" id="lock-time">09:41</div>
+    <div class="lock-identity">
+      <img class="lock-avatar" src="images/roman-portrait.jpg" alt="Roman">
+      <div class="lock-name">Roman</div>
+      <div class="lock-role">Product / UI Designer</div>
+      <button class="unlock-button" type="button">Click to enter&nbsp;&nbsp;→</button>
+      <div class="lock-footnote">Portfolio OS · press any key</div>
+    </div>
+  </div>
+</div>
+<div id="desktop" data-theme="blue">
+
+<!-- MENUBAR -->
+<div id="menubar">
+  <div class="mb-l">
+    <button class="mb-apple" type="button" onclick="lockDesktop()" aria-label="Lock portfolio"><img src="icons/ui/apple.svg" alt=""></button>
+    <span class="mb-item bold">Roman</span>
+    <span class="mb-item">Work</span>
+    <span class="mb-item">About</span>
+    <span class="mb-item">Contact</span>
+  </div>
+  <button class="mb-search" type="button" onclick="openSpotlight()" aria-label="Search the portfolio"><img src="icons/ui/mbx-spotlight.svg" alt=""><span>Search Roman's portfolio</span><kbd>⌘K</kbd></button>
+  <div class="mb-r">
+    <div class="mb-icon" title="Wi-Fi"><img class="mb-o" src="icons/ui/mbx-wifi.svg"></div>
+    <div class="mb-icon" title="Spotlight Search"><img class="mb-o" src="icons/ui/mbx-spotlight.svg"></div>
+    <div class="mb-icon" title="Control Center"><img class="mb-o mb-o-cc" src="icons/ui/mbx-control.svg"></div>
+    <div id="mb-dt">Mon 7 Jul&nbsp;&nbsp;23:30</div>
+  </div>
+</div>
+
+<!-- PERSONAL INTRO — visible before any app opens -->
+<section class="desktop-profile" aria-labelledby="desktop-profile-title">
+  <div class="desktop-profile-photo-wrap"><img class="desktop-profile-photo" src="images/roman-portrait.jpg" alt="Roman working at a café with his MacBook"></div>
+  <div>
+    <div class="desktop-eyebrow">Product / UI Designer · Europe</div>
+    <h1 id="desktop-profile-title">Hi, I’m Roman.</h1>
+    <p>I turn complex fintech, crypto, and mobile products into clear interfaces that feel fast, intentional, and human.</p>
+    <div class="profile-actions">
+      <button class="profile-action primary" type="button" onclick="openWin('win-finder')">View selected work&nbsp; →</button>
+      <a class="profile-action" href="mailto:olrom2003@gmail.com">✉&nbsp; olrom2003@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL WIDGETS -->
+<aside class="desktop-widgets" aria-label="Profile highlights">
+  <div class="theme-card desk-glass">
+    <span class="theme-label">Choose a mood</span>
+    <div class="theme-swatches" role="group" aria-label="Wallpaper theme">
+      <button class="theme-swatch active" data-theme="blue" type="button" onclick="setDesktopTheme('blue',this)" aria-label="Blue wallpaper"></button>
+      <button class="theme-swatch" data-theme="lilac" type="button" onclick="setDesktopTheme('lilac',this)" aria-label="Lilac wallpaper"></button>
+      <button class="theme-swatch" data-theme="sage" type="button" onclick="setDesktopTheme('sage',this)" aria-label="Sage wallpaper"></button>
+      <button class="theme-swatch" data-theme="midnight" type="button" onclick="setDesktopTheme('midnight',this)" aria-label="Midnight wallpaper"></button>
+    </div>
+  </div>
+  <div class="experience-card desk-glass">
+    <div class="widget-kicker">Experience at a glance</div>
+    <div class="experience-stats">
+      <div class="experience-stat"><div class="experience-value">4+</div><div class="experience-label">years</div></div>
+      <div class="experience-stat"><div class="experience-value">12+</div><div class="experience-label">products</div></div>
+      <div class="experience-stat"><div class="experience-value">20M+</div><div class="experience-label">users</div></div>
+    </div>
+  </div>
+  <div class="now-card desk-glass">
+    <div class="widget-kicker">Right now</div>
+    <div class="now-title"><span class="now-dot"></span>Available for work</div>
+    <p class="now-copy">Focused on thoughtful product systems, expressive interfaces, and digital experiences that ship.</p>
+    <div class="now-place"><span>Europe</span><span>Remote-friendly</span></div>
+  </div>
+</aside>
+
+<!-- Kept for the lightweight clock/date runtime used by both layouts. -->
+<div class="desktop-runtime" aria-hidden="true"><canvas id="clock-canvas" width="304" height="304"></canvas><span id="wc-dn"></span><span id="wc-d"></span><span id="wc-l2"></span><span id="wc-l3"></span></div>
+
+<!-- DESKTOP FOLDERS — real macOS folder, NO border-radius -->
+<div class="desktop-icons" aria-label="Selected work">
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('youhodler')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">YouHodler</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('nexa')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Nexa Agency</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('wagmio')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Wagmio</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('coinflip')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Coinflip</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('warriors')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Warriors Cats</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('cherry')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Cherry</span></button>
+</div>
+
+<!-- ══ FINDER WINDOW ══ -->
+<div class="win" id="win-finder" style="left:calc(50% - 470px);top:76px;width:940px;height:650px;display:none">
+  <div class="wh">
+    <div class="tl tl-r" onclick="closeWin('win-finder')"></div>
+    <div class="tl tl-y"></div><div class="tl tl-g"></div>
+    <div class="wh-title">Finder</div>
+  </div>
+  <div class="wb" style="overflow:hidden;height:100%">
+    <div class="finder-body">
+      <div class="finder-sb">
+        <div class="sb-label">Work</div>
+        <div class="sb-row active" data-project="youhodler" onclick="showProj('youhodler',this)"><img src="icons/Folder.svg">YouHodler</div>
+        <div class="sb-row" data-project="nexa" onclick="showProj('nexa',this)"><img src="icons/Folder.svg">Nexa Agency</div>
+        <div class="sb-label">Projects</div>
+        <div class="sb-row" data-project="wagmio" onclick="showProj('wagmio',this)"><img src="icons/Folder.svg">Wagmio</div>
+        <div class="sb-row" data-project="coinflip" onclick="showProj('coinflip',this)"><img src="icons/Folder.svg">Coinflip</div>
+        <div class="sb-row" data-project="warriors" onclick="showProj('warriors',this)"><img src="icons/Folder.svg">Warriors Cats</div>
+        <div class="sb-row" data-project="cherry" onclick="showProj('cherry',this)"><img src="icons/Folder.svg">Cherry</div>
+        <div class="sb-label">Me</div>
+        <div class="sb-row" onclick="toggleWin('win-terminal')"><img src="icons/Terminal.svg">Skills</div>
+        <div class="sb-row" onclick="toggleWin('win-notes')"><img src="icons/Notes.svg">About Me</div>
+        <div class="sb-row" onclick="toggleWin('win-mail')"><img src="icons/Mail.svg">Contact</div>
+      </div>
+      <div class="fc" id="fc"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TERMINAL WINDOW ══ -->
+<div class="win" id="win-terminal" style="left:910px;top:52px;width:480px;height:580px;display:none">
+  <div class="wh">
+    <div class="tl tl-r" onclick="closeWin('win-terminal')"></div>
+    <div class="tl tl-y"></div><div class="tl tl-g"></div>
+    <div class="wh-title">roman@macbook — zsh</div>
+  </div>
+  <div class="wb scroll">
+    <div class="term">
+<div class="tlo">██████╗  ██████╗ ███╗   ███╗ █████╗ ███╗   ██╗
+██╔══██╗██╔═══██╗████╗ ████║██╔══██╗████╗  ██║
+██████╔╝██║   ██║██╔████╔██║███████║██╔██╗ ██║
+██╔══██╗██║   ██║██║╚██╔╝██║██╔══██║██║╚██╗██║
+██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝</div>
+<div class="tl2"><span class="tp2">roman@macbook</span> <span style="color:#555">~</span> <span style="color:#ccc">%</span> <span style="color:#fff">neofetch</span></div><br>
+<div class="ti"><span class="tik">OS</span><span class="tis">:</span><span class="tiv">macOS 26 Tahoe</span></div>
+<div class="ti"><span class="tik">Role</span><span class="tis">:</span><span class="tiv">Product / UI Designer</span></div>
+<div class="ti"><span class="tik">Base</span><span class="tis">:</span><span class="tiv">Europe · Remote</span></div>
+<div class="ti"><span class="tik">Uptime</span><span class="tis">:</span><span class="tiv">4 years designing</span></div>
+<div class="ti"><span class="tik">Impact</span><span class="tis">:</span><span class="tiv">20M+ users reached</span></div>
+<br>
+<div class="tl2"><span class="tp2">roman@macbook</span> <span style="color:#555">~</span> <span style="color:#ccc">%</span> <span style="color:#fff">cat skills.json</span></div><br>
+<div class="tl2"><span class="ts">## Design</span></div>
+<div class="tl2" style="color:#888">  <span class="tk">Figma</span>            <span class="tv">████████████</span>  expert</div>
+<div class="tl2" style="color:#888">  <span class="tk">Prototyping</span>      <span class="tv">██████████░░</span>  advanced</div>
+<div class="tl2" style="color:#888">  <span class="tk">Design Systems</span>   <span class="tv">█████████░░░</span>  advanced</div>
+<div class="tl2" style="color:#888">  <span class="tk">UX Research</span>      <span class="tv">████████░░░░</span>  solid</div>
+<div class="tl2" style="color:#888">  <span class="tk">Motion Design</span>    <span class="tv">███████░░░░░</span>  solid</div>
+<br>
+<div class="tl2"><span class="ts">## Code</span></div>
+<div class="tl2" style="color:#888">  <span class="tk">HTML / CSS</span>       <span class="tv">██████████░░</span>  advanced</div>
+<div class="tl2" style="color:#888">  <span class="tk">JavaScript</span>       <span class="tv">████████░░░░</span>  solid</div>
+<div class="tl2" style="color:#888">  <span class="tk">Framer</span>           <span class="tv">█████████░░░</span>  advanced</div>
+<div class="tl2" style="color:#888">  <span class="tk">Webflow</span>          <span class="tv">████████░░░░</span>  solid</div>
+<br>
+<div class="tl2"><span class="ts">## Tools</span></div>
+<div class="tl2" style="color:#888">  <span class="tk">Notion</span> · <span class="tk">Linear</span> · <span class="tk">Jira</span> · <span class="tk">After Effects</span></div>
+<br>
+<div class="tl2"><span class="tp2">roman@macbook</span> <span style="color:#555">~</span> <span style="color:#ccc">%</span> <span class="tc"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTES WINDOW ══ -->
+<div class="win" id="win-notes" style="left:60px;top:52px;width:620px;height:520px;display:none">
+  <div class="wh" style="background:rgba(28,24,16,.9)">
+    <div class="tl tl-r" onclick="closeWin('win-notes')"></div>
+    <div class="tl tl-y"></div><div class="tl tl-g"></div>
+    <div class="wh-title" style="color:rgba(255,200,40,.4)">Notes</div>
+  </div>
+  <div class="wb" style="overflow:hidden;height:100%">
+    <div class="notes-win">
+      <div class="notes-sb">
+        <div class="notes-sb-top">
+          <div class="notes-search">🔍 <span>Search</span></div>
+        </div>
+        <div class="notes-list">
+          <div class="ni active">
+            <div class="ni-date">Today</div>
+            <div class="ni-title">About Roman</div>
+            <div class="ni-prev">Product / UI Designer based in Europe...</div>
+          </div>
+          <div class="ni">
+            <div class="ni-date">Jun 2025</div>
+            <div class="ni-title">Design Principles</div>
+            <div class="ni-prev">Ship fast, iterate often, obsess over details...</div>
+          </div>
+          <div class="ni">
+            <div class="ni-date">Mar 2025</div>
+            <div class="ni-title">Currently reading</div>
+            <div class="ni-prev">The Design of Everyday Things, Shape Up...</div>
+          </div>
+          <div class="ni">
+            <div class="ni-date">Jan 2025</div>
+            <div class="ni-title">Wishlist</div>
+            <div class="ni-prev">MacBook Pro M4 Max, Studio Display...</div>
+          </div>
+        </div>
+      </div>
+      <div class="notes-content">
+        <div class="nc-title">About Roman</div>
+        <div class="nc-date">Last edited today at 23:30</div>
+        <p class="nc-p">Product / UI Designer based in Europe. I design digital products that feel fast, intentional, and human — from crypto platforms to gaming mini-apps to brand systems.</p>
+        <div class="nc-h2">🎯 What I do</div>
+        <p class="nc-p">Full product design lifecycle — discovery, research, wireframes, hi-fi interfaces, design systems, and shipped products. I care about the details that make it into production.</p>
+        <div class="nc-h2">📍 Background</div>
+        <p class="nc-p">Started at Nexa Agency designing for 20M+ users across 12+ products. Then YouHodler (fintech), Wagmio (crypto education), and Telegram mini-apps.</p>
+        <div class="nc-h2">🌍 Languages</div>
+        <div style="margin-top:6px">
+          <span class="nc-tag">🇷🇺 Russian — Native</span>
+          <span class="nc-tag">🇬🇧 English — Fluent</span>
+          <span class="nc-tag">🇺🇦 Ukrainian — Native</span>
+        </div>
+        <div class="nc-h2">⚡ Daily tools</div>
+        <div style="margin-top:6px">
+          <span class="nc-chip">Figma</span><span class="nc-chip">Framer</span><span class="nc-chip">Notion</span><span class="nc-chip">Linear</span><span class="nc-chip">After Effects</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIL WINDOW ══ -->
+<div class="win" id="win-mail" style="left:60px;top:52px;width:560px;height:460px;display:none">
+  <div class="wh">
+    <div class="tl tl-r" onclick="closeWin('win-mail')"></div>
+    <div class="tl tl-y"></div><div class="tl tl-g"></div>
+    <div class="wh-title">Mail — Contact</div>
+  </div>
+  <div class="wb" style="overflow:hidden;height:100%">
+    <div class="mail-win">
+      <div class="mail-sb">
+        <div class="mail-folder active">
+          <svg width="14" height="12" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="2" width="14" height="10" rx="2"/><path d="M1 4l7 5 7-5"/></svg>
+          Inbox
+        </div>
+        <div class="mail-folder">
+          <svg width="14" height="12" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2 12l4-4 8-8M6 8l2 4"/></svg>
+          Sent
+        </div>
+      </div>
+      <div class="mail-c scroll" style="height:100%">
+        <div class="mail-from">From: Roman · Product Designer</div>
+        <div class="mail-subj">Let's work together 👋</div>
+        <div class="mail-sl">Contact</div>
+        <a href="mailto:olrom2003@gmail.com" class="ml">
+          <div class="ml-ic" style="background:rgba(59,130,246,.14)">✉️</div>
+          <div style="flex:1"><div class="ml-lbl">Email</div><div class="ml-val">olrom2003@gmail.com</div></div>
+          <div class="ml-arr">›</div>
+        </a>
+        <a href="#" class="ml">
+          <div class="ml-ic" style="background:rgba(99,102,241,.14)">💼</div>
+          <div style="flex:1"><div class="ml-lbl">LinkedIn</div><div class="ml-val">linkedin.com/in/roman</div></div>
+          <div class="ml-arr">›</div>
+        </a>
+        <a href="#" class="ml">
+          <div class="ml-ic" style="background:rgba(59,130,246,.14)">🎨</div>
+          <div style="flex:1"><div class="ml-lbl">Behance</div><div class="ml-val">behance.net/roman</div></div>
+          <div class="ml-arr">›</div>
+        </a>
+        <div class="mail-sl">Availability</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.42);line-height:1.7">🌍 Europe &nbsp;·&nbsp; Remote-friendly<br>Open to freelance & full-time</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOCK — SVG icons directly, no border-radius on images -->
+<!-- Liquid Glass refraction filter (edge distortion, like Apple's glass) -->
+<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
+  <filter id="liquid" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+    <feImage href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAABQCAYAAACK0l9hAAAF2klEQVR4nO3dz2/TdhzH4Xd+tRMbhSsXuHGl/GPctuuYtNOQOPCXQbUTNyYhrtu6TIUQe3Jjt26atGlXp173PJKVNG3tcnzx+frrwcuXL8tsw49buQoAAADcvJ/SufFNnuz+s2T6PinnSVnUHzb5//NNXgkAAAC2pxzVbwb118PFZ9Onyd67ngT6/vfJwZtFlP/1a1KumsdvZ0YPAAAA3Rmc9u2gSAZfk+9+TYrxItYPXiTPX13/9MPr/uKDx8lwkrx7nZSzxcT8eGperjgAAADgv648fxyHenXMkmevk/kk+f3xFifoo0ny58fFH7NyYr78DwAAAIC7YLDisyrU69fq2PuYfJ0k41mHE/Tde8lwlBTzJNXEfDm+Tc8BAAC4y8qLu3dQfV0kw3kyHyVH9zoI9PEkmR3VS9mryfmqPw4AAAD+b8qzXTyoQ71a+j45SmaTGwz08XgxNV8Z5gAAAMDCilCvpumz8Q0E+nGct6fmwhwAAAAu1mwi10R6cXmkDzeN85MLAAAAAJtppukbRPraQJ8sxfmlu7UDAAAA5wyWIv3L+AqBfm83mTdxvsmj1AAAAICLI71a8l4moyKZ7m4Y6J9nrThff34AAABgQ82z0qtI351tEOiT0WmcAwAAADesjvQvowsC/fGD+r7z098BAAAAbnKKXr9W96N/eLAm0D8dth6lBgAAAHSjfgTbo8MVgf79flK0NoTT6AAAANDhFL3a1b1MftlfCvQ3B6IcAAAAth3rLw4W70+evja3MRwAAABsV/XYtbQm6M/uL9rc5nAAAACw3c3iquPt/TrQ309P7z0HAAAAtqe6F/3ptA704+XtAAAAwK0YVRvGVW+q3dsBAACA21Ht5n7mOegAAADA7TgO9PYA3TAdAAAAtrdRXPP+ZIIuzAEAAODymO7q3MMfO7wIAAAA3BWDjs/vHnQAAADoAYEOAAAAPSDQAQAAoAcEOgAAAPSAQAcAAIAeEOgAAADQAwIdAAAAekCgAwAAQA8IdAAAAOgBgQ4AAAA9INABAACgBwQ6AAAA9IBABwAAgB4Q6AAAANADAh0AAAB6QKADAABADwh0AAAA6AGBDgAAAD0g0AEAAKAHBDoAAAD0gEAHAACAHhDoAAAA0AMCHQAAAHpAoAMAAEAPCHQAAADoAYEOAAAAPSDQAQAAoAcEOgAAAPTA+Kcko7Ljqww6Pj8AAAB0rCy3NEHvtKG7/g8AAAAA+I/GeXPqcRPnzQft951cEQAAAEi59N496AAAANADx4E+NN0GAACAW1OUdaB3vkkcAAAAsNa8CfSn02Qg0gEAAOBWNqB7P60D/d3eYnO4Zid3T0UDAACA7pSt1+rY32ttEne8zN0UHQAAALanXCxvr5wE+osDk3MAAADYpqrN3xwsBfqr54vd3Jt70cU6AAAAdLi8vVzs3v7D88XXZ56D/uiwDnNL3QEAAKA75SK9Px2efnQm0H97mAwLm8UBAABA15vDFUXy5OGaQK/MxvUyd1N0AAAA6GZ6XiY747Mfnwv0yu7sNNJN0QEAAODfK1tx/nl2/vsrA/3vb5JR0Yp003QAAAC4tirKmzifF8m332wY6JXZpL4fvdnVXaQDAADA9eK82bW9SHYmq39ubaBXvi5FuvvSAQAA4AqW4nyyJs4vDfTlSD95BJtQBwAAgPWaJe0bxvlGgX4S6fNWpLcuBgAAAJxv5ZM4n18e5xsHeuXrTjI5SgbtaXr74mIdAACA/6NydZiXRTI7SiY7m51m6alrF/v87eJ19CUphslgkJTt57CtinTPaQMAAOCuKC/5dh3q1ZL28U4yukJ1XynQG/Od5MGH5PBRPYOvQn1djJusAwAAcJeVrWecF8nhp+Thk6ufZuMl7sv+eJIUO8mz18lgVi99L5ZG+5a+AwAAcFeU548qyI+PWfLudTLauV6cX3uC3vb2h9P3998m06dJOUrKJv2rqbpIBwAA4C4o65cqyufJ9H2yt59kkjxv9fF1/AP9xquQl4jBeQAAAABJRU5ErkJggg==" result="dmap" preserveAspectRatio="none"/>
+    <feDisplacementMap in="SourceGraphic" in2="dmap" scale="17" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+    <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cR"/>
+    <feDisplacementMap in="SourceGraphic" in2="dmap" scale="13" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+    <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="cG"/>
+    <feDisplacementMap in="SourceGraphic" in2="dmap" scale="9" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+    <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="cB"/>
+    <feBlend in="cR" in2="cG" mode="screen" result="rg"/>
+    <feBlend in="rg" in2="cB" mode="screen" result="rgb"/>
+    <feGaussianBlur in="rgb" stdDeviation="0.4"/>
+  </filter>
+</svg>
+
+<!-- ⌘K portfolio search -->
+<div class="spotlight-overlay" id="spotlight" hidden onclick="if(event.target===this)closeSpotlight()">
+  <div class="spotlight-panel" role="dialog" aria-modal="true" aria-label="Search Roman's portfolio">
+    <div class="spotlight-input-row">
+      <img src="icons/ui/mbx-spotlight.svg" alt="">
+      <input class="spotlight-input" id="spotlight-input" type="search" placeholder="Search work, about or contact…" autocomplete="off" oninput="filterSpotlight(this.value)">
+    </div>
+    <div class="spotlight-results" id="spotlight-results">
+      <button class="spotlight-result" type="button" data-search="projects selected work case studies" onclick="runSpotlight('window','win-finder')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Selected Work</span><span class="spotlight-result-meta">Open all case studies</span></span></button>
+      <button class="spotlight-result" type="button" data-search="youhodler fintech crypto product" onclick="runSpotlight('project','youhodler')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">YouHodler</span><span class="spotlight-result-meta">Fintech · Product design</span></span></button>
+      <button class="spotlight-result" type="button" data-search="nexa agency experience product" onclick="runSpotlight('project','nexa')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Nexa Agency</span><span class="spotlight-result-meta">12+ products · Lead Product Designer</span></span></button>
+      <button class="spotlight-result" type="button" data-search="wagmio crypto brand interface" onclick="runSpotlight('project','wagmio')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Wagmio</span><span class="spotlight-result-meta">Crypto education · UI/UX</span></span></button>
+      <button class="spotlight-result" type="button" data-search="about roman biography notes" onclick="runSpotlight('window','win-notes')"><img src="icons/apps/notes.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">About Roman</span><span class="spotlight-result-meta">Background, principles and tools</span></span></button>
+      <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Skills</span><span class="spotlight-result-meta">Design, code and daily stack</span></span></button>
+      <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Contact</span><span class="spotlight-result-meta">olrom2003@gmail.com</span></span></button>
+      <div class="spotlight-empty" id="spotlight-empty" hidden>Nothing found. Try “work”, “skills” or “contact”.</div>
+    </div>
+  </div>
+</div>
+
+<div id="dock">
+  <div class="di" onclick="toggleWin('win-finder')" role="button" tabindex="0"><img src="icons/apps/finder.svg"><div class="di-tip">Selected Work</div></div>
+  <div class="di" onclick="toggleWin('win-notes')" role="button" tabindex="0"><img src="icons/apps/notes.svg"><div class="di-tip">About Roman</div></div>
+  <div class="di" onclick="toggleWin('win-mail')" role="button" tabindex="0"><img src="icons/apps/mail.svg"><div class="di-tip">Contact</div></div>
+  <div class="di" onclick="toggleWin('win-terminal')" role="button" tabindex="0"><img src="icons/apps/terminal.svg"><div class="di-tip">Skills</div></div>
+  <div class="d-sep"></div>
+  <div class="di"><img src="icons/figma.png" class="di-3p"><div class="di-tip">Figma · daily tool</div></div>
+  <div class="di"><img src="icons/claude.png" class="di-3p"><div class="di-tip">Claude · daily tool</div></div>
+  <div class="di"><img src="icons/github_desktop.png" class="di-3p"><div class="di-tip">GitHub · daily tool</div></div>
+  <div class="d-sep"></div>
+  <div class="di" onclick="emptyTrash(event)"><img src="icons/apps/trash-empty.svg" id="trash-ic"><div class="di-tip">Trash</div></div>
+</div>
+
+</div>
+
+<!-- ══ MOBILE — iOS Settings-style adaptation ══ -->
+<div id="mobile">
+  <div class="ios-status">
+    <span id="ios-time">9:41</span>
+    <span class="ios-status-icons">
+      <svg class="ios-si" width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="3" height="5" rx="1" fill="#fff"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#fff"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>
+      <img class="ios-si" src="icons/ui/mbx-wifi.svg" style="width:17px;height:auto;filter:brightness(0) invert(1)" alt="" aria-hidden="true">
+      <svg class="ios-si" width="27" height="13" viewBox="0 0 27 13" fill="none" aria-hidden="true"><rect x=".6" y=".6" width="23" height="11.8" rx="3.5" stroke="#fff" stroke-opacity=".5" stroke-width="1.2"/><rect x="2.3" y="2.3" width="17" height="8.4" rx="2" fill="#fff"/><path d="M25 4.25v4.5c.9-.28 1.5-1.12 1.5-2.25S25.9 4.53 25 4.25Z" fill="#fff" opacity=".5"/></svg>
+    </span>
+  </div>
+
+  <div id="ios-stack">
+    <!-- HOME -->
+    <div class="ios-screen home active" id="ios-home">
+      <div class="ios-page-scroll">
+        <section class="ios-landing ios-home-static" aria-labelledby="ios-intro-title">
+          <div class="ios-photo-card">
+            <img src="images/roman-portrait.jpg" alt="Roman working at a café with his MacBook" fetchpriority="high">
+            <div class="ios-photo-availability ios-liquid"><span class="ios-dot"></span>Available</div>
+            <div class="ios-photo-role">Product / UI Designer · Europe</div>
+          </div>
+
+          <h1 class="ios-intro-title" id="ios-intro-title">Hi, I’m Roman</h1>
+          <p class="ios-intro-copy">I turn complex fintech, crypto, and mobile products into clear interfaces that feel fast, intentional, and human.</p>
+          <a class="ios-email-cta ios-liquid" href="mailto:olrom2003@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="m5.5 7.5 6.5 5 6.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>olrom2003@gmail.com</span>
+          </a>
+        </section>
+
+        <div class="ios-stats ios-home-static" aria-label="Experience highlights">
+          <div class="ios-stat"><div class="ios-stat-value">4+</div><div class="ios-stat-label">Years</div></div>
+          <div class="ios-stat"><div class="ios-stat-value">12+</div><div class="ios-stat-label">Products</div></div>
+          <div class="ios-stat"><div class="ios-stat-value">20M+</div><div class="ios-stat-label">Users</div></div>
+        </div>
+
+        <section class="ios-what ios-home-static" aria-labelledby="ios-what-title">
+          <h2 class="ios-what-title" id="ios-what-title">What I design</h2>
+          <p class="ios-what-copy">From discovery and product flows to polished UI, prototypes, design systems, and engineering handoff.</p>
+          <div class="ios-capabilities">
+            <span class="ios-capability">Fintech</span><span class="ios-capability">Crypto &amp; Web3</span><span class="ios-capability">Mobile apps</span><span class="ios-capability">Telegram mini-apps</span><span class="ios-capability">Design systems</span>
+          </div>
+        </section>
+
+        <div class="ios-search" id="ios-search-shell">
+          <img class="ios-search-symbol" src="icons/ui/mbx-spotlight.svg" alt="" aria-hidden="true">
+          <input id="ios-search-input" type="search" placeholder="Search projects" oninput="filterMobile(this.value)" autocomplete="off" aria-label="Search projects">
+          <button type="button" class="ios-search-clear" onclick="clearMobileSearch(event)" aria-label="Clear search">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="currentColor"/><path d="m7.4 7.4 5.2 5.2m0-5.2-5.2 5.2" stroke="#202024" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+
+        <div id="ios-section-work">
+          <div class="ios-group-label">Experience</div>
+          <div class="ios-group" id="ios-group-work"></div>
+        </div>
+
+        <div id="ios-section-projects">
+          <div class="ios-group-label">Projects</div>
+          <div class="ios-group" id="ios-group-projects"></div>
+        </div>
+
+        <div class="ios-footer" id="ios-no-results" style="display:none">No projects match "<span id="ios-no-results-q"></span>"</div>
+
+        <div class="ios-home-static">
+          <div class="ios-group-label">About</div>
+          <div class="ios-group">
+            <button type="button" class="ios-row tappable" onclick="openMobileDetail('skills')">
+              <img class="ios-row-icon-img" src="icons/apps/terminal.svg" alt="">
+              <span class="ios-row-label">Skills</span><span class="ios-chev" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ios-row tappable" onclick="openMobileDetail('about')">
+              <img class="ios-row-icon-img" src="icons/apps/notes.svg" alt="">
+              <span class="ios-row-label">About Me</span><span class="ios-chev" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ios-row tappable" onclick="openMobileDetail('contact')">
+              <img class="ios-row-icon-img" src="icons/apps/mail.svg" alt="">
+              <span class="ios-row-label">Contact</span><span class="ios-chev" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="ios-group-label">Preferences</div>
+          <div class="ios-group">
+            <div class="ios-row noicon">
+              <div class="ios-row-label">Reduce Motion</div>
+              <button type="button" class="ios-switch" id="ios-reduce-motion" role="switch" aria-checked="false" aria-label="Reduce Motion" onclick="toggleReduceMotion()"><span class="ios-switch-knob"></span></button>
+            </div>
+          </div>
+
+          <div class="ios-footer">Portfolio OS · Roman, 2026<span class="tc" style="margin-left:5px;vertical-align:-2px"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL (reused for project / skills / about / contact) -->
+    <div class="ios-screen detail" id="ios-detail">
+      <div class="ios-navbar">
+        <button type="button" class="ios-back ios-liquid" onclick="closeMobileDetail()" aria-label="Back">
+          <svg class="ios-back-glyph" viewBox="0 0 16 24" fill="none" aria-hidden="true"><path d="M12.5 3.5 4 12l8.5 8.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="ios-navbar-title" id="ios-detail-navtitle"></div>
+      </div>
+      <div class="ios-page-scroll" id="ios-detail-body"></div>
+    </div>
+  </div>
+  <div class="ios-home-indicator"></div>
+</div>
+
+<script>
+// ── LOCK SCREEN → PERSONAL DESKTOP ────────────────────────
+(function(){
+  const wel=document.getElementById('welcome');
+  if(!wel) return;
+  // A mobile portfolio should open like an app, without a desktop boot gate.
+  if(window.matchMedia('(max-width:900px)').matches){ wel.style.display='none'; return; }
+
+  function toDesktop(){
+    if(wel.classList.contains('gone')) return;
+    wel.classList.add('gone');
+    wel.setAttribute('aria-hidden','true');
+  }
+  window.unlockDesktop=toDesktop;
+  window.lockDesktop=function(){
+    closeSpotlight();
+    wel.classList.remove('gone');
+    wel.removeAttribute('aria-hidden');
+  };
+  wel.addEventListener('click', toDesktop);
+  window.addEventListener('keydown',e=>{if(!wel.classList.contains('gone') && e.key!=='Tab')toDesktop()});
+})();
+
+// ── WALLPAPER THEMES + SPOTLIGHT ────────────────────────
+function setDesktopTheme(theme,button){
+  document.getElementById('desktop').dataset.theme=theme;
+  document.querySelectorAll('.theme-swatch').forEach(el=>{const active=el===button;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+  try{localStorage.setItem('roman-desktop-theme',theme)}catch(e){}
+}
+(function restoreTheme(){
+  let theme='blue';try{theme=localStorage.getItem('roman-desktop-theme')||theme}catch(e){}
+  const button=document.querySelector(`.theme-swatch[data-theme="${theme}"]`)||document.querySelector('.theme-swatch[data-theme="blue"]');
+  setDesktopTheme(button.dataset.theme,button);
+})();
+function openSpotlight(){
+  if(window.matchMedia('(max-width:900px)').matches)return;
+  const overlay=document.getElementById('spotlight'),input=document.getElementById('spotlight-input');
+  overlay.hidden=false;input.value='';filterSpotlight('');requestAnimationFrame(()=>input.focus());
+}
+function closeSpotlight(){
+  const overlay=document.getElementById('spotlight');if(overlay)overlay.hidden=true;
+}
+function filterSpotlight(value){
+  const q=value.trim().toLowerCase();let visible=0;
+  document.querySelectorAll('.spotlight-result').forEach(row=>{const show=!q||row.dataset.search.includes(q)||row.textContent.toLowerCase().includes(q);row.hidden=!show;if(show)visible++});
+  document.getElementById('spotlight-empty').hidden=visible>0;
+}
+function runSpotlight(type,key){closeSpotlight();type==='project'?openProjectDesktop(key):openWin(key)}
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSpotlight()}
+  else if(e.key==='Escape'&&!document.getElementById('spotlight').hidden){closeSpotlight()}
+});
+
+// ── PROJECTS ──────────────────────────────────────────
+const P = {
+  youhodler:{
+    emoji:'💰', bg:'linear-gradient(135deg,#0f3460,#16213e)',
+    name:'YouHodler', period:'May 2024 – Oct 2024', role:'Product Designer',
+    sub:'Fintech · Crypto Lending & Savings',
+    desc:'Designed core mobile product screens for a crypto lending and savings platform — onboarding flows, portfolio dashboards, trading interfaces, and identity verification. Worked directly with PM and engineering in Agile sprints.',
+    tags:[['Fintech','to'],['Mobile Design','tb'],['Design System','tp'],['iOS','tg']],
+    layout:'phone',
+    screens:['screens/coinflip_home.png','screens/cf_1.png','screens/cf_2.png','screens/cf_3.png','screens/cf_5.png','screens/cf_7.png','screens/cf_8.png','screens/cf_9.png','screens/cf_10.png','screens/cf_11.png']
+  },
+  nexa:{
+    emoji:'🏢', bg:'linear-gradient(135deg,#1e1b4b,#312e81)',
+    name:'Nexa Agency', period:'Jul 2022 – May 2024', role:'Lead Product Designer',
+    sub:'Agency · 12+ Products · 20M+ Users',
+    desc:'Led design across 12+ client products reaching 20M+ users. Managed full design lifecycle — discovery, UX research, wireframes, high-fidelity designs, design systems, and engineering handoff. Clients across e-commerce, SaaS, fitness, and media.',
+    tags:[['Product Design','tp'],['20M+ Users','to'],['Web & Mobile','tb'],['Brand','tg']],
+    layout:'mixed',
+    screens:['screens/nexa_stryds.png']
+  },
+  wagmio:{
+    emoji:'🟠', bg:'linear-gradient(135deg,#7c2d12,#431407)',
+    name:'Wagmio', period:'2024–2025', role:'UI/UX Designer',
+    sub:'Crypto Education · Web & App',
+    desc:'Brand identity and product UI for Wagmio — a crypto education platform built around trading signals, bootcamps, and community. Dark, high-energy aesthetic with orange/black palette. Web dashboard, mobile app, and marketing.',
+    tags:[['Crypto','to'],['Brand Identity','ty'],['Web App','tb'],['Education','tg']],
+    layout:'wide',
+    screens:['screens/wagmio_brand.png','screens/wagmio_results.png','screens/wagmio_2.png','screens/wagmio_3.png','screens/wagmio_4.png','screens/wagmio_ui.png','screens/wagmio_7.png','screens/wagmio_8.png']
+  },
+  coinflip:{
+    emoji:'🪙', bg:'linear-gradient(135deg,#7c2d12,#1c0a00)',
+    name:'Coinflip', period:'2024', role:'Mobile UI Designer',
+    sub:'Crypto Wallet · iOS App',
+    desc:'Mobile UI for Coinflip — a crypto wallet and exchange app. Orange brand system, asset management flows, Send/Receive/Swap/Buy UX, identity verification onboarding, and portfolio tracking screens.',
+    tags:[['Crypto Wallet','to'],['iOS App','tb'],['Mobile UX','tp'],['Fintech','tg']],
+    layout:'phone',
+    screens:['screens/coinflip_home.png','screens/coinflip_ui2.png','screens/coinflip_ui3.png','screens/cf_1.png','screens/cf_3.png','screens/cf_5.png','screens/cf_7.png','screens/cf_8.png']
+  },
+  warriors:{
+    emoji:'🐱', bg:'linear-gradient(135deg,#3b1f6b,#1a0c3a)',
+    name:'Warriors Cats', period:'2024', role:'UI Designer',
+    sub:'Telegram Mini App · Play-to-Earn Game',
+    desc:'UI design for Warriors Cats — a Telegram mini-app PvP game where players battle cats to earn coins. Battle arenas, character selection, leaderboards, airdrop screens, and reward flows optimized for Telegram WebApp.',
+    tags:[['Telegram Mini App','tp'],['Game UI','tpk'],['Play-to-Earn','ty'],['Web3','tb']],
+    layout:'wide',
+    screens:['screens/warriors_cats.png','screens/warriors_cats2.png','screens/cat_2.png','screens/cat_3.png']
+  },
+  cherry:{
+    emoji:'🍒', bg:'linear-gradient(135deg,#7f1d1d,#3d0808)',
+    name:'Cherry', period:'2024', role:'UI Designer',
+    sub:'Telegram Mini App · Token Rewards',
+    desc:'Designed Cherry — a Telegram mini-app where users earn CHERRY tokens through tasks, referrals, and Telegram Premium bonuses. Dark pink brand, gamified reward flows, wallet connect, leaderboard, and invite screens.',
+    tags:[['Telegram Mini App','tpk'],['Token Design','to'],['Gamification','tp'],['Web3','tb']],
+    layout:'wide',
+    screens:['screens/cherry.png','screens/cherry2.png','screens/cherry_3.png','screens/cherry_4.png']
+  }
+};
+
+function showProj(key, el){
+  document.querySelectorAll('.sb-row').forEach(r=>r.classList.remove('active'));
+  el.classList.add('active');
+  const p=P[key]; if(!p) return;
+  const tags=p.tags.map(([t,c])=>`<span class="t ${c}">${t}</span>`).join('');
+
+  let screensHtml='';
+  if(p.layout==='phone'){
+    const imgs=p.screens.map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+    screensHtml=`<div class="screens-phone">${imgs}</div>`;
+  } else if(p.layout==='wide'){
+    const imgs=p.screens.map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+    screensHtml=`<div class="screens-wide">${imgs}</div>`;
+  } else {
+    // mixed — wide first, then phones
+    const imgs=p.screens.map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+    screensHtml=`<div class="screens-wide">${imgs}</div>`;
+  }
+
+  document.getElementById('fc').innerHTML=`
+    <div class="ph">
+      <div class="ph-thumb" style="background:${p.bg}">${p.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div class="ph-name">${p.name}</div>
+        <div class="ph-sub">${p.sub}</div>
+        <div class="ph-period">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style="opacity:.35;flex-shrink:0"><rect x="1" y="2" width="10" height="8.5" rx="1.8" stroke="white" stroke-width="1.1"/><path d="M3.5 1v2.5M8.5 1v2.5M1 5.5h10" stroke="white" stroke-width="1.1"/></svg>
+          ${p.period} &nbsp;·&nbsp; ${p.role}
+        </div>
+      </div>
+    </div>
+    <div class="pdesc">${p.desc}</div>
+    <div class="tags">${tags}</div>
+    <div class="scr-label">Screens</div>
+    ${screensHtml}
+  `;
+}
+showProj('youhodler', document.querySelector('.sb-row.active'));
+
+function openProjectDesktop(key){
+  const row=document.querySelector(`.sb-row[data-project="${key}"]`);
+  if(row)showProj(key,row);
+  openWin('win-finder');
+}
+
+// ── REMINDERS TOGGLE ──────────────────────────────────
+function toggle(item){
+  const c=item.querySelector('.rem-circle');
+  const t=item.querySelector('.rem-text');
+  c.classList.toggle('done');t.classList.toggle('done');
+}
+
+// ── CLOCK (analog, live hands) ─────────────────────────
+const clockCanvas=document.getElementById('clock-canvas');
+const cctx=clockCanvas.getContext('2d');
+const CS=2; // retina scale (canvas is 304 for a 152 box)
+function hand(cx,cy,ang,len,w,col,cap='round'){
+  cctx.save();cctx.translate(cx,cy);cctx.rotate(ang);
+  cctx.strokeStyle=col;cctx.lineWidth=w;cctx.lineCap=cap;
+  cctx.beginPath();cctx.moveTo(0,w*.8);cctx.lineTo(0,-len);cctx.stroke();cctx.restore();
+}
+function drawClock(now){
+  const cx=76*CS,cy=76*CS,r=70*CS;
+  cctx.clearRect(0,0,clockCanvas.width,clockCanvas.height);
+  // tick marks
+  for(let i=0;i<60;i++){
+    const a=(i/60)*Math.PI*2-Math.PI/2, maj=i%5===0;
+    const len=(maj?9:4)*CS, w=(maj?1.5:.75)*CS, al=maj?.4:.14;
+    cctx.strokeStyle=`rgba(255,255,255,${al})`;cctx.lineWidth=w;
+    cctx.beginPath();
+    cctx.moveTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+    cctx.lineTo(cx+Math.cos(a)*(r-len),cy+Math.sin(a)*(r-len));
+    cctx.stroke();
+  }
+  const ms=now.getMilliseconds(),s=now.getSeconds()+ms/1000;
+  const m=now.getMinutes()+s/60, h=(now.getHours()%12)+m/60;
+  hand(cx,cy,(h/12)*Math.PI*2, 34*CS, 4.2*CS, 'rgba(255,255,255,.95)');   // hour
+  hand(cx,cy,(m/60)*Math.PI*2, 52*CS, 3.2*CS, 'rgba(255,255,255,.95)');   // minute
+  hand(cx,cy,(s/60)*Math.PI*2, 56*CS, 1.4*CS, '#ff5f57','butt');          // second (Apple red)
+  cctx.fillStyle='#ff5f57';cctx.beginPath();cctx.arc(cx,cy,3.4*CS,0,7);cctx.fill();
+  cctx.fillStyle='#fff';cctx.beginPath();cctx.arc(cx,cy,1.5*CS,0,7);cctx.fill();
+}
+(function loop(){drawClock(new Date());requestAnimationFrame(loop);})();
+
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const pad=n=>String(n).padStart(2,'0');
+function tick(){
+  const now=new Date();
+  const h=pad(now.getHours()),m=pad(now.getMinutes());
+  const d=DAYS[now.getDay()],day=now.getDate(),mon=MONS[now.getMonth()];
+  document.getElementById('wc-dn').textContent=d.toUpperCase();
+  document.getElementById('wc-d').textContent=day;
+  document.getElementById('mb-dt').innerHTML=d.slice(0,3)+' '+day+' '+mon+'  '+h+':'+m;
+  const lockTime=document.getElementById('lock-time');if(lockTime)lockTime.textContent=h+':'+m;
+  const lockDate=document.getElementById('lock-date');if(lockDate)lockDate.textContent=d+', '+new Intl.DateTimeFormat('en',{month:'long',day:'numeric'}).format(now);
+  const iosT=document.getElementById('ios-time'); if(iosT) iosT.textContent=h+':'+m;
+  const d2=new Date(now);d2.setDate(day+2);
+  const d3=new Date(now);d3.setDate(day+3);
+  document.getElementById('wc-l2').textContent=DAYS[d2.getDay()].slice(0,3)+', '+d2.getDate()+' '+MONS[d2.getMonth()];
+  document.getElementById('wc-l3').textContent=DAYS[d3.getDay()].slice(0,3)+', '+d3.getDate()+' '+MONS[d3.getMonth()];
+}
+tick();setInterval(tick,1000);
+
+// ── DOCK MAGNIFY ──────────────────────────────────────
+const dock=document.getElementById('dock');
+const dis=dock.querySelectorAll('.di');
+dock.addEventListener('mousemove',e=>{
+  dis.forEach(icon=>{
+    const r2=icon.getBoundingClientRect();
+    const dist=Math.abs(e.clientX-(r2.left+r2.width/2));
+    const t=Math.max(0,1-dist/86);
+    icon.style.transform=t>0?`translateY(-${t*18}px) scale(${1+t*.28})`:'';
+  });
+});
+dock.addEventListener('mouseleave',()=>dis.forEach(i=>i.style.transform=''));
+
+// ── DRAG ─────────────────────────────────────────────
+let zTop=200;
+document.querySelectorAll('.win').forEach(win=>{
+  const hdr=win.querySelector('.wh');
+  let drag=false,ox=0,oy=0;
+  hdr.addEventListener('mousedown',e=>{
+    if(e.target.classList.contains('tl'))return;
+    drag=true;ox=e.clientX-win.offsetLeft;oy=e.clientY-win.offsetTop;front(win);e.preventDefault();
+  });
+  document.addEventListener('mousemove',e=>{if(!drag)return;win.style.left=(e.clientX-ox)+'px';win.style.top=Math.max(28,e.clientY-oy)+'px';});
+  document.addEventListener('mouseup',()=>drag=false);
+  win.addEventListener('mousedown',()=>front(win));
+});
+function front(w){w.style.zIndex=++zTop}
+let trashFull=false;
+function emptyTrash(e){
+  const ic=document.getElementById('trash-ic');
+  trashFull=!trashFull;
+  ic.src=trashFull?'icons/apps/trash-full.svg':'icons/apps/trash-empty.svg';
+}
+function closeWin(id){
+  const el=document.getElementById(id);
+  el.style.transition='transform .13s ease-in,opacity .13s';
+  el.style.transform='scale(.9)';el.style.opacity='0';
+  setTimeout(()=>{el.style.display='none';el.style.transform='';el.style.opacity='';el.style.transition=''},140);
+}
+function openWin(id){
+  const el=document.getElementById(id);
+  if(el.style.display==='none'||getComputedStyle(el).display==='none'){
+    el.style.display='flex';front(el);
+    el.style.transform='scale(.92)';el.style.opacity='0';el.style.transition='';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.style.transition='transform .2s cubic-bezier(.34,1.56,.64,1),opacity .16s';
+      el.style.transform='';el.style.opacity='1';
+    }));
+  } else {front(el);}
+}
+function toggleWin(id){
+  const el=document.getElementById(id);
+  if(el.style.display==='none'||getComputedStyle(el).display==='none')openWin(id);
+  else closeWin(id);
+}
+document.querySelectorAll('.win').forEach((w,i)=>w.style.zIndex=10+i);
+document.querySelectorAll('.di[role="button"]').forEach(item=>item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();item.click()}}));
+
+// ── MOBILE (iOS Settings-style) ────────────────────────
+const MOBILE_GROUPS={work:['youhodler','nexa'],projects:['wagmio','coinflip','warriors','cherry']};
+
+const SKILLS_DATA=[
+  {group:'Design', items:[['Figma',100,'Expert'],['Prototyping',83,'Advanced'],['Design Systems',75,'Advanced'],['UX Research',67,'Solid'],['Motion Design',58,'Solid']]},
+  {group:'Code', items:[['HTML / CSS',83,'Advanced'],['JavaScript',67,'Solid'],['Framer',75,'Advanced'],['Webflow',67,'Solid']]}
+];
+
+const ABOUT_HERO_HTML=`
+  <div class="ios-hero">
+    <img class="ios-avatar-photo" src="images/roman-portrait.jpg" alt="Roman">
+    <div class="ios-hero-name">Roman</div>
+    <div class="ios-hero-sub"><span class="ios-dot"></span>&nbsp;Available for work</div>
+    <div class="ios-hero-note">I turn complex product logic into interfaces that feel obvious, fast, and alive.</div>
+  </div>`;
+
+const ABOUT_HTML=`
+  <div class="ios-text-page">
+    <div class="ios-copy-card">
+      <p class="ios-p">Product / UI Designer based in Europe. I design digital products that feel fast, intentional, and human — from crypto platforms to gaming mini-apps to brand systems.</p>
+      <div class="ios-h3">What I do</div>
+      <p class="ios-p">Full product design lifecycle — discovery, research, wireframes, hi-fi interfaces, design systems, and shipped products. I care about the details that make it into production.</p>
+      <div class="ios-h3">Background</div>
+      <p class="ios-p">Started at Nexa Agency designing for 20M+ users across 12+ products. Then YouHodler, Wagmio, and Telegram mini-apps.</p>
+    </div>
+    <div class="ios-h3">Languages</div>
+    <div>
+      <span class="nc-tag">🇷🇺 Russian — Native</span>
+      <span class="nc-tag">🇬🇧 English — Fluent</span>
+      <span class="nc-tag">🇺🇦 Ukrainian — Native</span>
+    </div>
+    <div class="ios-h3">Daily tools</div>
+    <div>
+      <span class="nc-chip">Figma</span><span class="nc-chip">Framer</span><span class="nc-chip">Notion</span><span class="nc-chip">Linear</span><span class="nc-chip">After Effects</span>
+    </div>
+  </div>`;
+
+const CONTACT_HTML=`
+  <div class="ios-hero" style="padding-bottom:16px">
+    <img class="ios-avatar-photo" src="images/roman-portrait.jpg" alt="Roman">
+    <div class="ios-hero-name">Let’s make something good.</div>
+    <div class="ios-hero-note">The fastest way to reach me is email. I’m open to product work, freelance collaborations, and ambitious experiments.</div>
+  </div>
+  <div class="ios-contact">
+    <a href="mailto:olrom2003@gmail.com" class="ml">
+      <div class="ml-ic" style="background:rgba(59,130,246,.14)">✉️</div>
+      <div style="flex:1"><div class="ml-lbl">Email</div><div class="ml-val">olrom2003@gmail.com</div></div>
+      <div class="ml-arr">›</div>
+    </a>
+    <div class="ml" aria-label="Location and availability">
+      <div class="ml-ic" style="background:rgba(48,209,88,.12)">🌍</div>
+      <div style="flex:1"><div class="ml-lbl">Europe · Remote-friendly</div><div class="ml-val">Freelance &amp; full-time</div></div>
+      <span class="ios-dot"></span>
+    </div>
+  </div>`;
+
+const MOBILE_MARKS={youhodler:'YH',nexa:'N',wagmio:'W',coinflip:'C',warriors:'WC',cherry:'CH'};
+const MOBILE_SHORT_PERIODS={youhodler:'2024',nexa:'2022–24'};
+
+function mobRow(key,kind='project'){
+  const p=P[key];
+  const yr=(p.period.match(/\d{4}/g)||[]).slice(-1)[0]||'';
+  const copy=kind==='experience'
+    ?`<span class="ios-row-copy"><span class="ios-row-label">${p.name}</span><span class="ios-row-sub">${p.role}</span></span>`
+    :`<span class="ios-row-label">${p.name}</span>`;
+  return `<button type="button" class="ios-row tappable mob-proj-row" data-key="${key}" data-search="${p.name.toLowerCase()} ${p.sub.toLowerCase()} ${p.role.toLowerCase()}" onclick="openMobileDetail('project','${key}')">
+    <span class="ios-row-icon" style="background:${p.bg}">${MOBILE_MARKS[key]||p.name.slice(0,1)}</span>
+    ${copy}
+    <span class="ios-row-value">${kind==='experience'?(MOBILE_SHORT_PERIODS[key]||yr):yr}</span>
+    <span class="ios-chev" aria-hidden="true"></span>
+  </button>`;
+}
+(function renderMobileHome(){
+  const w=document.getElementById('ios-group-work');
+  const pr=document.getElementById('ios-group-projects');
+  if(w) w.innerHTML=MOBILE_GROUPS.work.map(k=>mobRow(k,'experience')).join('');
+  if(pr) pr.innerHTML=MOBILE_GROUPS.projects.map(mobRow).join('');
+})();
+
+// live search — filters project rows, hides empty groups/sections
+function filterMobile(qRaw){
+  const mobile=document.getElementById('mobile');
+  mobile.scrollTop=0;
+  requestAnimationFrame(()=>{ mobile.scrollTop=0; });
+  const q=qRaw.trim().toLowerCase();
+  let anyVisible=false;
+  const searchShell=document.getElementById('ios-search-shell');
+  searchShell.classList.toggle('has-query',!!q);
+  document.querySelectorAll('.ios-home-static').forEach(el=>el.style.display=q?'none':'');
+  ['work','projects'].forEach(g=>{
+    const group=document.getElementById('ios-group-'+g);
+    const section=document.getElementById('ios-section-'+g);
+    let groupHas=false;
+    group.querySelectorAll('.mob-proj-row').forEach(row=>{
+      const match=!q || row.dataset.search.includes(q);
+      row.style.display=match?'':'none';
+      if(match) groupHas=true;
+    });
+    section.style.display=groupHas?'':'none';
+    if(groupHas) anyVisible=true;
+  });
+  const noRes=document.getElementById('ios-no-results');
+  if(q && !anyVisible){
+    noRes.style.display='block';
+    document.getElementById('ios-no-results-q').textContent=qRaw.trim();
+  } else {
+    noRes.style.display='none';
+  }
+}
+
+function clearMobileSearch(e){
+  e.preventDefault();e.stopPropagation();
+  const input=document.getElementById('ios-search-input');
+  input.value='';filterMobile('');input.focus();
+}
+
+// Keep the bottom search control above the software keyboard. The root reset
+// prevents mobile browsers from panning the entire fixed app canvas.
+function syncMobileVisualViewport(){
+  const mobile=document.getElementById('mobile');
+  const vv=window.visualViewport;
+  const keyboard=vv?Math.max(0,window.innerHeight-vv.height-vv.offsetTop):0;
+  mobile.style.setProperty('--ios-keyboard-offset',`${keyboard}px`);
+  mobile.classList.toggle('keyboard-open',keyboard>80);
+  mobile.scrollTop=0;
+}
+if(window.visualViewport){
+  visualViewport.addEventListener('resize',syncMobileVisualViewport,{passive:true});
+  visualViewport.addEventListener('scroll',syncMobileVisualViewport,{passive:true});
+}
+document.getElementById('ios-search-input').addEventListener('focus',()=>requestAnimationFrame(syncMobileVisualViewport));
+syncMobileVisualViewport();
+
+// Reduce Motion — real accessibility toggle, wired to actually skip the
+// screen-slide/parallax transition. Defaults to the OS-level preference.
+function setReduceMotion(on){
+  const sw=document.getElementById('ios-reduce-motion');
+  document.getElementById('mobile').classList.toggle('reduce-motion',on);
+  sw.classList.toggle('on',on);
+  sw.setAttribute('aria-checked',String(on));
+}
+function toggleReduceMotion(){
+  document.getElementById('mobile').scrollTop=0;
+  setReduceMotion(!document.getElementById('ios-reduce-motion').classList.contains('on'));
+}
+setReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+function openMobileDetail(type,key){
+  const mobile=document.getElementById('mobile');
+  mobile.scrollTop=0;
+  const title=document.getElementById('ios-detail-navtitle');
+  const detailBody=document.getElementById('ios-detail-body');
+  if(type==='project'){
+    const p=P[key];
+    const tags=p.tags.map(([t,c])=>`<span class="t ${c}">${t}</span>`).join('');
+    const imgs=p.screens.map((s,i)=>`<img src="${s}" loading="lazy" alt="${p.name} design screen ${i+1}" onerror="this.style.display='none'">`).join('');
+    title.textContent=p.name;
+    detailBody.innerHTML=`
+      <div class="ios-detail-cover" style="background:${p.bg}">
+        <img src="${p.screens[0]}" alt="${p.name} cover" onerror="this.style.display='none'">
+        <div class="ios-detail-cover-copy">
+          <div class="ios-detail-overline">${MOBILE_MARKS[key]||'Selected work'} · Selected work</div>
+          <div class="ios-detail-name">${p.name}</div>
+          <div class="ios-detail-sub">${p.sub}</div>
+        </div>
+      </div>
+      <div class="ios-detail-meta"><span class="ios-meta-pill">${p.role}</span><span class="ios-meta-pill">${p.period}</span></div>
+      <div class="ios-detail-desc">${p.desc}</div>
+      <div class="tags ios-detail-tags">${tags}</div>
+      <div class="ios-group-label" style="margin-bottom:9px">Screens</div>
+      <div class="ios-screens">${imgs}</div>`;
+  } else if(type==='skills'){
+    title.textContent='Skills';
+    detailBody.innerHTML=SKILLS_DATA.map(g=>`
+      <div class="ios-group-label" style="margin-top:20px">${g.group}</div>
+      <div class="ios-group">${g.items.map(([n,pct,lvl])=>`
+        <div class="ios-skillrow">
+          <div class="ios-skillrow-top"><span>${n}</span><span class="ios-skillrow-lvl">${lvl}</span></div>
+          <div class="ios-bar-track"><div class="ios-bar-fill" style="width:${pct}%"></div></div>
+        </div>`).join('')}</div>`).join('')
+      +`<div class="ios-group-label" style="margin-top:20px">Tools</div>
+        <div class="ios-group"><div class="ios-row"><span style="font-size:14px;color:rgba(255,255,255,.6)">Notion · Linear · Jira · After Effects</span></div></div>`;
+  } else if(type==='about'){
+    title.textContent='About Me';
+    detailBody.innerHTML=ABOUT_HERO_HTML+ABOUT_HTML;
+  } else if(type==='contact'){
+    title.textContent='Contact';
+    detailBody.innerHTML=CONTACT_HTML;
+  }
+  detailBody.scrollTop=0;
+  document.activeElement?.blur();
+  document.getElementById('ios-detail').classList.add('active');
+  document.getElementById('ios-home').classList.add('behind');
+  mobile.classList.add('detail-open');
+}
+function closeMobileDetail(){
+  const mobile=document.getElementById('mobile');
+  mobile.scrollTop=0;
+  document.getElementById('ios-detail').classList.remove('active');
+  document.getElementById('ios-home').classList.remove('behind');
+  mobile.classList.remove('detail-open');
+}
+
+// A restrained interactive highlight gives the glass a tactile response.
+document.addEventListener('pointermove',e=>{
+  const glass=e.target.closest?.('.ios-liquid');if(!glass)return;
+  const r=glass.getBoundingClientRect();
+  glass.style.setProperty('--gx',`${((e.clientX-r.left)/r.width)*100}%`);
+  glass.style.setProperty('--gy',`${((e.clientY-r.top)/r.height)*100}%`);
+},{passive:true});
+
+// Native-feeling edge swipe to return from a detail screen.
+let mobileSwipeStart=null;
+const mobileDetail=document.getElementById('ios-detail');
+mobileDetail.addEventListener('touchstart',e=>{
+  const t=e.touches[0];mobileSwipeStart=t.clientX<34?{x:t.clientX,y:t.clientY}:null;
+},{passive:true});
+mobileDetail.addEventListener('touchend',e=>{
+  if(!mobileSwipeStart)return;
+  const t=e.changedTouches[0];
+  if(t.clientX-mobileSwipeStart.x>72&&Math.abs(t.clientY-mobileSwipeStart.y)<60)closeMobileDetail();
+  mobileSwipeStart=null;
+},{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileDetail()});
+</script>
+</body>
+</html>
