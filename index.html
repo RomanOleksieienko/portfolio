@@ -308,7 +308,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 /* ── DOCK ───────────────────────────────────────── */
 #dock{
   position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
-  display:flex;align-items:center;gap:2px;padding:6px 11px;
+  display:flex;align-items:center;gap:8px;padding:7px 10px;
   background:linear-gradient(175deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.09) 40%,rgba(255,255,255,.18) 100%);
   backdrop-filter:blur(28px) saturate(220%) brightness(1.05) url(#liquid);
   -webkit-backdrop-filter:blur(28px) saturate(220%) brightness(1.05);
@@ -319,14 +319,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
   z-index:9998
 }
 #dock::before{content:'';position:absolute;top:0;left:12px;right:12px;height:52%;background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,transparent 100%);border-radius:22px 22px 0 0;pointer-events:none}
-.di{position:relative;display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:2px 3px;transition:transform .2s cubic-bezier(.34,1.56,.64,1);will-change:transform}
+.dock-label{position:absolute;left:50%;bottom:calc(100% + 11px);transform:translateX(-50%);color:var(--desk-ink);font-size:9px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 12px var(--label-shadow);pointer-events:none;opacity:.72;transition:opacity .14s ease}
+#dock:hover .dock-label{opacity:0}
+.di{position:relative;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:transform .2s cubic-bezier(.34,1.56,.64,1);will-change:transform}
 .di[role="img"]{cursor:default}
-/* NO border-radius on img — macOS SVG icons have correct shape built in */
-.di img{width:52px;height:52px;object-fit:contain;pointer-events:none;position:relative;z-index:1;
+.di img{width:48px;height:48px;object-fit:contain;pointer-events:none;position:relative;z-index:1;
   filter:drop-shadow(0 3px 6px rgba(0,0,0,.28))}
-/* сторонние PNG имеют squircle на 84% канваса (прозрачные поля) — 62px, чтобы
-   их squircle совпал по размеру с Apple-иконками (100% заполнения при 52px) */
-.di-3p{width:62px !important;height:62px !important}
+.tech-icon{position:relative;z-index:1;width:48px;height:48px;flex:0 0 48px;border-radius:12px;overflow:hidden;display:grid;place-items:center;box-shadow:0 3px 7px rgba(0,0,0,.28),inset 0 .5px 0 rgba(255,255,255,.18)}
+.di .tech-icon img{width:100%;height:100%;object-fit:cover;filter:none}
+.tech-icon--figma{background:#111}.di .tech-icon--figma img{width:58px;height:58px}
+.tech-icon--webflow{background:#146ef5}
+.tech-icon--framer{background:#0b0b0c}
+.tech-icon--claude{background:#d97757}.di .tech-icon--claude img{width:57px;height:57px}
+.tech-icon--codex{background:#17191d}.di .tech-icon--codex img{width:60px;height:60px}
+.tech-icon--photoshop{background:#001e36}
+.tech-icon--illustrator{background:#300}
 .di.on::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.78)}
 .badge{position:absolute;top:-2px;right:1px;min-width:18px;height:18px;padding:0 5px;
   border-radius:9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:600;line-height:1;
@@ -342,7 +349,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
   pointer-events:none;opacity:0;transition:opacity .12s
 }
 .di:hover .di-tip{opacity:1}
-.d-sep{width:.5px;height:44px;align-self:center;margin:0 5px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.22) 30%,rgba(255,255,255,.22) 70%,transparent)}
+#dock .di-tip{bottom:calc(100% + 31px)}
+.d-sep{width:.5px;height:36px;align-self:center;margin:0 1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.22) 30%,rgba(255,255,255,.22) 70%,transparent)}
 
 /* ── DESKTOP ICONS ──────────────────────────────── */
 .desktop-icons{position:absolute;right:14px;top:38px;display:grid;grid-template-columns:repeat(2,74px);gap:0}
@@ -466,8 +474,8 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 .desk-ic img{width:58px;height:58px;filter:drop-shadow(0 7px 12px rgba(0,0,0,.2))}.fi-lbl{font-size:10px;font-weight:600;color:var(--desk-ink);text-shadow:0 1px 10px var(--label-shadow);line-height:1.2;max-width:82px}
 
 .win{background:linear-gradient(155deg,rgba(35,42,55,.90),rgba(10,14,22,.92));border-color:rgba(255,255,255,.2);border-top-color:rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 38px 120px rgba(30,42,57,.38),0 8px 28px rgba(20,30,44,.22)}
-#dock{bottom:12px;padding:6px 10px;border-radius:22px;background:linear-gradient(170deg,var(--dock-a),var(--dock-b));border-color:var(--dock-border);border-bottom-color:var(--dock-low);box-shadow:inset 0 1.5px 0 var(--glass-highlight),0 18px 52px rgba(0,0,0,.2);transition:background .3s ease,border-color .3s ease}
-#dock::before{background:linear-gradient(180deg,var(--glass-highlight),transparent)}.di img{width:48px;height:48px}.di-3p{width:57px!important;height:57px!important}.d-sep{height:39px;background:linear-gradient(180deg,transparent,var(--dock-divider) 30%,var(--dock-divider) 70%,transparent)}.di.on::after{background:var(--dock-indicator)}
+#dock{bottom:12px;padding:7px 10px;border-radius:22px;background:linear-gradient(170deg,var(--dock-a),var(--dock-b));border-color:var(--dock-border);border-bottom-color:var(--dock-low);box-shadow:inset 0 1.5px 0 var(--glass-highlight),0 18px 52px rgba(0,0,0,.2);transition:background .3s ease,border-color .3s ease}
+#dock::before{background:linear-gradient(180deg,var(--glass-highlight),transparent)}.d-sep{height:36px;background:linear-gradient(180deg,transparent,var(--dock-divider) 30%,var(--dock-divider) 70%,transparent)}.di.on::after{background:var(--dock-indicator)}
 
 .spotlight-overlay{position:fixed;z-index:20000;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;background:rgba(21,30,43,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .spotlight-overlay[hidden]{display:none}.spotlight-panel{width:min(590px,calc(100vw - 36px));border-radius:24px;overflow:hidden;background:var(--spot-bg);backdrop-filter:blur(38px) saturate(180%);-webkit-backdrop-filter:blur(38px) saturate(180%);border:.5px solid var(--spot-border);box-shadow:0 40px 120px rgba(0,0,0,.3),inset 0 1px 0 var(--glass-highlight);color:var(--spot-ink)}
@@ -479,7 +487,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   .mb-item:not(.bold){display:none}.mb-search{min-width:230px}.desktop-profile{left:52px;width:min(61vw,calc(100vw - 366px));grid-template-columns:138px 1fr;gap:25px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:138px;height:138px}.desktop-widgets{right:22px;width:292px}.desktop-icons{left:48px;grid-template-columns:repeat(4,82px);top:385px}.win{max-width:94vw;max-height:calc(100vh - 104px)}#win-finder{left:3vw!important;top:64px!important;width:94vw!important;height:calc(100vh - 142px)!important}#win-terminal,#win-notes,#win-mail{left:5vw!important;top:68px!important;width:90vw!important;height:calc(100vh - 150px)!important}
 }
 @media (max-height:700px) and (min-width:901px){
-  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px}.di img{width:42px;height:42px}.di-3p{width:50px!important;height:50px!important}
+  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di,.tech-icon{width:42px;height:42px;flex-basis:42px;border-radius:11px}.di img{width:42px;height:42px}.di .tech-icon--figma img,.di .tech-icon--claude img{width:50px;height:50px}.di .tech-icon--codex img{width:52px;height:52px}
   .desktop-widgets{top:45px;gap:7px}.appearance-widget{min-height:54px}.appearance-orb{width:52px;height:52px;flex-basis:52px}.appearance-glyph{width:26px;height:26px}.weather-card{height:94px;padding:10px}.weather-temp{font-size:27px;margin-top:2px}.weather-meta{font-size:10px}.languages-widget{padding:9px;border-radius:18px}.languages-widget .widget-kicker{margin-bottom:6px}.language-row{padding:5px 1px 4px}.language-meter{margin-top:4px}.language-footer{margin-top:5px}
 }
 @media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
@@ -1015,20 +1023,16 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 </div>
 
 <div id="dock">
-  <div class="di" onclick="toggleWin('win-finder')" role="button" tabindex="0"><img src="icons/apps/finder.svg"><div class="di-tip">Selected Work</div></div>
-  <div class="di" onclick="toggleWin('win-notes')" role="button" tabindex="0"><img src="icons/apps/notes.svg"><div class="di-tip">About Roman</div></div>
-  <div class="di" onclick="toggleWin('win-mail')" role="button" tabindex="0"><img src="icons/apps/mail.svg"><div class="di-tip">Contact</div></div>
-  <div class="di" onclick="toggleWin('win-terminal')" role="button" tabindex="0"><img src="icons/apps/terminal.svg"><div class="di-tip">Skills</div></div>
+  <div class="dock-label">Tech stack · Skills</div>
+  <div class="di" role="img" aria-label="Figma" title="Figma"><span class="tech-icon tech-icon--figma"><img src="icons/tools/figma.png" alt=""></span><div class="di-tip">Figma · product design</div></div>
+  <div class="di" role="img" aria-label="Webflow" title="Webflow"><span class="tech-icon tech-icon--webflow"><img src="icons/tools/webflow.png" alt=""></span><div class="di-tip">Webflow · visual development</div></div>
+  <div class="di" role="img" aria-label="Framer" title="Framer"><span class="tech-icon tech-icon--framer"><img src="icons/tools/framer.png" alt=""></span><div class="di-tip">Framer · websites & prototypes</div></div>
+  <div class="di" role="img" aria-label="Claude" title="Claude"><span class="tech-icon tech-icon--claude"><img src="icons/tools/claude.png" alt=""></span><div class="di-tip">Claude · AI collaborator</div></div>
+  <div class="di" role="img" aria-label="Codex" title="Codex"><span class="tech-icon tech-icon--codex"><img src="icons/tools/codex.png" alt=""></span><div class="di-tip">Codex · product engineering</div></div>
+  <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><span class="tech-icon tech-icon--photoshop"><img src="icons/tools/photoshop.svg" alt=""></span><div class="di-tip">Photoshop · image craft</div></div>
+  <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><span class="tech-icon tech-icon--illustrator"><img src="icons/tools/illustrator.svg" alt=""></span><div class="di-tip">Illustrator · vector craft</div></div>
   <div class="d-sep" aria-hidden="true"></div>
-  <div class="di" role="img" aria-label="Figma" title="Figma"><img src="icons/tools/figma.png" class="di-3p" alt=""><div class="di-tip">Figma · product design</div></div>
-  <div class="di" role="img" aria-label="Webflow" title="Webflow"><img src="icons/tools/webflow.png" alt=""><div class="di-tip">Webflow · visual development</div></div>
-  <div class="di" role="img" aria-label="Framer" title="Framer"><img src="icons/tools/framer.png" alt=""><div class="di-tip">Framer · websites & prototypes</div></div>
-  <div class="di" role="img" aria-label="Claude" title="Claude"><img src="icons/tools/claude.png" class="di-3p" alt=""><div class="di-tip">Claude · AI collaborator</div></div>
-  <div class="di" role="img" aria-label="Codex" title="Codex"><img src="icons/tools/codex.png" class="di-3p" alt=""><div class="di-tip">Codex · product engineering</div></div>
-  <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><img src="icons/tools/photoshop.svg" alt=""><div class="di-tip">Photoshop · image craft</div></div>
-  <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><img src="icons/tools/illustrator.svg" alt=""><div class="di-tip">Illustrator · vector craft</div></div>
-  <div class="d-sep" aria-hidden="true"></div>
-  <div class="di" onclick="emptyTrash(event)"><img src="icons/apps/trash-empty.svg" id="trash-ic"><div class="di-tip">Trash</div></div>
+  <div class="di" onclick="emptyTrash(event)" role="button" tabindex="0" aria-label="Trash"><img src="icons/apps/trash-empty.svg" id="trash-ic" alt=""><div class="di-tip">Trash</div></div>
 </div>
 
 </div>
