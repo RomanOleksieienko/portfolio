@@ -321,12 +321,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 #dock::before{content:'';position:absolute;top:0;left:12px;right:12px;height:52%;background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,transparent 100%);border-radius:22px 22px 0 0;pointer-events:none}
 .dock-label{position:absolute;left:50%;bottom:calc(100% + 11px);transform:translateX(-50%);color:var(--desk-ink);font-size:9px;font-weight:750;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 12px var(--label-shadow);pointer-events:none;opacity:.72;transition:opacity .14s ease}
 #dock:hover .dock-label{opacity:0}
-.di{position:relative;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:transform .2s cubic-bezier(.34,1.56,.64,1);will-change:transform}
+.di{position:relative;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:transform .18s cubic-bezier(.22,1,.36,1);will-change:transform}
 .di[role="img"]{cursor:default}
 .di img{width:48px;height:48px;object-fit:contain;pointer-events:none;position:relative;z-index:1;
   filter:drop-shadow(0 3px 6px rgba(0,0,0,.28))}
-.di .tech-app{--app-size:48px;width:var(--app-size);height:var(--app-size);object-fit:contain}
-.di .tech-app--figma{--app-size:50px}.di .tech-app--claude{--app-size:56px}.di .tech-app--codex{--app-size:59px}
+.di .tech-app{width:48px;height:48px;object-fit:contain;border-radius:12px}
 .di.on::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.78)}
 .badge{position:absolute;top:-2px;right:1px;min-width:18px;height:18px;padding:0 5px;
   border-radius:9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:600;line-height:1;
@@ -480,7 +479,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   .mb-item:not(.bold){display:none}.mb-search{min-width:230px}.desktop-profile{left:52px;width:min(61vw,calc(100vw - 366px));grid-template-columns:138px 1fr;gap:25px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:138px;height:138px}.desktop-widgets{right:22px;width:292px}.desktop-icons{left:48px;grid-template-columns:repeat(4,82px);top:385px}.win{max-width:94vw;max-height:calc(100vh - 104px)}#win-finder{left:3vw!important;top:64px!important;width:94vw!important;height:calc(100vh - 142px)!important}#win-terminal,#win-notes,#win-mail{left:5vw!important;top:68px!important;width:90vw!important;height:calc(100vh - 150px)!important}
 }
 @media (max-height:700px) and (min-width:901px){
-  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di{width:42px;height:42px}.di img{width:42px;height:42px}.di .tech-app{--app-size:42px;width:var(--app-size);height:var(--app-size)}.di .tech-app--figma{--app-size:44px}.di .tech-app--claude{--app-size:49px}.di .tech-app--codex{--app-size:52px}
+  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di{width:42px;height:42px}.di img,.di .tech-app{width:42px;height:42px}.di .tech-app{border-radius:11px}
   .desktop-widgets{top:45px;gap:7px}.appearance-widget{min-height:54px}.appearance-orb{width:52px;height:52px;flex-basis:52px}.appearance-glyph{width:26px;height:26px}.weather-card{height:94px;padding:10px}.weather-temp{font-size:27px;margin-top:2px}.weather-meta{font-size:10px}.languages-widget{padding:9px;border-radius:18px}.languages-widget .widget-kicker{margin-bottom:6px}.language-row{padding:5px 1px 4px}.language-meter{margin-top:4px}.language-footer{margin-top:5px}
 }
 @media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
@@ -1017,11 +1016,11 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 
 <div id="dock">
   <div class="dock-label">Tech stack · Skills</div>
-  <div class="di" role="img" aria-label="Figma" title="Figma"><img class="tech-app tech-app--figma" src="icons/tools/figma.png" alt=""><div class="di-tip">Figma · product design</div></div>
+  <div class="di" role="img" aria-label="Figma" title="Figma"><img class="tech-app" src="icons/tools/figma-dock.png" alt=""><div class="di-tip">Figma · product design</div></div>
   <div class="di" role="img" aria-label="Webflow" title="Webflow"><img class="tech-app" src="icons/tools/webflow.png" alt=""><div class="di-tip">Webflow · visual development</div></div>
   <div class="di" role="img" aria-label="Framer" title="Framer"><img class="tech-app" src="icons/tools/framer.png" alt=""><div class="di-tip">Framer · websites & prototypes</div></div>
-  <div class="di" role="img" aria-label="Claude" title="Claude"><img class="tech-app tech-app--claude" src="icons/tools/claude.png" alt=""><div class="di-tip">Claude · AI collaborator</div></div>
-  <div class="di" role="img" aria-label="Codex" title="Codex"><img class="tech-app tech-app--codex" src="icons/tools/codex.png" alt=""><div class="di-tip">Codex · product engineering</div></div>
+  <div class="di" role="img" aria-label="Claude" title="Claude"><img class="tech-app" src="icons/tools/claude-dock.png" alt=""><div class="di-tip">Claude · AI collaborator</div></div>
+  <div class="di" role="img" aria-label="Codex" title="Codex"><img class="tech-app" src="icons/tools/codex-dock.png" alt=""><div class="di-tip">Codex · product engineering</div></div>
   <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><img class="tech-app" src="icons/tools/photoshop.svg" alt=""><div class="di-tip">Photoshop · image craft</div></div>
   <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><img class="tech-app" src="icons/tools/illustrator.svg" alt=""><div class="di-tip">Illustrator · vector craft</div></div>
   <div class="d-sep" aria-hidden="true"></div>
@@ -1453,7 +1452,7 @@ dock.addEventListener('mousemove',e=>{
     const r2=icon.getBoundingClientRect();
     const dist=Math.abs(e.clientX-(r2.left+r2.width/2));
     const t=Math.max(0,1-dist/86);
-    icon.style.transform=t>0?`translateY(-${t*18}px) scale(${1+t*.28})`:'';
+    icon.style.transform=t>0?`translateY(-${t*7}px)`:'';
   });
 });
 dock.addEventListener('mouseleave',()=>dis.forEach(i=>i.style.transform=''));
