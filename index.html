@@ -1410,24 +1410,36 @@ tick();setInterval(tick,1000);
 // The public Apple Music iframe has no parent-page playback API. Removing its
 // src destroys the embedded player and reliably stops any audio it owns.
 const APPLE_MUSIC_EMBED='https://embed.music.apple.com/us/album/astroworld/1421658111?theme=auto';
+function createAppleMusicPlayer(){
+  const player=document.createElement('iframe');
+  player.id='apple-music-player';
+  player.title='Apple Music: ASTROWORLD by Travis Scott';
+  player.src=APPLE_MUSIC_EMBED;
+  player.height='220';
+  player.setAttribute('frameborder','0');
+  player.setAttribute('sandbox','allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation');
+  player.setAttribute('allow','autoplay *; encrypted-media *;');
+  player.loading='lazy';
+  return player;
+}
 function toggleAppleMusic(){
-  const player=document.getElementById('apple-music-player');
+  const embed=document.getElementById('music-embed');
   const stopped=document.getElementById('music-stopped');
   const button=document.getElementById('music-stop-button');
   const label=document.getElementById('music-control-label');
-  if(!player||!stopped||!button||!label)return;
+  if(!embed||!stopped||!button||!label)return;
   const isStopped=button.dataset.stopped==='true';
   if(isStopped){
-    player.src=APPLE_MUSIC_EMBED;
-    player.hidden=false;
+    const player=createAppleMusicPlayer();
+    embed.insertBefore(player,stopped);
     stopped.hidden=true;
     button.dataset.stopped='false';
     button.setAttribute('aria-label','Stop Apple Music playback');
     button.querySelector('.music-control-symbol').textContent='■';
     label.textContent='Stop music';
   }else{
-    player.src='about:blank';
-    player.hidden=true;
+    const player=document.getElementById('apple-music-player');
+    if(player){player.src='about:blank';player.remove()}
     stopped.hidden=false;
     button.dataset.stopped='true';
     button.setAttribute('aria-label','Reload Apple Music player');
