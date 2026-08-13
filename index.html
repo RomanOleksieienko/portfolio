@@ -325,15 +325,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .di[role="img"]{cursor:default}
 .di img{width:48px;height:48px;object-fit:contain;pointer-events:none;position:relative;z-index:1;
   filter:drop-shadow(0 3px 6px rgba(0,0,0,.28))}
-.tech-icon{position:relative;z-index:1;width:48px;height:48px;flex:0 0 48px;border-radius:12px;overflow:hidden;display:grid;place-items:center;box-shadow:0 3px 7px rgba(0,0,0,.28),inset 0 .5px 0 rgba(255,255,255,.18)}
-.di .tech-icon img{display:block;width:100%;height:100%;object-fit:contain;filter:none}
-.tech-icon--figma{background:#111}
-.tech-icon--webflow{background:#146ef5}
-.tech-icon--framer{background:#0b0b0c}
-.tech-icon--claude{background:#d97757}
-.tech-icon--codex{background:#17191d}
-.tech-icon--photoshop{background:#001e36}
-.tech-icon--illustrator{background:#300}
+.di .tech-app{--app-size:48px;width:var(--app-size);height:var(--app-size);object-fit:contain}
+.di .tech-app--figma{--app-size:50px}.di .tech-app--claude{--app-size:56px}.di .tech-app--codex{--app-size:59px}
 .di.on::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.78)}
 .badge{position:absolute;top:-2px;right:1px;min-width:18px;height:18px;padding:0 5px;
   border-radius:9px;background:#ff3b30;color:#fff;font-size:11px;font-weight:600;line-height:1;
@@ -487,7 +480,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   .mb-item:not(.bold){display:none}.mb-search{min-width:230px}.desktop-profile{left:52px;width:min(61vw,calc(100vw - 366px));grid-template-columns:138px 1fr;gap:25px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:138px;height:138px}.desktop-widgets{right:22px;width:292px}.desktop-icons{left:48px;grid-template-columns:repeat(4,82px);top:385px}.win{max-width:94vw;max-height:calc(100vh - 104px)}#win-finder{left:3vw!important;top:64px!important;width:94vw!important;height:calc(100vh - 142px)!important}#win-terminal,#win-notes,#win-mail{left:5vw!important;top:68px!important;width:90vw!important;height:calc(100vh - 150px)!important}
 }
 @media (max-height:700px) and (min-width:901px){
-  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di,.tech-icon{width:42px;height:42px;flex-basis:42px;border-radius:11px}.di img{width:42px;height:42px}
+  .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di{width:42px;height:42px}.di img{width:42px;height:42px}.di .tech-app{--app-size:42px;width:var(--app-size);height:var(--app-size)}.di .tech-app--figma{--app-size:44px}.di .tech-app--claude{--app-size:49px}.di .tech-app--codex{--app-size:52px}
   .desktop-widgets{top:45px;gap:7px}.appearance-widget{min-height:54px}.appearance-orb{width:52px;height:52px;flex-basis:52px}.appearance-glyph{width:26px;height:26px}.weather-card{height:94px;padding:10px}.weather-temp{font-size:27px;margin-top:2px}.weather-meta{font-size:10px}.languages-widget{padding:9px;border-radius:18px}.languages-widget .widget-kicker{margin-bottom:6px}.language-row{padding:5px 1px 4px}.language-meter{margin-top:4px}.language-footer{margin-top:5px}
 }
 @media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
@@ -1024,13 +1017,13 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 
 <div id="dock">
   <div class="dock-label">Tech stack · Skills</div>
-  <div class="di" role="img" aria-label="Figma" title="Figma"><span class="tech-icon tech-icon--figma"><img src="icons/tools/figma.png" alt=""></span><div class="di-tip">Figma · product design</div></div>
-  <div class="di" role="img" aria-label="Webflow" title="Webflow"><span class="tech-icon tech-icon--webflow"><img src="icons/tools/webflow.png" alt=""></span><div class="di-tip">Webflow · visual development</div></div>
-  <div class="di" role="img" aria-label="Framer" title="Framer"><span class="tech-icon tech-icon--framer"><img src="icons/tools/framer.png" alt=""></span><div class="di-tip">Framer · websites & prototypes</div></div>
-  <div class="di" role="img" aria-label="Claude" title="Claude"><span class="tech-icon tech-icon--claude"><img src="icons/tools/claude.png" alt=""></span><div class="di-tip">Claude · AI collaborator</div></div>
-  <div class="di" role="img" aria-label="Codex" title="Codex"><span class="tech-icon tech-icon--codex"><img src="icons/tools/codex.png" alt=""></span><div class="di-tip">Codex · product engineering</div></div>
-  <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><span class="tech-icon tech-icon--photoshop"><img src="icons/tools/photoshop.svg" alt=""></span><div class="di-tip">Photoshop · image craft</div></div>
-  <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><span class="tech-icon tech-icon--illustrator"><img src="icons/tools/illustrator.svg" alt=""></span><div class="di-tip">Illustrator · vector craft</div></div>
+  <div class="di" role="img" aria-label="Figma" title="Figma"><img class="tech-app tech-app--figma" src="icons/tools/figma.png" alt=""><div class="di-tip">Figma · product design</div></div>
+  <div class="di" role="img" aria-label="Webflow" title="Webflow"><img class="tech-app" src="icons/tools/webflow.png" alt=""><div class="di-tip">Webflow · visual development</div></div>
+  <div class="di" role="img" aria-label="Framer" title="Framer"><img class="tech-app" src="icons/tools/framer.png" alt=""><div class="di-tip">Framer · websites & prototypes</div></div>
+  <div class="di" role="img" aria-label="Claude" title="Claude"><img class="tech-app tech-app--claude" src="icons/tools/claude.png" alt=""><div class="di-tip">Claude · AI collaborator</div></div>
+  <div class="di" role="img" aria-label="Codex" title="Codex"><img class="tech-app tech-app--codex" src="icons/tools/codex.png" alt=""><div class="di-tip">Codex · product engineering</div></div>
+  <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><img class="tech-app" src="icons/tools/photoshop.svg" alt=""><div class="di-tip">Photoshop · image craft</div></div>
+  <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><img class="tech-app" src="icons/tools/illustrator.svg" alt=""><div class="di-tip">Illustrator · vector craft</div></div>
   <div class="d-sep" aria-hidden="true"></div>
   <div class="di" onclick="emptyTrash(event)" role="button" tabindex="0" aria-label="Trash"><img src="icons/apps/trash-empty.svg" id="trash-ic" alt=""><div class="di-tip">Trash</div></div>
 </div>
