@@ -391,6 +391,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
     var(--desk-e) 80%,
     var(--desk-f) 100%)
 }
+.macintosh-wallpaper{position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none;background:rgba(244,245,244,.16)}
+.macintosh-wallpaper-stage{position:absolute;inset:-7%;animation:macintoshWallpaperDrift 24s cubic-bezier(.45,.05,.55,.95) infinite alternate;will-change:transform}
+.macintosh-scene{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center;image-rendering:pixelated;opacity:0;mix-blend-mode:multiply;filter:grayscale(1) contrast(.7) brightness(1.08);transform:scale(1.018);transition:opacity 1.35s cubic-bezier(.4,0,.2,1),filter .4s ease;will-change:opacity}
+.macintosh-scene.is-active{opacity:.34}
+.macintosh-scene:nth-child(2n){object-position:center 42%;transform:scale(1.035)}
+.macintosh-wallpaper-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(226,232,236,.48) 0%,rgba(234,237,239,.18) 48%,rgba(223,226,228,.4) 100%)}
+#desktop[data-theme="dark"] .macintosh-wallpaper{background:rgba(18,18,18,.12)}
+#desktop[data-theme="dark"] .macintosh-scene{mix-blend-mode:screen;filter:invert(1) grayscale(1) contrast(.78) brightness(.82)}
+#desktop[data-theme="dark"] .macintosh-scene.is-active{opacity:.24}
+#desktop[data-theme="dark"] .macintosh-wallpaper-shade{background:linear-gradient(90deg,rgba(14,14,14,.58) 0%,rgba(25,25,25,.28) 48%,rgba(12,12,12,.52) 100%)}
+@keyframes macintoshWallpaperDrift{
+  0%{transform:translate3d(-1.2%,-.5%,0) scale(1.015)}
+  50%{transform:translate3d(.5%,1%,0) scale(1.035)}
+  100%{transform:translate3d(1.4%,-.8%,0) scale(1.02)}
+}
 #desktop::before{content:'';position:absolute;z-index:0;inset:-18%;pointer-events:none;
   background:
     radial-gradient(34% 36% at 28% 34%,var(--blob-a),transparent 74%),
@@ -482,7 +497,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   .desktop-profile{top:62px}.desktop-profile-photo-wrap,.desktop-profile-photo{width:124px;height:124px}.desktop-profile{grid-template-columns:124px 1fr}.desktop-profile h1{font-size:36px;margin-bottom:7px}.profile-actions{margin-top:12px}.desktop-icons{top:294px;row-gap:3px}.desk-ic{min-height:78px}.desk-ic img{width:50px;height:50px}#dock{bottom:7px;gap:7px}.di{width:42px;height:42px}.di img,.di .tech-app{width:42px;height:42px}.di .tech-app{border-radius:11px}
   .desktop-widgets{top:45px;gap:7px}.appearance-widget{min-height:54px}.appearance-orb{width:52px;height:52px;flex-basis:52px}.appearance-glyph{width:26px;height:26px}.weather-card{height:94px;padding:10px}.weather-temp{font-size:27px;margin-top:2px}.weather-meta{font-size:10px}.languages-widget{padding:9px;border-radius:18px}.languages-widget .widget-kicker{margin-bottom:6px}.language-row{padding:5px 1px 4px}.language-meter{margin-top:4px}.language-footer{margin-top:5px}
 }
-@media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before{animation:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#desktop::before,#welcome::before,.macintosh-wallpaper-stage{animation:none}.macintosh-scene{transition:none}.profile-action,.desk-ic,.appearance-orb,.appearance-glyph{transition:none!important}.appearance-orb.is-animating::after{animation:none!important}}
 
 /* ══════════════════════════════════════════════════════
    MOBILE — iOS 26 Settings + Liquid Glass (≤900px)
@@ -705,6 +720,19 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   </div>
 </div>
 <div id="desktop" data-theme="light">
+
+<!-- Macintosh wallpaper — original macOS scenes, adapted for the browser. -->
+<div class="macintosh-wallpaper" aria-hidden="true">
+  <div class="macintosh-wallpaper-stage">
+    <img class="macintosh-scene is-active" src="images/macintosh-wallpaper/icon-garden.png" alt="" decoding="async">
+    <img class="macintosh-scene" src="images/macintosh-wallpaper/finder-window.png" alt="" decoding="async">
+    <img class="macintosh-scene" src="images/macintosh-wallpaper/macpaint.png" alt="" decoding="async">
+    <img class="macintosh-scene" src="images/macintosh-wallpaper/macwrite-1984.png" alt="" decoding="async">
+    <img class="macintosh-scene" src="images/macintosh-wallpaper/control-panel.png" alt="" decoding="async">
+    <img class="macintosh-scene" src="images/macintosh-wallpaper/desk-accessories.png" alt="" decoding="async">
+  </div>
+  <div class="macintosh-wallpaper-shade"></div>
+</div>
 
 <!-- MENUBAR -->
 <div id="menubar">
@@ -1175,6 +1203,23 @@ function setDesktopTheme(theme,persist=true){
   let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
   try{theme=localStorage.getItem('roman-desktop-appearance')||theme}catch(e){}
   setDesktopTheme(theme,false);
+})();
+
+// The native Macintosh wallpaper is a collection of programmed scenes rather
+// than a movie. Cycle the same artwork here and stop the timer off-screen.
+(function animateMacintoshWallpaper(){
+  const scenes=Array.from(document.querySelectorAll('.macintosh-scene'));
+  if(scenes.length<2||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let active=0,timer=null;
+  function showNextScene(){
+    scenes[active].classList.remove('is-active');
+    active=(active+1)%scenes.length;
+    scenes[active].classList.add('is-active');
+  }
+  function start(){if(!timer)timer=window.setInterval(showNextScene,7200)}
+  function stop(){if(timer){window.clearInterval(timer);timer=null}}
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  start();
 })();
 function toggleDesktopAppearance(button){
   const next=document.getElementById('desktop').dataset.theme==='dark'?'light':'dark';
