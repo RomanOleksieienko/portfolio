@@ -230,35 +230,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .screens-mixed .phone-row{display:flex;gap:8px;align-items:flex-start}
 .screens-mixed .phone-row img{height:300px;width:auto;border-radius:12px;flex-shrink:0}
 
-/* YouHodler case study — live product captures plus code-native UI studies. */
+/* YouHodler case study — untouched captures from the live product. */
 .yh-case{display:flex;flex-direction:column;gap:14px}
-.yh-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 1px 0}
-.yh-section-head strong{font-size:12px;line-height:16px;font-weight:650;color:rgba(255,255,255,.78)}
-.yh-section-head span{font-size:10px;line-height:14px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.08em;text-align:right}
-.yh-live-frame,.yh-snapshot{display:block;margin:0;position:relative;overflow:hidden;border-radius:16px;background:#05060b;border:.5px solid rgba(255,255,255,.11);box-shadow:0 18px 42px rgba(0,0,0,.25)}
-.yh-live-frame img,.yh-snapshot img{display:block;width:100%;height:auto}
-.yh-live-meta{position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;border-radius:11px;color:#fff;background:rgba(8,10,18,.68);border:.5px solid rgba(255,255,255,.16);backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25)}
-.yh-live-meta strong{font-size:11px}.yh-live-meta span{font-size:10px;color:rgba(255,255,255,.62)}
-.yh-ui-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:10px}
-.yh-code-card{min-width:0;border-radius:16px;padding:14px;background:linear-gradient(145deg,#20242d,#171a21);border:.5px solid rgba(255,255,255,.11);box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 16px 36px rgba(0,0,0,.22)}
-.yh-code-label{font-size:9px;line-height:12px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:#7086c6;margin-bottom:11px}
-.yh-quote-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:9px 10px;border-radius:11px;background:rgba(255,255,255,.035)}
-.yh-quote-row+.yh-quote-row{margin-top:7px}
-.yh-quote-copy small{display:block;font-size:9px;color:rgba(255,255,255,.35);margin-bottom:3px}.yh-quote-copy b{display:block;color:#fff;font-size:19px;letter-spacing:-.45px}
-.yh-currency{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.8);font-size:10px;font-weight:650}.yh-coin{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#2f7cf6;font-size:10px}.yh-coin.btc{background:#f39b28}
-.yh-swap{width:28px;height:28px;padding:0;margin:-4px auto;position:relative;z-index:2;display:grid;place-items:center;border-radius:50%;border:.5px solid rgba(107,139,255,.32);background:#222b4c;color:#86a1ff;cursor:pointer;font-size:13px;transition:transform .22s ease,background .2s ease}
-.yh-swap:hover{background:#293863}.yh-swap:active{transform:rotate(180deg) scale(.94)}
-.yh-cta{height:36px;margin-top:10px;border-radius:10px;display:grid;place-items:center;background:#fff;color:#111;font-size:11px;font-weight:700}
-.yh-balance-label{font-size:9px;color:rgba(255,255,255,.4)}.yh-balance{font-size:23px;line-height:29px;font-weight:700;color:#fff;letter-spacing:-.6px;margin-top:3px}
-.yh-balance-change{font-size:10px;color:#58d5a4;margin:3px 0 13px}
-.yh-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.yh-action{padding:8px 5px;border-radius:10px;text-align:center;background:rgba(63,112,255,.11);border:.5px solid rgba(73,127,255,.18);font-size:9px;color:#a9bbff}.yh-action i{display:block;font-style:normal;font-size:14px;color:#6090ff;margin-bottom:3px}
-.yh-principles{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.yh-principle{padding:11px;border-radius:12px;background:rgba(255,255,255,.035);border:.5px solid rgba(255,255,255,.06)}
-.yh-principle b{display:block;font-size:10px;color:#fff;margin-bottom:4px}.yh-principle span{display:block;font-size:9px;line-height:1.45;color:rgba(255,255,255,.4)}
-.yh-snapshot figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;color:rgba(255,255,255,.66);background:#10131a}
-.yh-snapshot figcaption strong{font-size:11px}.yh-snapshot figcaption span{font-size:9px;color:rgba(255,255,255,.34);text-transform:uppercase;letter-spacing:.07em}
+.yh-source-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.08)}
+.yh-source-bar span{font-size:11px;color:rgba(255,255,255,.48)}
+.yh-source-bar a{font-size:11px;font-weight:600;color:#7ca8ff;text-decoration:none;white-space:nowrap}
+.yh-capture{display:block;margin:0;overflow:hidden;border-radius:16px;background:#000;border:.5px solid rgba(255,255,255,.11);box-shadow:0 18px 42px rgba(0,0,0,.25)}
+.yh-capture img{display:block;width:100%;height:auto}
+.yh-capture figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;color:rgba(255,255,255,.68);background:#10131a}
+.yh-capture figcaption strong{font-size:11px}.yh-capture figcaption span{font-size:9px;color:rgba(255,255,255,.34);text-transform:uppercase;letter-spacing:.07em}
 .yh-case-note{font-size:10px;line-height:1.55;color:rgba(255,255,255,.34);padding:0 2px 4px}
-.yh-mobile-case{padding:0 14px 32px;gap:14px}.yh-mobile-case .yh-section-head{margin:2px 2px 0}.yh-mobile-case .yh-ui-grid{grid-template-columns:1fr}.yh-mobile-case .yh-principles{grid-column:auto;grid-template-columns:1fr}.yh-mobile-case .yh-code-card{border-radius:22px;padding:16px}.yh-mobile-case .yh-live-frame,.yh-mobile-case .yh-snapshot{border-radius:22px}.yh-mobile-case .yh-snapshot figcaption{padding:11px 13px}
+.yh-mobile-case{padding:0 14px 32px;gap:14px}.yh-mobile-case .yh-source-bar{border-radius:16px}.yh-mobile-case .yh-capture{border-radius:22px}.yh-mobile-case .yh-capture figcaption{padding:11px 13px}
 
 /* ── TERMINAL ────────────────────────────────────── */
 .term{
@@ -1284,6 +1266,7 @@ const P = {
     desc:'Product design work for a regulated Web3 fintech platform spanning crypto and fiat. The case focuses on making dense financial actions feel clear: conversion, portfolio discovery, navigation, and everyday asset management across mobile and web.',
     tags:[['Fintech','to'],['Product Design','tb'],['Design System','tp'],['Web3','tg']],
     layout:'case', caseRenderer:'youhodler',
+    mobileCover:'screens/youhodler/live-mobile-hero.png',
     screens:['screens/youhodler/live-hero.png','screens/youhodler/live-products.png','screens/youhodler/live-platform.png']
   },
   nexa:{
@@ -1334,51 +1317,20 @@ const P = {
 };
 
 function renderYouhodlerCase(mobile=false){
-  const liveHero=mobile?'':`
-    <div class="yh-section-head"><strong>Live product</strong><span>Captured August 2026</span></div>
-    <a class="yh-live-frame" href="https://www.youhodler.com/" target="_blank" rel="noreferrer">
-      <img src="screens/youhodler/live-hero.png" alt="Current YouHodler homepage with the exchange experience" loading="lazy">
-      <div class="yh-live-meta"><strong>Daily Crypto. Swiss Made</strong><span>Open live product ↗</span></div>
-    </a>`;
+  const captures=mobile?[
+    ['screens/youhodler/live-mobile-hero.png','Homepage & conversion','Mobile'],
+    ['screens/youhodler/live-mobile-products.png','Product discovery','MultiHODL'],
+    ['screens/youhodler/live-mobile-platform.png','All-in-One Platform','Mobile system']
+  ]:[
+    ['screens/youhodler/live-hero.png','Homepage & conversion','Desktop'],
+    ['screens/youhodler/live-products.png','Product discovery','MultiHODL'],
+    ['screens/youhodler/live-platform.png','All-in-One Platform','Web + mobile']
+  ];
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
-    ${liveHero}
-    <div class="yh-section-head"><strong>Interface studies</strong><span>Rebuilt in HTML &amp; CSS</span></div>
-    <div class="yh-ui-grid">
-      <article class="yh-code-card yh-exchange-card">
-        <div class="yh-code-label">Instant conversion</div>
-        <div class="yh-quote-row"><div class="yh-quote-copy"><small>You pay</small><b data-quote-value>1,000</b></div><div class="yh-currency"><span class="yh-coin" data-quote-coin>€</span><span data-quote-currency>EUR</span></div></div>
-        <button class="yh-swap" type="button" onclick="toggleYhQuote(this)" aria-label="Swap quote direction">⇅</button>
-        <div class="yh-quote-row"><div class="yh-quote-copy"><small>You get</small><b data-quote-value>0.017999</b></div><div class="yh-currency"><span class="yh-coin btc" data-quote-coin>₿</span><span data-quote-currency>BTC</span></div></div>
-        <div class="yh-cta">Get started</div>
-      </article>
-      <article class="yh-code-card">
-        <div class="yh-code-label">Portfolio at a glance</div>
-        <div class="yh-balance-label">Portfolio value</div><div class="yh-balance">€52,234.32</div><div class="yh-balance-change">↗ 2.8% this month</div>
-        <div class="yh-actions"><div class="yh-action"><i>＋</i>Buy</div><div class="yh-action"><i>↗</i>Send</div><div class="yh-action"><i>⇄</i>Exchange</div><div class="yh-action"><i>€</i>Cash</div></div>
-      </article>
-      <article class="yh-code-card yh-principles">
-        <div class="yh-principle"><b>One clear action</b><span>Complex finance reduced to an obvious next step.</span></div>
-        <div class="yh-principle"><b>Useful hierarchy</b><span>Balance, context, then controls — in that order.</span></div>
-        <div class="yh-principle"><b>Trust through restraint</b><span>Dark surfaces, precise type and calm feedback.</span></div>
-      </article>
-    </div>
-    <div class="yh-section-head"><strong>Selected product surfaces</strong><span>Current public experience</span></div>
-    <figure class="yh-snapshot"><img src="screens/youhodler/live-products.png" alt="YouHodler MultiHODL product section" loading="lazy"><figcaption><strong>Product discovery</strong><span>MultiHODL</span></figcaption></figure>
-    <figure class="yh-snapshot"><img src="screens/youhodler/live-platform.png" alt="YouHodler all-in-one platform section" loading="lazy"><figcaption><strong>Cross-platform system</strong><span>Web + mobile</span></figcaption></figure>
-    <div class="yh-case-note">Public product captures are used as current context. The interface studies above are lightweight portfolio reconstructions, not copied production source code.</div>
+    <div class="yh-source-bar"><span>Exact captures from the current product</span><a href="https://www.youhodler.com/" target="_blank" rel="noreferrer">Open YouHodler ↗</a></div>
+    ${captures.map(([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`).join('')}
+    <div class="yh-case-note">Captured directly from youhodler.com in August 2026. No UI elements, colors, layouts, or product copy were reconstructed.</div>
   </div>`;
-}
-
-function toggleYhQuote(button){
-  const card=button.closest('.yh-exchange-card');if(!card)return;
-  const flipped=card.classList.toggle('is-flipped');
-  const values=card.querySelectorAll('[data-quote-value]');
-  const currencies=card.querySelectorAll('[data-quote-currency]');
-  const coins=card.querySelectorAll('[data-quote-coin]');
-  values[0].textContent=flipped?'0.017999':'1,000';values[1].textContent=flipped?'1,000':'0.017999';
-  currencies[0].textContent=flipped?'BTC':'EUR';currencies[1].textContent=flipped?'EUR':'BTC';
-  coins[0].textContent=flipped?'₿':'€';coins[1].textContent=flipped?'€':'₿';coins[0].classList.toggle('btc',flipped);coins[1].classList.toggle('btc',!flipped);
-  button.style.transform=flipped?'rotate(180deg)':'rotate(0deg)';
 }
 
 function showProj(key, el){
@@ -1752,7 +1704,7 @@ function openMobileDetail(type,key){
     title.textContent=p.name;
     detailBody.innerHTML=`
       <div class="ios-detail-cover" style="background:${p.bg}">
-        <img src="${p.screens[0]}" alt="${p.name} cover" onerror="this.style.display='none'">
+        <img src="${p.mobileCover||p.screens[0]}" alt="${p.name} cover" onerror="this.style.display='none'">
         ${p.logo?`<img class="ios-detail-brand" src="${p.logo}" alt="${p.name} logo">`:''}
         <div class="ios-detail-cover-copy">
           <div class="ios-detail-overline">${MOBILE_MARKS[key]||'Selected work'} · Selected work</div>
