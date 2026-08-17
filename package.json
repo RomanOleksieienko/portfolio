@@ -1,0 +1,9 @@
+{
+  "name": "roman-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash scripts/build-static-site.sh"
+  }
+}

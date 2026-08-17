@@ -1,0 +1,17 @@
+{
+  "name": "roman-portfolio",
+  "main": "index.js",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "../client",
+    "binding": "ASSETS"
+  },
+  "no_bundle": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": ["**/*.js", "**/*.mjs"]
+    }
+  ]
+}
