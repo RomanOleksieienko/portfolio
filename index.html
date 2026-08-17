@@ -360,7 +360,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
   color-scheme:light;
   --desk-ink:#162132;--desk-muted:rgba(22,33,50,.62);
   --desk-a:#95b5d8;--desk-b:#c8d8e5;--desk-c:#dfd2e3;--desk-d:#a9c7c1;--desk-e:#dbe3e9;--desk-f:#b8cbd7;
-  --blob-a:transparent;--blob-b:transparent;--blob-c:transparent;--grain-opacity:0;
+  --blob-a:rgba(255,255,255,.28);--blob-b:rgba(255,226,239,.24);--blob-c:rgba(199,255,235,.18);--grain-opacity:.17;
   --bar-bg:rgba(240,246,250,.52);--bar-border:rgba(255,255,255,.45);--bar-ink:#172234;--bar-muted:rgba(23,34,52,.7);--bar-hover:rgba(255,255,255,.35);--bar-search:rgba(255,255,255,.38);--bar-key:rgba(255,255,255,.44);--system-icon-filter:none;
   --glass-a:rgba(255,255,255,.54);--glass-b:rgba(255,255,255,.27);--glass-border:rgba(255,255,255,.66);--glass-border-low:rgba(255,255,255,.26);--glass-highlight:rgba(255,255,255,.5);--surface-ink:#172234;--surface-muted:rgba(23,34,52,.58);--surface-faint:rgba(23,34,52,.43);--orb-bg:#fff;--orb-ink:#11151b;--orb-border:rgba(255,255,255,.78);
   --action-bg:rgba(255,255,255,.32);--action-border:rgba(255,255,255,.5);--primary-bg:rgba(20,29,44,.88);--primary-ink:#fff;--icon-hover:rgba(255,255,255,.25);--label-shadow:rgba(255,255,255,.7);
@@ -377,7 +377,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
   color-scheme:dark;
   --desk-ink:#f3f6fb;--desk-muted:rgba(235,241,249,.64);
   --desk-a:#323232;--desk-b:#484848;--desk-c:#606060;--desk-d:#787878;--desk-e:#929292;--desk-f:#acacac;
-  --blob-a:transparent;--blob-b:transparent;--blob-c:transparent;--grain-opacity:0;
+  --blob-a:transparent;--blob-b:transparent;--blob-c:transparent;--grain-opacity:.17;
   --bar-bg:rgba(10,14,22,.52);--bar-border:rgba(255,255,255,.1);--bar-ink:#f5f7fb;--bar-muted:rgba(245,247,251,.68);--bar-hover:rgba(255,255,255,.1);--bar-search:rgba(255,255,255,.08);--bar-key:rgba(255,255,255,.09);--system-icon-filter:brightness(0) invert(1);
   --glass-a:rgba(28,35,48,.68);--glass-b:rgba(15,20,30,.48);--glass-border:rgba(255,255,255,.15);--glass-border-low:rgba(255,255,255,.06);--glass-highlight:rgba(255,255,255,.12);--surface-ink:#f4f7fb;--surface-muted:rgba(235,241,249,.62);--surface-faint:rgba(235,241,249,.4);--orb-bg:#151922;--orb-ink:#f8f9fb;--orb-border:rgba(255,255,255,.17);
   --action-bg:rgba(255,255,255,.09);--action-border:rgba(255,255,255,.14);--primary-bg:rgba(246,248,252,.92);--primary-ink:#111a27;--icon-hover:rgba(255,255,255,.09);--label-shadow:rgba(0,0,0,.72);
@@ -391,12 +391,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
     var(--desk-e) 80%,
     var(--desk-f) 100%)
 }
-.macintosh-wallpaper{position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none;background:#d4d4d2;transition:background .35s ease}
-.macintosh-wallpaper-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:pixelated}
-.macintosh-source{display:none}
-.macintosh-wallpaper-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(242,242,239,.25) 0%,rgba(242,242,239,.06) 48%,rgba(220,220,218,.2) 100%)}
-#desktop[data-theme="dark"] .macintosh-wallpaper{background:#343434}
-#desktop[data-theme="dark"] .macintosh-wallpaper-shade{background:linear-gradient(90deg,rgba(8,8,8,.36) 0%,rgba(8,8,8,.08) 48%,rgba(8,8,8,.28) 100%)}
 #desktop::before{content:'';position:absolute;z-index:0;inset:-18%;pointer-events:none;
   background:
     radial-gradient(34% 36% at 28% 34%,var(--blob-a),transparent 74%),
@@ -711,22 +705,6 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   </div>
 </div>
 <div id="desktop" data-theme="light">
-
-<!-- Macintosh wallpaper — original macOS scenes, adapted for the browser. -->
-<div class="macintosh-wallpaper" aria-hidden="true">
-  <canvas class="macintosh-wallpaper-canvas" id="macintosh-wallpaper-canvas"></canvas>
-  <img class="macintosh-source" data-mac-source="icon-garden" src="images/macintosh-wallpaper/icon-garden.png" alt="">
-  <img class="macintosh-source" data-mac-source="startup-welcome" src="images/macintosh-wallpaper/startup-welcome.png" alt="">
-  <img class="macintosh-source" data-mac-source="startup-desktop" src="images/macintosh-wallpaper/startup-desktop.png" alt="">
-  <img class="macintosh-source" data-mac-source="finder-window" src="images/macintosh-wallpaper/finder-window.png" alt="">
-  <img class="macintosh-source" data-mac-source="finder-trash" src="images/macintosh-wallpaper/finder-trash.png" alt="">
-  <img class="macintosh-source" data-mac-source="macpaint" src="images/macintosh-wallpaper/macpaint.png" alt="">
-  <img class="macintosh-source" data-mac-source="macwrite-1984" src="images/macintosh-wallpaper/macwrite-1984.png" alt="">
-  <img class="macintosh-source" data-mac-source="macwrite-crazy-ones" src="images/macintosh-wallpaper/macwrite-crazy-ones.png" alt="">
-  <img class="macintosh-source" data-mac-source="control-panel" src="images/macintosh-wallpaper/control-panel.png" alt="">
-  <img class="macintosh-source" data-mac-source="desk-accessories" src="images/macintosh-wallpaper/desk-accessories.png" alt="">
-  <div class="macintosh-wallpaper-shade"></div>
-</div>
 
 <!-- MENUBAR -->
 <div id="menubar">
@@ -1197,138 +1175,6 @@ function setDesktopTheme(theme,persist=true){
   let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
   try{theme=localStorage.getItem('roman-desktop-appearance')||theme}catch(e){}
   setDesktopTheme(theme,false);
-})();
-
-// Apple's .program files define a camera path over monochrome 512×342 artwork.
-// This canvas mirrors those coordinates, timings and directional pixel ramps.
-(function renderMacintoshWallpaper(){
-  const canvas=document.getElementById('macintosh-wallpaper-canvas');
-  const desktop=document.getElementById('desktop');
-  if(!canvas||!desktop||window.matchMedia('(max-width:900px)').matches)return;
-  const ctx=canvas.getContext('2d',{alpha:false});
-  const sourceElements=Array.from(document.querySelectorAll('[data-mac-source]'));
-  const sourceMap=new Map();
-  const scenes=[
-    {source:'icon-garden',duration:27,start:[120,171],end:[392,171],camera:-22.5,ramp:'right'},
-    {source:'icon-garden',duration:27,start:[392,121],end:[120,121],camera:22.5,ramp:'left'},
-    {source:'icon-garden',duration:27,start:[392,201],end:[120,201],camera:-22.5,ramp:'left'},
-    {source:'startup-welcome',duration:36,start:[40,103],end:[400,103],camera:-22.5,ramp:'right'},
-    {source:'startup-desktop',duration:14,start:[196,171],end:[316,171],camera:-22.5,ramp:'right'},
-    {source:'finder-window',duration:20,start:[300,145],end:[500,145],camera:-22.5,ramp:'right'},
-    {source:'finder-trash',duration:22,start:[460,110],end:[460,310],camera:-22.5,ramp:'down'},
-    {source:'macpaint',duration:28,start:[42,0],end:[42,282],camera:22.5,ramp:'down'},
-    {source:'macpaint',duration:32,start:[155,318],end:[477,318],camera:-22.5,ramp:'right'},
-    {source:'macpaint',duration:30,start:[120,0],end:[120,302],camera:22.5,ramp:'down'},
-    {source:'macpaint',duration:28,start:[0,10],end:[100,10],camera:-22.5,ramp:'right',zoom:1.35,fade:6},
-    {source:'macwrite-1984',duration:20,start:[150,131],end:[352,131],camera:22.5,ramp:'right'},
-    {source:'macwrite-crazy-ones',duration:47,start:[20,62],end:[492,62],camera:-22.5,ramp:'right'},
-    {source:'control-panel',duration:25,start:[142,40],end:[142,290],camera:22.5,ramp:'down'},
-    {source:'control-panel',duration:19,start:[302,100],end:[416,100],camera:-22.5,ramp:'right'},
-    {source:'control-panel',duration:13,start:[395,270],end:[395,160],camera:22.5,ramp:'up'},
-    {source:'control-panel',duration:14,start:[228,170],end:[368,170],camera:22.5,ramp:'right'},
-    {source:'control-panel',duration:16,start:[388,244],end:[228,244],camera:-22.5,ramp:'left'},
-    {source:'desk-accessories',duration:20,start:[256,259],end:[256,79],camera:22.5,ramp:'up'},
-    {source:'desk-accessories',duration:18,start:[440,120],end:[440,160],camera:-22.5,ramp:'down'}
-  ];
-  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let width=0,height=0,dpr=1,sceneIndex=0,sceneStarted=performance.now(),frame=0,lastFrame=0,pauseStarted=0;
-
-  const clamp=(value,min=0,max=1)=>Math.min(max,Math.max(min,value));
-  const ease=value=>value*value*(3-2*value);
-  const ready=image=>image.complete&&image.naturalWidth?Promise.resolve():new Promise(resolve=>{image.addEventListener('load',resolve,{once:true});image.addEventListener('error',resolve,{once:true})});
-
-  function prepareSource(image){
-    if(!image.naturalWidth)return;
-    const buffer=document.createElement('canvas');
-    buffer.width=image.naturalWidth;buffer.height=image.naturalHeight;
-    const bufferContext=buffer.getContext('2d',{willReadFrequently:true});
-    bufferContext.drawImage(image,0,0);
-    const pixels=bufferContext.getImageData(0,0,buffer.width,buffer.height).data;
-    const mask=new Uint8Array(buffer.width*buffer.height);
-    for(let index=0,pixel=0;index<pixels.length;index+=4,pixel++){
-      const luminance=pixels[index]*.299+pixels[index+1]*.587+pixels[index+2]*.114;
-      mask[pixel]=pixels[index+3]>16&&luminance<128?1:0;
-    }
-    sourceMap.set(image.dataset.macSource,{width:buffer.width,height:buffer.height,mask});
-  }
-
-  function resize(){
-    const rect=canvas.getBoundingClientRect();
-    width=Math.max(1,Math.round(rect.width));height=Math.max(1,Math.round(rect.height));
-    dpr=Math.min(window.devicePixelRatio||1,1.5);
-    canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
-  }
-
-  function rampProgress(direction,nx,ny,progress){
-    if(progress>=.999)return 1;
-    const order=direction==='left'?1-nx:direction==='down'?ny:direction==='up'?1-ny:nx;
-    return ease(clamp((progress*1.32-order*.32)));
-  }
-
-  function drawScene(scene,elapsed){
-    const source=sourceMap.get(scene.source);if(!source)return;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    const dark=desktop.dataset.theme==='dark';
-    const background=ctx.createLinearGradient(0,0,0,height);
-    if(dark){background.addColorStop(0,'#2d2d2d');background.addColorStop(.48,'#565656');background.addColorStop(1,'#8c8c8a')}
-    else{background.addColorStop(0,'#b8b8b6');background.addColorStop(.48,'#d4d4d1');background.addColorStop(1,'#efefeb')}
-    ctx.fillStyle=background;ctx.fillRect(0,0,width,height);
-
-    const duration=scene.duration;
-    const time=clamp(elapsed,0,duration);
-    const path=ease(time/duration);
-    const centerX=scene.start[0]+(scene.end[0]-scene.start[0])*path;
-    const centerY=scene.start[1]+(scene.end[1]-scene.start[1])*path;
-    const fadeDuration=scene.fade||3;
-    const scaleProgress=Math.min(clamp(time/fadeDuration),clamp((duration-time)/fadeDuration));
-    const pitch=clamp(width/126,9,16)*(scene.zoom||1);
-    const viewWidth=width/pitch,viewHeight=height/pitch;
-    const minX=Math.max(0,Math.floor(centerX-viewWidth/2)-3),maxX=Math.min(source.width-1,Math.ceil(centerX+viewWidth/2)+3);
-    const minY=Math.max(0,Math.floor(centerY-viewHeight/2)-3),maxY=Math.min(source.height-1,Math.ceil(centerY+viewHeight/2)+3);
-    const skew=Math.tan(scene.camera*Math.PI/180)*.055;
-    const tileBase=pitch*.72;
-    const shadowX=Math.sign(scene.camera)*pitch*.18;
-    const shadowY=pitch*.19;
-    const shadowColor=dark?'rgba(0,0,0,.26)':'rgba(255,255,255,.42)';
-    const tileColor=dark?'rgba(245,245,240,.92)':'rgba(30,30,30,.86)';
-    const highlightColor=dark?'rgba(255,255,255,.17)':'rgba(255,255,255,.12)';
-
-    for(let sourceY=minY;sourceY<=maxY;sourceY++){
-      const ny=(sourceY-minY)/Math.max(1,maxY-minY);
-      for(let sourceX=minX;sourceX<=maxX;sourceX++){
-        if(!source.mask[sourceY*source.width+sourceX])continue;
-        const nx=(sourceX-minX)/Math.max(1,maxX-minX);
-        const localScale=rampProgress(scene.ramp,nx,ny,scaleProgress);
-        if(localScale<=.01)continue;
-        const x=(sourceX-centerX)*pitch+width/2+(sourceY-centerY)*pitch*skew;
-        const y=(sourceY-centerY)*pitch+height/2;
-        const size=Math.max(.5,tileBase*localScale);
-        const inset=(tileBase-size)/2;
-        ctx.fillStyle=shadowColor;ctx.fillRect(Math.round(x+inset+shadowX),Math.round(y+inset+shadowY),Math.ceil(size),Math.ceil(size));
-        ctx.fillStyle=tileColor;ctx.fillRect(Math.round(x+inset),Math.round(y+inset),Math.ceil(size),Math.ceil(size));
-        if(size>5){ctx.fillStyle=highlightColor;ctx.fillRect(Math.round(x+inset+1),Math.round(y+inset+1),Math.max(1,Math.ceil(size)-2),1)}
-      }
-    }
-  }
-
-  function render(now){
-    if(now-lastFrame<33){frame=requestAnimationFrame(render);return}
-    lastFrame=now;
-    const scene=scenes[sceneIndex];
-    let elapsed=(now-sceneStarted)/1000;
-    if(!reduced&&elapsed>=scene.duration){sceneStarted+=scene.duration*1000;sceneIndex=(sceneIndex+1)%scenes.length;elapsed=(now-sceneStarted)/1000}
-    drawScene(reduced?{source:'icon-garden',duration:100,start:[255,171],end:[255,171],camera:-22.5,ramp:'right'}:scenes[sceneIndex],reduced?50:elapsed);
-    if(!reduced)frame=requestAnimationFrame(render);
-  }
-
-  Promise.all(sourceElements.map(ready)).then(()=>{
-    sourceElements.forEach(prepareSource);resize();render(performance.now());
-  });
-  window.addEventListener('resize',resize,{passive:true});
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){pauseStarted=performance.now();cancelAnimationFrame(frame)}
-    else if(!reduced){if(pauseStarted)sceneStarted+=performance.now()-pauseStarted;pauseStarted=0;frame=requestAnimationFrame(render)}
-  });
 })();
 function toggleDesktopAppearance(button){
   const next=document.getElementById('desktop').dataset.theme==='dark'?'light':'dark';
