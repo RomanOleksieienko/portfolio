@@ -236,11 +236,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .yh-source-bar span{font-size:11px;color:rgba(255,255,255,.48)}
 .yh-source-bar a{font-size:11px;font-weight:600;color:#7ca8ff;text-decoration:none;white-space:nowrap}
 .yh-capture{display:block;margin:0;overflow:hidden;border-radius:16px;background:#000;border:.5px solid rgba(255,255,255,.11);box-shadow:0 18px 42px rgba(0,0,0,.25)}
-.yh-capture img{display:block;width:100%;height:auto}
+.yh-capture img,.yh-capture video{display:block;width:100%;height:auto;background:#000}
 .yh-capture figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;color:rgba(255,255,255,.68);background:#10131a}
 .yh-capture figcaption strong{font-size:11px}.yh-capture figcaption span{font-size:9px;color:rgba(255,255,255,.34);text-transform:uppercase;letter-spacing:.07em}
+.yh-story{padding:18px;border-radius:16px;background:linear-gradient(145deg,rgba(36,40,49,.88),rgba(26,29,36,.92));border:.5px solid rgba(255,255,255,.09)}
+.yh-story-kicker{font-size:9px;line-height:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ca8ff;margin-bottom:7px}
+.yh-story h3{font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.4px;color:#fff;margin:0 0 8px}
+.yh-story p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.52);margin:0}
+.yh-role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px;padding-top:14px;border-top:.5px solid rgba(255,255,255,.08)}
+.yh-role-item small{display:block;font-size:9px;color:rgba(255,255,255,.28);margin-bottom:3px}.yh-role-item strong{display:block;font-size:11px;color:rgba(255,255,255,.8)}
+.yh-deliverables{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}.yh-deliverables span{font-size:10px;padding:5px 8px;border-radius:8px;color:rgba(255,255,255,.68);background:rgba(255,255,255,.055);border:.5px solid rgba(255,255,255,.07)}
 .yh-case-note{font-size:10px;line-height:1.55;color:rgba(255,255,255,.34);padding:0 2px 4px}
-.yh-mobile-case{padding:0 14px 32px;gap:14px}.yh-mobile-case .yh-source-bar{border-radius:16px}.yh-mobile-case .yh-capture{border-radius:22px}.yh-mobile-case .yh-capture figcaption{padding:11px 13px}
+.yh-mobile-case{padding:0 14px 32px;gap:14px}.yh-mobile-case .yh-source-bar,.yh-mobile-case .yh-story{border-radius:20px}.yh-mobile-case .yh-capture{border-radius:22px}.yh-mobile-case .yh-capture figcaption{padding:11px 13px}.yh-mobile-case .yh-role-grid{grid-template-columns:1fr}.yh-mobile-case .yh-story h3{font-size:22px}.yh-mobile-case .yh-story p{font-size:14px}
 
 /* ── TERMINAL ────────────────────────────────────── */
 .term{
@@ -1326,9 +1333,32 @@ function renderYouhodlerCase(mobile=false){
     ['screens/youhodler/live-products.png','Product discovery','MultiHODL'],
     ['screens/youhodler/live-platform.png','All-in-One Platform','Web + mobile']
   ];
+  const capture=([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
+  const autoplay=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'':' autoplay';
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Exact captures from the current product</span><a href="https://www.youhodler.com/" target="_blank" rel="noreferrer">Open YouHodler ↗</a></div>
-    ${captures.map(([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`).join('')}
+    <figure class="yh-capture"><video${autoplay} muted loop playsinline controls preload="metadata" poster="screens/youhodler/live-hero.png" aria-label="Auto-scrolling recording of youhodler.com"><source src="videos/youhodler-scroll.mp4?v=3" type="video/mp4"></video><figcaption><strong>youhodler.com — top to bottom</strong><span>12 sec · live capture</span></figcaption></figure>
+    <section class="yh-story">
+      <div class="yh-story-kicker">Role &amp; scope</div><h3>Product Designer across a complex fintech product</h3>
+      <p>I worked across core mobile and web experiences for a platform connecting crypto and fiat. My focus was making dense financial actions easier to understand, navigate, and trust.</p>
+      <div class="yh-role-grid"><div class="yh-role-item"><small>Role</small><strong>Product Designer</strong></div><div class="yh-role-item"><small>Timeline</small><strong>May – Oct 2024</strong></div><div class="yh-role-item"><small>Platform</small><strong>Mobile &amp; Web</strong></div></div>
+    </section>
+    ${capture(captures[0])}
+    <section class="yh-story">
+      <div class="yh-story-kicker">What I worked on</div><h3>From first-time onboarding to everyday asset management</h3>
+      <p>My scope covered onboarding and identity verification, portfolio views, exchange and trading flows, plus the reusable states needed to keep those journeys consistent.</p>
+      <div class="yh-deliverables"><span>User flows</span><span>Wireframes</span><span>High-fidelity UI</span><span>Prototypes</span><span>Component patterns</span></div>
+    </section>
+    ${capture(captures[1])}
+    <section class="yh-story">
+      <div class="yh-story-kicker">How I worked</div><h3>Close collaboration with product and engineering</h3>
+      <p>I translated product requirements into clear flows and implementation-ready interfaces, worked through edge cases in Agile sprints, and prepared structured Figma handoff for engineering.</p>
+    </section>
+    ${capture(captures[2])}
+    <section class="yh-story">
+      <div class="yh-story-kicker">Design focus</div><h3>Clarity before decoration</h3>
+      <p>Balances, rates, risk, and transaction states must be readable at a glance. I focused on hierarchy, predictable interaction patterns, and consistency across mobile and responsive web surfaces.</p>
+    </section>
     <div class="yh-case-note">Captured directly from youhodler.com in August 2026. No UI elements, colors, layouts, or product copy were reconstructed.</div>
   </div>`;
 }
