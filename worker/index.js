@@ -8,6 +8,19 @@ export default {
       url.pathname = "/index.html";
       response = await env.ASSETS.fetch(new Request(url, request));
     }
+
+    if (url.pathname === "/index.html") {
+      const headers = new Headers(response.headers);
+      headers.set("Cache-Control", "no-store, max-age=0, must-revalidate");
+      headers.set("Pragma", "no-cache");
+      headers.set("X-Portfolio-Release", "exact-youhodler");
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
     return response;
   },
 };
