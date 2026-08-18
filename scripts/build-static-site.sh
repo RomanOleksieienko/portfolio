@@ -15,7 +15,6 @@ cp "$project_dir/wallpaper-bigsur-backup.jpg" "$build_dir/client/wallpaper-bigsu
 cp -R "$project_dir/icons" "$build_dir/client/icons"
 cp -R "$project_dir/images" "$build_dir/client/images"
 cp -R "$project_dir/screens" "$build_dir/client/screens"
-cp -R "$project_dir/videos" "$build_dir/client/videos"
 
 cp "$project_dir/worker/index.js" "$build_dir/server/index.js"
 cp "$project_dir/worker/wrangler.json" "$build_dir/server/wrangler.json"
