@@ -241,11 +241,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .yh-capture figcaption strong{font-size:11px}.yh-capture figcaption span{font-size:9px;color:rgba(255,255,255,.34);text-transform:uppercase;letter-spacing:.07em}
 .yh-scroll-stage{position:relative;container-type:inline-size;aspect-ratio:16/9;overflow:hidden;isolation:isolate;background:#000}
 .yh-scroll-page{position:absolute;z-index:1;inset:0 auto auto 0;max-width:none;transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;animation:yh-site-scroll 26s ease-in-out infinite;animation-play-state:paused}
-.yh-scroll-header{position:absolute;z-index:2;inset:0 0 auto;aspect-ratio:1280/86;background:url('screens/youhodler/live-fullpage.png') top left/100% auto no-repeat;pointer-events:none;border-bottom:.5px solid rgba(255,255,255,.06)}
+.yh-scroll-header{position:absolute;z-index:2;inset:0 0 auto;aspect-ratio:1280/86;background:url('screens/youhodler/live-fullpage.jpg') top left/100% auto no-repeat;pointer-events:none;border-bottom:.5px solid rgba(255,255,255,.06)}
 .yh-scroll-track{position:absolute;z-index:3;top:calc(11.95% + 5px);right:3px;bottom:5px;width:3px;border-radius:2px;background:rgba(255,255,255,.06);pointer-events:none}
 .yh-scroll-thumb{position:absolute;inset:0 0 auto;height:8.2%;border-radius:2px;background:rgba(255,255,255,.48);animation:yh-scroll-thumb 26s ease-in-out infinite;animation-play-state:paused}
 .yh-scroll-stage.is-playing .yh-scroll-page,.yh-scroll-stage.is-playing .yh-scroll-thumb{animation-play-state:running}
-@keyframes yh-site-scroll{0%,6%{transform:translate3d(0,0,0)}52%,60%{transform:translate3d(0,-684.453125cqw,0)}100%{transform:translate3d(0,0,0)}}
+@keyframes yh-site-scroll{0%,6%{transform:translate3d(0,0,0)}52%,60%{transform:translate3d(0,-693.984375cqw,0)}100%{transform:translate3d(0,0,0)}}
 @keyframes yh-scroll-thumb{0%,6%{top:0}52%,60%{top:91.8%}100%{top:0}}
 .yh-story{padding:18px;border-radius:16px;background:linear-gradient(145deg,rgba(36,40,49,.88),rgba(26,29,36,.92));border:.5px solid rgba(255,255,255,.09)}
 .yh-story-kicker{font-size:9px;line-height:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ca8ff;margin-bottom:7px}
@@ -1333,41 +1333,39 @@ const P = {
 };
 
 function renderYouhodlerCase(mobile=false){
-  const captures=mobile?[
+  const captures=[
     ['screens/youhodler/live-mobile-hero.png','Homepage & conversion','Mobile'],
     ['screens/youhodler/live-mobile-products.png','Product discovery','MultiHODL'],
     ['screens/youhodler/live-mobile-platform.png','All-in-One Platform','Mobile system']
-  ]:[
-    ['screens/youhodler/live-hero.png','Homepage & conversion','Desktop'],
-    ['screens/youhodler/live-products.png','Product discovery','MultiHODL'],
-    ['screens/youhodler/live-platform.png','All-in-One Platform','Web + mobile']
   ];
   const capture=([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
+  const mobileCapture=index=>mobile?capture(captures[index]):'';
+  const desktopScroll=mobile?'':`<figure class="yh-capture yh-scroll-capture"><div class="yh-scroll-stage" role="img" aria-label="Smooth auto-scrolling exact capture of youhodler.com"><img class="yh-scroll-page" src="screens/youhodler/live-fullpage.jpg" alt="" loading="lazy" decoding="async" draggable="false"><div class="yh-scroll-header" aria-hidden="true"></div><div class="yh-scroll-track" aria-hidden="true"><span class="yh-scroll-thumb"></span></div></div><figcaption><strong>youhodler.com — top to bottom</strong><span>26 sec · CSS auto-scroll</span></figcaption></figure>`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Exact captures from the current product</span><a href="https://www.youhodler.com/" target="_blank" rel="noreferrer">Open YouHodler ↗</a></div>
-    <figure class="yh-capture yh-scroll-capture"><div class="yh-scroll-stage" role="img" aria-label="Smooth auto-scrolling exact capture of youhodler.com"><img class="yh-scroll-page" src="screens/youhodler/live-fullpage.png" alt="" draggable="false"><div class="yh-scroll-header" aria-hidden="true"></div><div class="yh-scroll-track" aria-hidden="true"><span class="yh-scroll-thumb"></span></div></div><figcaption><strong>youhodler.com — top to bottom</strong><span>26 sec · CSS auto-scroll</span></figcaption></figure>
+    ${desktopScroll}
     <section class="yh-story">
       <div class="yh-story-kicker">Role &amp; scope</div><h3>Product Designer across a complex fintech product</h3>
       <p>I worked across core mobile and web experiences for a platform connecting crypto and fiat. My focus was making dense financial actions easier to understand, navigate, and trust.</p>
       <div class="yh-role-grid"><div class="yh-role-item"><small>Role</small><strong>Product Designer</strong></div><div class="yh-role-item"><small>Timeline</small><strong>May – Oct 2024</strong></div><div class="yh-role-item"><small>Platform</small><strong>Mobile &amp; Web</strong></div></div>
     </section>
-    ${capture(captures[0])}
+    ${mobileCapture(0)}
     <section class="yh-story">
       <div class="yh-story-kicker">What I worked on</div><h3>From first-time onboarding to everyday asset management</h3>
       <p>My scope covered onboarding and identity verification, portfolio views, exchange and trading flows, plus the reusable states needed to keep those journeys consistent.</p>
       <div class="yh-deliverables"><span>User flows</span><span>Wireframes</span><span>High-fidelity UI</span><span>Prototypes</span><span>Component patterns</span></div>
     </section>
-    ${capture(captures[1])}
+    ${mobileCapture(1)}
     <section class="yh-story">
       <div class="yh-story-kicker">How I worked</div><h3>Close collaboration with product and engineering</h3>
       <p>I translated product requirements into clear flows and implementation-ready interfaces, worked through edge cases in Agile sprints, and prepared structured Figma handoff for engineering.</p>
     </section>
-    ${capture(captures[2])}
+    ${mobileCapture(2)}
     <section class="yh-story">
       <div class="yh-story-kicker">Design focus</div><h3>Clarity before decoration</h3>
       <p>Balances, rates, risk, and transaction states must be readable at a glance. I focused on hierarchy, predictable interaction patterns, and consistency across mobile and responsive web surfaces.</p>
     </section>
-    <div class="yh-case-note">Captured directly from youhodler.com in August 2026. No UI elements, colors, layouts, or product copy were reconstructed.</div>
+    <div class="yh-case-note">Captured directly from youhodler.com in August 2026. Desktop uses one continuous site capture; mobile uses the original responsive views. No UI elements, colors, layouts, or product copy were reconstructed.</div>
   </div>`;
 }
 
