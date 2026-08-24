@@ -254,8 +254,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .yh-story-intro{padding-top:28px;padding-bottom:18px}
 .yh-story-intro h3{font-size:28px;line-height:1.2;letter-spacing:-.65px}
 .yh-story-intro p{font-size:15px;line-height:1.7}
+.yh-motion{display:block;width:100%;margin:8px 0 12px;overflow:hidden;border-radius:16px;background:#060912;border:.5px solid rgba(255,255,255,.11);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.yh-motion-stage{position:relative;aspect-ratio:16/8.5;overflow:hidden;isolation:isolate}
+.yh-motion figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:#10131a;color:rgba(255,255,255,.66)}
+.yh-motion figcaption strong{font-size:11px;font-weight:600}.yh-motion figcaption span{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.34)}
+.yh-gradient-stage{display:grid;place-items:center;background:#001e44}
+.yh-gradient-mover{position:absolute;inset:-65% -40%;animation:yh-live-gradient-move 30s linear infinite}
+.yh-gradient-shape{position:absolute;border-radius:999px;transform:translateZ(0)}
+.yh-gradient-shape-one{width:58%;aspect-ratio:1;left:22%;top:2%;background:#001e44}
+.yh-gradient-shape-two{width:62%;aspect-ratio:1.08;left:1%;top:18%;background:#020077;filter:blur(2px)}
+.yh-gradient-shape-three{width:64%;height:112%;left:31%;top:-3%;background:#142272;transform:rotate(-28deg);animation:yh-live-gradient-rotate 30s linear infinite;filter:blur(3px)}
+.yh-gradient-copy{position:relative;z-index:2;text-align:center;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.35)}
+.yh-gradient-copy span,.yh-gradient-copy strong{display:block}.yh-gradient-copy span{font-size:clamp(21px,3.2vw,38px);line-height:1.05;font-weight:520;letter-spacing:-.055em}.yh-gradient-copy strong{font-size:clamp(21px,3.2vw,38px);line-height:1.05;font-weight:670;letter-spacing:-.055em}
+@keyframes yh-live-gradient-move{0%,100%{transform:translate3d(0,0,0)}25%{transform:translate3d(18%,0,0)}50%{transform:translate3d(18%,16%,0)}75%{transform:translate3d(0,16%,0)}}
+@keyframes yh-live-gradient-rotate{0%,100%{transform:rotate(0deg)}25%{transform:rotate(180deg)}50%{transform:rotate(360deg)}75%{transform:rotate(-180deg)}}
+.yh-lottie-stage{display:grid;place-items:center;background:radial-gradient(circle at 50% 46%,rgba(41,121,255,.28),transparent 34%),linear-gradient(145deg,#050914,#0a1325 65%,#070a11)}
+.yh-lottie-stage::before{content:'Get Cash';position:absolute;left:18px;top:16px;z-index:2;font-size:10px;font-weight:650;letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.46)}
+.yh-lottie-canvas{position:absolute;inset:0;display:block;width:70%;height:96%;margin:auto;overflow:hidden}.yh-lottie-canvas svg{position:absolute;inset:0;display:block;width:100%!important;height:100%!important}
+.yh-promo-stage{background:#10141d}
+.yh-promo-track{display:flex;width:200%;height:100%;animation:yh-live-promo 12s cubic-bezier(.76,0,.24,1) infinite;will-change:transform}
+.yh-promo-slide{position:relative;display:flex;align-items:center;width:50%;min-width:50%;height:100%;padding:7% 8%;overflow:hidden;color:#fff}
+.yh-promo-slide-uma{justify-content:center;gap:7%;background:linear-gradient(to right top,rgba(64,196,255,.3) 19.66%,rgba(41,121,255,0) 69.94%),#10141d}
+.yh-promo-slide-uma img{width:34%;max-height:76%;object-fit:contain}.yh-promo-slide-copy{position:relative;z-index:2;max-width:52%}.yh-promo-slide-copy h4{font-size:clamp(18px,2.4vw,28px);line-height:1.12;letter-spacing:-.04em;margin:0 0 9px}.yh-promo-slide-copy p{font-size:clamp(9px,1.12vw,13px);line-height:1.45;color:rgba(255,255,255,.62);margin:0 0 13px}.yh-promo-action{display:inline-flex;padding:7px 11px;border-radius:999px;background:#fff;color:#111722;font-size:9px;font-weight:700}
+.yh-promo-slide-miner{background:linear-gradient(304deg,rgba(244,145,0,.3) 19.66%,rgba(244,145,0,0) 69.94%),#11141c}.yh-promo-slide-miner .yh-promo-slide-copy{max-width:50%;margin-left:2%}.yh-promo-slide-miner img{position:absolute;right:3%;bottom:-9%;width:45%;height:106%;object-fit:contain;object-position:bottom}.yh-promo-slide-miner em{font-style:normal;color:#f49100}
+@keyframes yh-live-promo{0%,42.75%{transform:translate3d(0,0,0)}49%,92.75%{transform:translate3d(-50%,0,0)}99%,100%{transform:translate3d(0,0,0)}}
 .yh-case-note{font-size:10px;line-height:1.55;color:rgba(255,255,255,.34);padding:0 2px 4px}
 .yh-mobile-case{padding:0 14px 32px;gap:14px}.yh-mobile-case .yh-source-bar{border-radius:20px}.yh-mobile-case .yh-capture{border-radius:22px}.yh-mobile-case .yh-capture figcaption{padding:11px 13px}.yh-mobile-case .yh-story{padding:24px 2px 12px}.yh-mobile-case .yh-story h3{font-size:23px}.yh-mobile-case .yh-story p{font-size:15px}.yh-mobile-case .yh-story-intro h3{font-size:28px}
+@media(prefers-reduced-motion:reduce){.yh-gradient-mover,.yh-gradient-shape-three,.yh-promo-track{animation:none!important}}
 
 /* ── TERMINAL ────────────────────────────────────── */
 .term{
@@ -1168,6 +1193,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <div class="ios-home-indicator"></div>
 </div>
 
+<script src="animations/vendor/lottie.min.js"></script>
 <script>
 // ── LOCK SCREEN → PERSONAL DESKTOP ────────────────────────
 (function(){
@@ -1341,6 +1367,9 @@ function renderYouhodlerCase(mobile=false){
   const capture=([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const mobileCapture=index=>mobile?capture(captures[index]):'';
   const desktopScroll=mobile?'':`<figure class="yh-capture yh-scroll-capture"><div class="yh-scroll-stage" role="img" aria-label="Smooth auto-scrolling exact capture of youhodler.com"><img class="yh-scroll-page" src="screens/youhodler/live-fullpage.jpg" alt="" loading="lazy" decoding="async" draggable="false"><div class="yh-scroll-header" aria-hidden="true"></div><div class="yh-scroll-track" aria-hidden="true"><span class="yh-scroll-thumb"></span></div></div><figcaption><strong>youhodler.com — top to bottom</strong><span>26 sec · CSS auto-scroll</span></figcaption></figure>`;
+  const gradientMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-gradient-stage" role="img" aria-label="YouHodler ambient blue gradient animation"><div class="yh-gradient-mover" aria-hidden="true"><span class="yh-gradient-shape yh-gradient-shape-one"></span><span class="yh-gradient-shape yh-gradient-shape-two"></span><span class="yh-gradient-shape yh-gradient-shape-three"></span></div><div class="yh-gradient-copy"><span>Daily Crypto.</span><strong>Swiss Made</strong></div></div><figcaption><strong>Ambient motion system</strong><span>Live-site palette · 30 sec loop</span></figcaption></figure>`;
+  const lottieMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-lottie-stage"><div class="yh-lottie-canvas" data-yh-lottie role="img" aria-label="YouHodler Get Cash crypto logo animation"></div></div><figcaption><strong>Get Cash product storytelling</strong><span>Original YouHodler Lottie</span></figcaption></figure>`;
+  const promoMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-promo-stage" aria-label="YouHodler promotional carousel animation"><div class="yh-promo-track"><section class="yh-promo-slide yh-promo-slide-uma"><img src="animations/youhodler/uma-graphic.svg" alt="" loading="lazy"><div class="yh-promo-slide-copy"><h4>Get your Universal Money Address (UMA) Now</h4><p>UMA enables seamless and secure global payments with instant, cost-effective transactions in both fiat and cryptocurrency.</p><span class="yh-promo-action">Sign up ↗</span></div></section><section class="yh-promo-slide yh-promo-slide-miner"><div class="yh-promo-slide-copy"><h4>Discover <em>Cloud Miner</em></h4><p>Access a simplified way to earn rewards with Cloud Miner, without the complexity of traditional mining operations.</p><span class="yh-promo-action">Learn more ↗</span></div><img src="animations/youhodler/cloud-miner.avif" alt="" loading="lazy"></section></div></div><figcaption><strong>Campaign carousel</strong><span>UMA · Cloud Miner · 750 ms transition</span></figcaption></figure>`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Exact captures from the current product</span><a href="https://www.youhodler.com/" target="_blank" rel="noreferrer">Open YouHodler ↗</a></div>
     ${desktopScroll}
@@ -1348,16 +1377,19 @@ function renderYouhodlerCase(mobile=false){
       <div class="yh-story-kicker">Product Designer · May — October 2024</div><h3>Designing YouHodler’s web and growth experience</h3>
       <p>I worked across the public website and the creative ecosystem around it. My responsibility covered experience design, visual execution, motion, campaign production, and close collaboration with the teams bringing the work into production.</p>
     </section>
+    ${gradientMotion}
     ${mobileCapture(0)}
     <section class="yh-story">
       <h3>Rebuilding the website from the ground up</h3>
-      <p>We completely rethought YouHodler’s website and rebuilt its pages from the foundation. I designed the information hierarchy, responsive layouts, reusable page sections, interaction states, and motion behavior, then worked with engineering on API-connected modules and implementation details.</p>
+      <p>We completely rethought YouHodler’s website and rebuilt its pages from the foundation. I designed the information hierarchy, responsive layouts, reusable page sections, interaction states, and motion behavior — including Lottie-based product storytelling — then worked with engineering on API-connected modules and implementation details.</p>
     </section>
+    ${lottieMotion}
     ${mobileCapture(1)}
     <section class="yh-story">
       <h3>Creating for social and paid acquisition</h3>
-      <p>I produced campaign banners and story formats for YouHodler’s Instagram pages, Meta Ads, and other acquisition channels. The work was designed as a consistent visual system that could adapt to launches, offers, markets, and multiple content formats without losing the brand.</p>
+      <p>I produced campaign banners and story formats for YouHodler’s Instagram pages, Meta Ads, and other acquisition channels, and translated launches into on-site promotional modules. The system could adapt to products, offers, markets, and multiple content formats without losing the brand.</p>
     </section>
+    ${promoMotion}
     ${mobileCapture(2)}
     <section class="yh-story">
       <h3>Connecting CRM and the wider product ecosystem</h3>
@@ -1368,6 +1400,22 @@ function renderYouhodlerCase(mobile=false){
 }
 
 let yhScrollObserver=null;
+function initYouhodlerLotties(scope=document){
+  if(!window.lottie||!scope)return;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  scope.querySelectorAll('[data-yh-lottie]:not([data-yh-lottie-ready])').forEach(container=>{
+    container.setAttribute('data-yh-lottie-ready','');
+    container._yhLottie=window.lottie.loadAnimation({
+      container,renderer:'svg',loop:true,autoplay:!reduced,
+      path:'animations/youhodler/get-cash/animations/5d62a213-10bd-4d31-a137-26b3e966e357.json?v=2',
+      assetsPath:'animations/youhodler/get-cash/images/'
+    });
+  });
+}
+function releaseYouhodlerLotties(scope){
+  if(!scope)return;
+  scope.querySelectorAll('[data-yh-lottie]').forEach(container=>{container._yhLottie?.destroy();delete container._yhLottie});
+}
 function observeYouhodlerScrolls(scope=document){
   const stages=scope.querySelectorAll('.yh-scroll-stage');
   if(!stages.length||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -1376,8 +1424,9 @@ function observeYouhodlerScrolls(scope=document){
   stages.forEach(stage=>yhScrollObserver.observe(stage));
 }
 function releaseYouhodlerScrolls(scope){
-  if(!yhScrollObserver||!scope)return;
-  scope.querySelectorAll('.yh-scroll-stage').forEach(stage=>yhScrollObserver.unobserve(stage));
+  if(!scope)return;
+  if(yhScrollObserver)scope.querySelectorAll('.yh-scroll-stage').forEach(stage=>yhScrollObserver.unobserve(stage));
+  releaseYouhodlerLotties(scope);
 }
 
 function showProj(key, el){
@@ -1422,6 +1471,7 @@ function showProj(key, el){
     ${screensHtml}
   `;
   observeYouhodlerScrolls(finderContent);
+  initYouhodlerLotties(finderContent);
 }
 showProj('youhodler', document.querySelector('.sb-row.active'));
 
@@ -1791,6 +1841,7 @@ function openMobileDetail(type,key){
   document.getElementById('ios-home').classList.add('behind');
   mobile.classList.add('detail-open');
   observeYouhodlerScrolls(detailBody);
+  initYouhodlerLotties(detailBody);
 }
 function closeMobileDetail(){
   const mobile=document.getElementById('mobile');
