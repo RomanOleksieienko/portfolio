@@ -1096,6 +1096,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     <div class="cv-lang-switch" role="group" aria-label="Resume language">
       <button type="button" class="cv-lang-btn" data-lang="en" onclick="setCvLang('en')">EN</button>
       <button type="button" class="cv-lang-btn" data-lang="nl" onclick="setCvLang('nl')">NL</button>
+      <button type="button" class="cv-lang-btn" data-lang="ru" onclick="setCvLang('ru')">RU</button>
     </div>
   </div>
   <div class="wb scroll" style="height:100%">
@@ -1136,7 +1137,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <button class="spotlight-result" type="button" data-search="about roman biography notes" onclick="runSpotlight('window','win-notes')"><img src="icons/apps/notes.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="notes.aboutTitle">About Roman</span><span class="spotlight-result-meta" data-i18n="spotlight.about.meta">Background, principles and tools</span></span></button>
       <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.skills">Skills</span><span class="spotlight-result-meta" data-i18n="spotlight.skills.meta">Design, code and daily stack</span></span></button>
       <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.contact">Contact</span><span class="spotlight-result-meta">olrom2003@gmail.com</span></span></button>
-      <button class="spotlight-result" type="button" data-search="resume cv download experience pdf" onclick="runSpotlight('window','win-cv')"><img src="icons/document.png" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Resume</span><span class="spotlight-result-meta">Download CV · EN / NL</span></span></button>
+      <button class="spotlight-result" type="button" data-search="resume cv download experience pdf" onclick="runSpotlight('window','win-cv')"><img src="icons/document.png" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Resume</span><span class="spotlight-result-meta">Download CV · EN / NL / RU</span></span></button>
       <div class="spotlight-empty" id="spotlight-empty" hidden data-i18n="spotlight.empty">Nothing found. Try “work”, “skills” or “contact”.</div>
     </div>
   </div>
@@ -2138,7 +2139,16 @@ function contactHtml(){return `
   </div>`;}
 
 // ── CV / RESUME (EN / NL) ───────────────────────
-let cvLang=(function(){try{return localStorage.getItem('roman-cv-lang')||((navigator.language||'').toLowerCase().startsWith('nl')?'nl':'en')}catch(e){return 'en'}})();
+let cvLang=(function(){
+  try{
+    const stored=localStorage.getItem('roman-cv-lang');
+    if(stored)return stored;
+    const nav=(navigator.language||'').toLowerCase();
+    if(nav.startsWith('nl'))return 'nl';
+    if(nav.startsWith('ru'))return 'ru';
+    return 'en';
+  }catch(e){return 'en'}
+})();
 
 const CV_I18N={
   en:{
@@ -2226,6 +2236,49 @@ const CV_I18N={
     ],
     education:{inst:'Mariupol State University',date:'Sep 2020 — 2025 (verwacht)',major:'Faculteit Humaniora en Technologie — Major: Design'},
     languages:"Oekraïens — Moedertaal · Russisch — Moedertaal · Engels — Bovengemiddeld (Upper-Intermediate) · Nederlands — Beginner (lerende) · Noors — Gemiddeld (Intermediate)"
+  },
+  ru:{
+    downloadFile:'cv/roman-oleksieienko-cv-ru.html',
+    downloadName:'Roman-Oleksieienko-CV-RU.html',
+    downloadLabel:'Скачать',
+    hint:'Обычный HTML — совместим с ATS. Нажмите ⌘P → «Сохранить как PDF», если нужен файл.',
+    location:'Гент, Бельгия',
+    badge:'Разрешение на работу в ЕС',
+    labels:{summary:'Профиль',achievements:'Ключевые достижения',experience:'Опыт работы',skills:'Навыки и инструменты',education:'Образование',languages:'Языки'},
+    summary:'UX/UI и продуктовый дизайнер с 5+ годами опыта в финтехе, SaaS и Web3. Владею полным циклом продуктового дизайна — от исследований, пользовательских сценариев и вайрфреймов до UI, дизайн-систем и маркетинговых материалов. Глубокая экспертиза в Webflow, Framer и AI-автоматизации, стабильно повышаю эффективность и конверсию. Живу в Генте, Бельгия, есть разрешение на работу в ЕС — открыт к удалённой, гибридной или офисной работе.',
+    achievements:[
+      'Сократил время производства дизайна в 2–3 раза благодаря AI-инструментам и переиспользуемым шаблонам',
+      'Сократил срок выпуска Webflow-лендингов с 1 дня до 4 часов за счёт системного подхода к дизайну',
+      'Внедрил автоматизацию, сократившую ручные процессы команды примерно на 60%',
+      'Создал CMS-бота для автоматического импорта 100+ крупных позиций, обойдя ограничения платформы',
+      'Участвовал в разработке Telegram Mini Apps с охватом 20M+ пользователей',
+      'Проектировал конверсионные страницы и дашборды для рынков ЕС, LATAM и Италии'
+    ],
+    experience:[
+      {company:'YouHodler',role:'UX/UI дизайнер',date:'Май 2024 — по настоящее время · Удалённо',bullets:[
+        'Оптимизировал производство креативов с помощью переиспользуемых шаблонов и AI-инструментов, сократив время дизайна в 2–3 раза',
+        'Разработал дизайн-систему Webflow для лендингов, сократив срок выпуска с 1 дня до 4 часов',
+        'Внедрил автоматизацию Make/Zapier для команды acquisition, сократив ручные шаги примерно на 60%',
+        'Делал UX/UI для страниц ивентов, дашбордов и мультирыночных лендингов (ЕС, LATAM, Италия)'
+      ]},
+      {company:'Nexa Agency',role:'UX/UI и продуктовый дизайнер',date:'Июль 2021 — Май 2024 · Германия · Удалённо',bullets:[
+        'Работал как основной UX/UI дизайнер в кросс-функциональной продуктовой команде, вёл полный цикл дизайна от исследования до передачи разработчикам',
+        'Проектировал Telegram Mini Apps, участвовал в приложении с охватом 20M+ пользователей',
+        'Делал UX/UI для реферальных систем, SaaS-дашбордов и маркетинговых сайтов для рынка ЕС'
+      ]},
+      {company:'Фриланс',role:'UX/UI и графический дизайнер',date:'Январь 2021 — Июнь 2021 · Удалённо',bullets:[
+        'Спроектировал и запустил несколько лендингов для малого бизнеса с фокусом на конверсию',
+        'Создавал интерфейсы мобильных приложений (iOS/Android) с упором на удобство и адаптивность',
+        'Подготовил 20+ наборов баннеров и креативов для digital-кампаний'
+      ]}
+    ],
+    skills:[
+      ['Дизайн и UX','UX/UI-дизайн, вайрфреймы, прототипирование, дизайн-системы, адаптивный дизайн, пользовательские сценарии, юзабилити-тестирование, доступность (WCAG)'],
+      ['Инструменты','Figma, Photoshop, Illustrator, Webflow, Framer, Notion, Miro, Trello, Slack'],
+      ['AI и автоматизация','ChatGPT, Cursor, Midjourney, Webflow CMS, Make, Zapier, API-интеграции']
+    ],
+    education:{inst:'Мариупольский государственный университет',date:'Сен 2020 — 2025 (ожидается)',major:'Факультет гуманитарных наук и технологий — специальность: дизайн'},
+    languages:"Украинский — родной · Русский — родной · Английский — выше среднего (Upper-Intermediate) · Нидерландский — начальный (учу) · Норвежский — средний (Intermediate)"
   }
 };
 
@@ -2280,6 +2333,7 @@ function renderCvMobileHTML(lang){
   return `<div class="cv-lang-switch" style="margin:2px auto 16px;width:max-content" role="group" aria-label="Resume language">
       <button type="button" class="cv-lang-btn${lang==='en'?' active':''}" data-lang="en" onclick="setCvLang('en')">EN</button>
       <button type="button" class="cv-lang-btn${lang==='nl'?' active':''}" data-lang="nl" onclick="setCvLang('nl')">NL</button>
+      <button type="button" class="cv-lang-btn${lang==='ru'?' active':''}" data-lang="ru" onclick="setCvLang('ru')">RU</button>
     </div>
     <div class="cv-doc" style="padding:0 2px">${cvHeadHTML(lang)}${cvBodyHTML(lang)}</div>`;
 }

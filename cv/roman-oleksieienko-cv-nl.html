@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Oleksieienko - CV - UX/UI & Product Designer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #1d1d1f;
+            background: #ffffff;
+            padding: 48px;
+        }
+
+        .resume {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1d1d1f;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin: 0 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1d1d1f;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin: 18px 0 6px 0;
+        }
+
+        .section h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .header {
+            padding-bottom: 22px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #444;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .contact-info {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .contact-info li {
+            display: inline-flex;
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #1d1d1f;
+            text-decoration: none;
+            padding: 7px 12px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            border: 1px solid #e5e5e7;
+            font-size: 13.5px;
+            white-space: nowrap;
+        }
+
+        a.contact-item:hover {
+            background: #ececee;
+        }
+
+        .contact-item.badge {
+            background: #eef4ff;
+            border-color: #d6e4ff;
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
+        .contact-icon {
+            width: 15px;
+            height: 15px;
+            fill: #6c757d;
+            flex-shrink: 0;
+        }
+
+        .badge .contact-icon {
+            fill: #1d4ed8;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .job, .education-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e5e7;
+        }
+
+        .job:last-child, .education-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            margin-bottom: 10px;
+        }
+
+        .company {
+            font-weight: 700;
+            font-size: 17px;
+            color: #1d1d1f;
+        }
+
+        .position {
+            font-size: 15px;
+            color: #444;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .date-location {
+            font-size: 13.5px;
+            color: #6e6e73;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .company-description {
+            font-size: 13.5px;
+            color: #6e6e73;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .job-description ul,
+        .achievements-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .job-description li,
+        .achievements-list li {
+            margin-bottom: 5px;
+            font-size: 14.5px;
+            line-height: 1.5;
+            color: #1d1d1f;
+        }
+
+        .skills-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #1d1d1f;
+            margin-bottom: 10px;
+        }
+
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            margin-bottom: 6px;
+        }
+
+        .institution {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1d1d1f;
+        }
+
+        .education-date {
+            font-size: 13.5px;
+            color: #6e6e73;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .major {
+            color: #6e6e73;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .certificate {
+            margin-bottom: 10px;
+            font-size: 14.5px;
+        }
+
+        .certificate-name {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .certificate-issuer {
+            color: #6e6e73;
+        }
+
+        .languages-text {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: #1d1d1f;
+        }
+
+        .summary {
+            font-size: 15.5px;
+            line-height: 1.6;
+            color: #1d1d1f;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .job-header, .education-header {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            body {
+                padding: 12mm !important;
+                font-size: 12.5px !important;
+            }
+
+            .resume {
+                max-width: none !important;
+            }
+
+            .job, .education-item {
+                page-break-inside: avoid;
+            }
+
+            h2 {
+                font-size: 17px !important;
+            }
+
+            .contact-item {
+                padding: 4px 8px !important;
+                font-size: 11.5px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume">
+        <header class="header">
+            <h1>Roman Oleksieienko</h1>
+            <p class="title">UX/UI &amp; Product Designer</p>
+            <ul class="contact-info">
+                <li><span class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                    Gent, België
+                </span></li>
+                <li><a class="contact-item" href="mailto:olrom2003@gmail.com">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    olrom2003@gmail.com
+                </a></li>
+                <li><a class="contact-item" href="tel:+32471782348">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    +32 471 78 23 48
+                </a></li>
+                <li><a class="contact-item" href="https://www.linkedin.com/in/roman-oleksieienko-b03606228/" target="_blank" rel="noopener">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                    LinkedIn
+                </a></li>
+                <li><a class="contact-item" href="https://t.me/olexmar" target="_blank" rel="noopener">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                    Telegram
+                </a></li>
+                <li><span class="contact-item badge">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM10 4h4v2h-4V4z"/></svg>
+                    EU-werkvergunning
+                </span></li>
+            </ul>
+        </header>
+
+        <main>
+            <section class="section">
+                <h2>Profiel</h2>
+                <p class="summary">
+                    UX/UI &amp; Product Designer met 5+ jaar ervaring in fintech, SaaS en Web3. Sterk in end-to-end productontwerp — van onderzoek, user flows en wireframes tot UI, design systems en marketingmateriaal. Ruime expertise in Webflow, Framer en AI-gedreven automatisering, met aantoonbare verbeteringen in efficiëntie en conversie. Woonachtig in Gent, België, met een EU-werkvergunning — beschikbaar voor remote, hybride of on-site functies.
+                </p>
+            </section>
+
+            <section class="section">
+                <h2>Belangrijkste Resultaten</h2>
+                <ul class="achievements-list">
+                    <li>Verhoogde de on-site conversie door gestructureerde A/B-tests en data-gedreven iteratie</li>
+                    <li>Leidde de migratie van de YouHodler-website van Webflow (no-code) naar een custom-gecodeerde stack</li>
+                    <li>Trad op als Design Lead over meerdere afdelingen, en breidde het designbereik uit van alleen de EU naar wereldwijde markten</li>
+                    <li>Verminderde de productietijd van designs met 2–3× door AI-tools en herbruikbare templatesystemen</li>
+                    <li>Verkortte de levertijd van Webflow-landingspagina's van 1 dag naar 4 uur door een systematische ontwerpaanpak</li>
+                    <li>Implementeerde automatiseringsworkflows die handmatige teamprocessen met ~60% verminderden</li>
+                    <li>Droeg bij aan Telegram Mini Apps met 20M+ gebruikers</li>
+                    <li>Ontwierp conversiegerichte pagina's en dashboards voor de EU-, LATAM-, IT- en wereldwijde markten</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>Werkervaring</h2>
+
+                <article class="job">
+                    <div class="job-header">
+                        <div>
+                            <div class="company">YouHodler</div>
+                            <div class="position">UX/UI Designer &amp; Design Lead</div>
+                        </div>
+                        <div class="date-location">Mei 2024 — Heden | Montenegro · Remote</div>
+                    </div>
+                    <p class="company-description">
+                        YouHodler is een toonaangevend fintech-platform voor crypto-gedekte leningen en yield-producten, met meer dan 500K gebruikers en $2B+ aan verwerkte transacties.
+                    </p>
+                    <div class="job-description">
+                        <ul>
+                            <li>Verantwoordelijk voor de website-designroadmap — voerde A/B-tests uit en analyseerde data om conversie meetbaar te verhogen</li>
+                            <li>Leidde de migratie van de website van Webflow (no-code) naar een custom-gecodeerde stack, wat performance en flexibiliteit verbeterde</li>
+                            <li>Werkte als Design Lead over meerdere afdelingen, en breidde het designbereik uit van alleen de EU naar wereldwijde markten</li>
+                            <li>Optimaliseerde creatieve productie met herbruikbare templates en AI-tools, wat de ontwerptijd met 2–3× verminderde</li>
+                            <li>Bouwde Make/Zapier-automatiseringen en een custom CMS-bot voor het acquisitieteam, wat handmatig werk met ~60% verminderde en Webflow's import-beperkingen oploste</li>
+                            <li>Leverde UX/UI voor eventpagina's, dashboards en multi-market landingspagina's (EU, LATAM, IT en daarbuiten)</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="job">
+                    <div class="job-header">
+                        <div>
+                            <div class="company">Nexa Agency</div>
+                            <div class="position">UX/UI Designer &amp; Product Designer</div>
+                        </div>
+                        <div class="date-location">Jul 2021 — Mei 2024 | Duitsland · Remote</div>
+                    </div>
+                    <p class="company-description">
+                        Nexa Agency was een full-cycle software-ontwikkelingsbureau gespecialiseerd in Web3 en Telegram mini-apps, met een team van 10 professionals waaronder designers, developers en project leads.
+                    </p>
+                    <div class="job-description">
+                        <ul>
+                            <li>Werkte als kern-UX/UI-designer in een cross-functioneel digitaal productteam en leverde full-cycle design van onderzoek tot developer handoff</li>
+                            <li>Ontwierp Telegram Mini Apps en droeg bij aan een applicatie met 20M+ gebruikers</li>
+                            <li>Creëerde UX/UI voor referral-systemen, SaaS-dashboards en marketingwebsites gericht op de EU-markt</li>
+                            <li>Leverde landingspagina's, app flows en promotiegrafiek ter ondersteuning van klantacquisitie en -retentie</li>
+                            <li>Werkte door de volledige designcyclus heen: gebruikersonderzoek → wireframes → prototyping → UI → developer handoff</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <section class="section">
+                <h2>Vaardigheden &amp; Tools</h2>
+
+                <h3>Design &amp; UX</h3>
+                <p class="skills-text">UX/UI Design, Wireframing, Prototyping, Design Systems, Responsive Design, Informatiearchitectuur, User Flows, User Journey Mapping, Usability Testing, Toegankelijkheid (WCAG), Interactie-ontwerp</p>
+
+                <h3>UI &amp; Grafisch Ontwerp</h3>
+                <p class="skills-text">Webdesign, App-ontwerp (iOS/Android), Landingspagina's, Dashboards, Branding, Visuele Identiteit, Bannersystemen, Social Media Creatives, Pitch Decks, Motion Graphics (basis)</p>
+
+                <h3>Tools</h3>
+                <p class="skills-text">Figma, Photoshop, Illustrator, Webflow, Framer, After Effects (basis), Notion, Miro, Trello, Slack</p>
+
+                <h3>AI &amp; Automatisering</h3>
+                <p class="skills-text">ChatGPT, Cursor, Midjourney, Webflow CMS, Make, Zapier, API-workflows</p>
+
+                <h3>Ontwikkeling (basis)</h3>
+                <p class="skills-text">HTML, CSS, JavaScript (UI-aanpassingen), API-integraties</p>
+            </section>
+
+            <section class="section">
+                <h2>Opleiding</h2>
+                <div class="education-item">
+                    <div class="education-header">
+                        <div class="institution">Mariupol State University</div>
+                        <div class="education-date">Sep 2021 — 2026 (verwacht)</div>
+                    </div>
+                    <div class="major">Faculteit Humaniora en Technologie — Major: Design</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Cursussen &amp; Certificaten</h2>
+
+                <div class="certificate">
+                    <span class="certificate-name">Google UX Design Certificate</span><br>
+                    <span class="certificate-issuer">Coursera • 2023</span>
+                </div>
+
+                <div class="certificate">
+                    <span class="certificate-name">User Experience: The Beginner's Guide</span><br>
+                    <span class="certificate-issuer">Interaction Design Foundation • 2023</span>
+                </div>
+
+                <div class="certificate">
+                    <span class="certificate-name">UX Research &amp; Usability Testing</span><br>
+                    <span class="certificate-issuer">Interaction Design Foundation • 2023</span>
+                </div>
+
+                <div class="certificate">
+                    <span class="certificate-name">Foundations of Project Management</span><br>
+                    <span class="certificate-issuer">Google • 2023</span>
+                </div>
+
+                <div class="certificate">
+                    <span class="certificate-name">Webflow Masterclass</span><br>
+                    <span class="certificate-issuer">Flux Academy • 2022</span>
+                </div>
+
+                <div class="certificate">
+                    <span class="certificate-name">Responsive Web Design</span><br>
+                    <span class="certificate-issuer">freeCodeCamp • 2022</span>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Talen</h2>
+                <ul class="achievements-list languages-list">
+                    <li>Oekraïens — Moedertaal</li>
+                    <li>Russisch — Moedertaal</li>
+                    <li>Engels — Bovengemiddeld (Upper-Intermediate)</li>
+                    <li>Nederlands — Beginner (lerende)</li>
+                    <li>Noors — Gemiddeld (Intermediate)</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
