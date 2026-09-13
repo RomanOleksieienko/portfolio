@@ -237,6 +237,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .yh-source-bar a{font-size:11px;font-weight:600;color:#7ca8ff;text-decoration:none;white-space:nowrap}
 .yh-capture{display:block;margin:0;overflow:hidden;border-radius:16px;background:#000;border:.5px solid rgba(255,255,255,.11);box-shadow:0 18px 42px rgba(0,0,0,.25)}
 .yh-capture img{display:block;width:100%;height:auto;background:#000}
+.yh-capture video{display:block;width:100%;height:auto;background:#000}
 .yh-capture figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;color:rgba(255,255,255,.68);background:#10131a}
 .yh-capture figcaption strong{font-size:11px}.yh-capture figcaption span{font-size:9px;color:rgba(255,255,255,.34);text-transform:uppercase;letter-spacing:.07em}
 .yh-scroll-stage{position:relative;container-type:inline-size;aspect-ratio:16/9;overflow:hidden;isolation:isolate;background:#000}
@@ -853,6 +854,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <button type="button" class="desk-ic" onclick="openProjectDesktop('coinflip')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Coinflip</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('warriors')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Warriors Cats</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('cherry')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Cherry</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('arctrade')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">ARC.TRADE</span></button>
 </div>
 
 <!-- ══ FINDER WINDOW ══ -->
@@ -873,6 +875,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
         <div class="sb-row" data-project="coinflip" onclick="showProj('coinflip',this)"><img src="icons/Folder.svg">Coinflip</div>
         <div class="sb-row" data-project="warriors" onclick="showProj('warriors',this)"><img src="icons/Folder.svg">Warriors Cats</div>
         <div class="sb-row" data-project="cherry" onclick="showProj('cherry',this)"><img src="icons/Folder.svg">Cherry</div>
+        <div class="sb-row" data-project="arctrade" onclick="showProj('arctrade',this)"><img src="icons/Folder.svg">ARC.TRADE</div>
         <div class="sb-label">Me</div>
         <div class="sb-row" onclick="toggleWin('win-terminal')"><img src="icons/Terminal.svg">Skills</div>
         <div class="sb-row" onclick="toggleWin('win-notes')"><img src="icons/Notes.svg">About Me</div>
@@ -1016,14 +1019,9 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
           <div style="flex:1"><div class="ml-lbl">Email</div><div class="ml-val">olrom2003@gmail.com</div></div>
           <div class="ml-arr">›</div>
         </a>
-        <a href="#" class="ml">
+        <a href="https://www.linkedin.com/in/roman-oleksieienko-b03606228/" target="_blank" rel="noreferrer" class="ml">
           <div class="ml-ic" style="background:rgba(99,102,241,.14)">💼</div>
-          <div style="flex:1"><div class="ml-lbl">LinkedIn</div><div class="ml-val">linkedin.com/in/roman</div></div>
-          <div class="ml-arr">›</div>
-        </a>
-        <a href="#" class="ml">
-          <div class="ml-ic" style="background:rgba(59,130,246,.14)">🎨</div>
-          <div style="flex:1"><div class="ml-lbl">Behance</div><div class="ml-val">behance.net/roman</div></div>
+          <div style="flex:1"><div class="ml-lbl">LinkedIn</div><div class="ml-val">linkedin.com/in/roman-oleksieienko</div></div>
           <div class="ml-arr">›</div>
         </a>
         <div class="mail-sl">Availability</div>
@@ -1062,6 +1060,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <button class="spotlight-result" type="button" data-search="youhodler fintech crypto product" onclick="runSpotlight('project','youhodler')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">YouHodler</span><span class="spotlight-result-meta">Fintech · Product design</span></span></button>
       <button class="spotlight-result" type="button" data-search="nexa agency experience product" onclick="runSpotlight('project','nexa')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Nexa Agency</span><span class="spotlight-result-meta">12+ products · Lead Product Designer</span></span></button>
       <button class="spotlight-result" type="button" data-search="wagmio crypto brand interface" onclick="runSpotlight('project','wagmio')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Wagmio</span><span class="spotlight-result-meta">Crypto education · UI/UX</span></span></button>
+      <button class="spotlight-result" type="button" data-search="arc.trade arctrade crypto trading platform nextjs" onclick="runSpotlight('project','arctrade')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">ARC.TRADE</span><span class="spotlight-result-meta">Trading platform · Product & front-end</span></span></button>
       <button class="spotlight-result" type="button" data-search="about roman biography notes" onclick="runSpotlight('window','win-notes')"><img src="icons/apps/notes.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">About Roman</span><span class="spotlight-result-meta">Background, principles and tools</span></span></button>
       <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Skills</span><span class="spotlight-result-meta">Design, code and daily stack</span></span></button>
       <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Contact</span><span class="spotlight-result-meta">olrom2003@gmail.com</span></span></button>
@@ -1355,6 +1354,16 @@ const P = {
     tags:[['Telegram Mini App','tpk'],['Token Design','to'],['Gamification','tp'],['Web3','tb']],
     layout:'wide',
     screens:['screens/cherry.png','screens/cherry2.png','screens/cherry_3.png','screens/cherry_4.png']
+  },
+  arctrade:{
+    emoji:'📈', bg:'linear-gradient(135deg,#831843,#1a0510)',
+    name:'ARC.TRADE', period:'2026', role:'Product Designer & Front-End Architect',
+    sub:'Crypto Trading Platform · Next.js',
+    desc:'A multilingual crypto trading platform front-end built as an architecture-first showcase — marketing site, live-feeling trading UI, and the SEO/i18n scaffolding needed to scale to many coins and locales without rewriting routes. Token-based design system, live order book, charting, and per-coin/per-locale content architecture. Front-end only — no backend, no real order execution.',
+    tags:[['Next.js','tb'],['Trading UI','tpk'],['i18n & SEO','tg'],['Design System','tp']],
+    layout:'case', caseRenderer:'arctrade',
+    link:{url:'https://github.com/RomanOleksieienko/arc-trade', label:'View on GitHub ↗', note:'Open-source · architecture-first build'},
+    screens:['screens/arctrade/home.png','screens/arctrade/platform.png','screens/arctrade/markets.png','screens/arctrade/buy_btc.png']
   }
 };
 
@@ -1399,6 +1408,43 @@ function renderYouhodlerCase(mobile=false){
   </div>`;
 }
 
+function renderArcTradeCase(mobile=false){
+  const captures=[
+    ['screens/arctrade/home.png','Homepage','Marketing site'],
+    ['screens/arctrade/platform.png','Trading interface','Order book · chart · risk'],
+    ['screens/arctrade/markets.png','Markets','Liquidity-focused listing'],
+    ['screens/arctrade/buy_btc.png','Coin pages','Live price · charting']
+  ];
+  const capture=([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="ARC.TRADE ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const liveMotion=`<figure class="yh-capture"><video class="at-live-video" ${reducedMotion?'':'autoplay loop '}muted playsinline preload="metadata" poster="screens/arctrade/live-motion-poster.jpg"><source src="screens/arctrade/live-motion.webm" type="video/webm"><source src="screens/arctrade/live-motion.mp4" type="video/mp4"></video><figcaption><strong>Live on localhost — actual product motion</strong><span>Hero → live widgets → coin page</span></figcaption></figure>`;
+  return `<div class="yh-case${mobile?' yh-mobile-case':''}">
+    <div class="yh-source-bar"><span>Self-directed build · open-source</span><a href="https://github.com/RomanOleksieienko/arc-trade" target="_blank" rel="noreferrer">View on GitHub ↗</a></div>
+    ${liveMotion}
+    ${mobile?capture(captures[0]):''}
+    <section class="yh-story yh-story-intro">
+      <div class="yh-story-kicker">Product Designer &amp; Front-End Architect · 2026</div><h3>Building ARC.TRADE — an architecture-first trading platform</h3>
+      <p>A solo build exploring what a crypto exchange's front end looks like when SEO, i18n and a token-based design system are treated as first-class architecture from day one, instead of retrofitted once the product needs to ship in twenty locales.</p>
+    </section>
+    ${capture(captures[1])}
+    <section class="yh-story">
+      <h3>A trading interface that feels live</h3>
+      <p>The trade view pairs a live-feeling order book, charting and an order form — Cross/Isolated, Market/Limit/Pro — with the exact same design tokens as the marketing site, so the jump from landing page to terminal doesn't feel like two different products glued together.</p>
+    </section>
+    ${capture(captures[2])}
+    <section class="yh-story">
+      <h3>Markets built to scale to hundreds of listings</h3>
+      <p>Every coin gets a page — price, chart, stats — generated from a per-coin, per-locale content model rather than hand-written routes. A scaffold script stubs missing content keys automatically, so a new page type never quietly breaks the listings that already shipped.</p>
+    </section>
+    ${capture(captures[3])}
+    <section class="yh-story">
+      <h3>SEO and i18n as architecture, not an afterthought</h3>
+      <p>Locale-aware routing, JSON-LD schema, generated sitemaps, and an audit script that catches hardcoded colors, fonts and English strings before they reach production — built so a page can be published in one locale and simply not exist in the others, without duplicating the site.</p>
+    </section>
+    <div class="yh-case-note">Self-directed project — Next.js 16, TypeScript, Tailwind CSS 4. Front-end and marketing simulation only: no backend, no real order execution, no custody of funds.</div>
+  </div>`;
+}
+
 let yhScrollObserver=null;
 function initYouhodlerLotties(scope=document){
   if(!window.lottie||!scope)return;
@@ -1439,6 +1485,8 @@ function showProj(key, el){
   let screensHtml='';
   if(p.caseRenderer==='youhodler'){
     screensHtml=renderYouhodlerCase(false);
+  } else if(p.caseRenderer==='arctrade'){
+    screensHtml=renderArcTradeCase(false);
   } else if(p.layout==='phone'){
     const imgs=p.screens.map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
     screensHtml=`<div class="screens-phone">${imgs}</div>`;
@@ -1467,6 +1515,7 @@ function showProj(key, el){
     </div>
     <div class="pdesc">${p.desc}</div>
     <div class="tags">${tags}</div>
+    ${(!p.caseRenderer&&p.link)?`<div class="yh-source-bar"><span>${p.link.note}</span><a href="${p.link.url}" target="_blank" rel="noreferrer">${p.link.label}</a></div>`:''}
     ${p.caseRenderer?'':'<div class="scr-label">Screens</div>'}
     ${screensHtml}
   `;
@@ -1640,7 +1689,7 @@ document.querySelectorAll('.win').forEach((w,i)=>w.style.zIndex=10+i);
 document.querySelectorAll('.di[role="button"]').forEach(item=>item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();item.click()}}));
 
 // ── MOBILE (iOS Settings-style) ────────────────────────
-const MOBILE_GROUPS={work:['youhodler','nexa'],projects:['wagmio','coinflip','warriors','cherry']};
+const MOBILE_GROUPS={work:['youhodler','nexa'],projects:['arctrade','wagmio','coinflip','warriors','cherry']};
 
 const SKILLS_DATA=[
   {group:'Design', items:[['Figma',100,'Expert'],['Prototyping',83,'Advanced'],['Design Systems',75,'Advanced'],['UX Research',67,'Solid'],['Motion Design',58,'Solid']]},
@@ -1697,7 +1746,7 @@ const CONTACT_HTML=`
     </div>
   </div>`;
 
-const MOBILE_MARKS={youhodler:'YH',nexa:'N',wagmio:'W',coinflip:'C',warriors:'WC',cherry:'CH'};
+const MOBILE_MARKS={youhodler:'YH',nexa:'N',wagmio:'W',coinflip:'C',warriors:'WC',cherry:'CH',arctrade:'AT'};
 const MOBILE_SHORT_PERIODS={youhodler:'2024',nexa:'2022–24'};
 
 function mobRow(key,kind='project'){
@@ -1801,7 +1850,7 @@ function openMobileDetail(type,key){
     const p=P[key];
     const tags=p.tags.map(([t,c])=>`<span class="t ${c}">${t}</span>`).join('');
     const imgs=p.screens.map((s,i)=>`<img src="${s}" loading="lazy" alt="${p.name} design screen ${i+1}" onerror="this.style.display='none'">`).join('');
-    const projectContent=p.caseRenderer==='youhodler'?renderYouhodlerCase(true):`<div class="ios-group-label" style="margin-bottom:9px">Screens</div><div class="ios-screens">${imgs}</div>`;
+    const projectContent=p.caseRenderer==='youhodler'?renderYouhodlerCase(true):p.caseRenderer==='arctrade'?renderArcTradeCase(true):`<div class="ios-group-label" style="margin-bottom:9px">Screens</div><div class="ios-screens">${imgs}</div>`;
     title.textContent=p.name;
     detailBody.innerHTML=`
       <div class="ios-detail-cover" style="background:${p.bg}">
