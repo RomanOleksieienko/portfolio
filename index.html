@@ -396,7 +396,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .cv-edu-inst{font-size:13px;font-weight:700;color:#fff}
 .cv-edu-date{font-size:11.5px;color:rgba(255,255,255,.34)}
 .cv-edu-major{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
-.cv-langs{font-size:12.5px;line-height:1.7;color:rgba(255,255,255,.62)}
+.cv-langs{margin:0;padding-left:18px}
+.cv-langs li{font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.62);margin-bottom:4px}
 
 /* ── DOCK ───────────────────────────────────────── */
 #dock{
@@ -844,7 +845,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     <p data-i18n="hero.paragraph">I turn complex fintech, crypto, and mobile products into clear interfaces that feel fast, intentional, and human.</p>
     <div class="profile-actions">
       <button class="profile-action primary" type="button" onclick="openWin('win-finder')"><span data-i18n="hero.viewWork">View selected work</span>&nbsp; →</button>
-      <a class="profile-action" href="mailto:olrom2003@gmail.com">✉&nbsp; olrom2003@gmail.com</a>
+      <a class="profile-action" href="mailto:contact@oleksieienko.com">✉&nbsp; contact@oleksieienko.com</a>
     </div>
   </div>
 </section>
@@ -1070,9 +1071,9 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
         <div class="mail-from" data-i18n="contact.mailFrom">From: Roman · Product Designer</div>
         <div class="mail-subj" data-i18n="contact.mailSubject">Let's work together 👋</div>
         <div class="mail-sl" data-i18n="common.contact">Contact</div>
-        <a href="mailto:olrom2003@gmail.com" class="ml">
+        <a href="mailto:contact@oleksieienko.com" class="ml">
           <div class="ml-ic" style="background:rgba(59,130,246,.14)">✉️</div>
-          <div style="flex:1"><div class="ml-lbl" data-i18n="contact.email">Email</div><div class="ml-val">olrom2003@gmail.com</div></div>
+          <div style="flex:1"><div class="ml-lbl" data-i18n="contact.email">Email</div><div class="ml-val">contact@oleksieienko.com</div></div>
           <div class="ml-arr">›</div>
         </a>
         <a href="https://www.linkedin.com/in/roman-oleksieienko-b03606228/" target="_blank" rel="noreferrer" class="ml">
@@ -1136,7 +1137,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <button class="spotlight-result" type="button" data-search="arc.trade arctrade crypto trading platform nextjs" onclick="runSpotlight('project','arctrade')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">ARC.TRADE</span><span class="spotlight-result-meta" data-i18n="spotlight.arctrade.meta">Trading platform · Product & front-end</span></span></button>
       <button class="spotlight-result" type="button" data-search="about roman biography notes" onclick="runSpotlight('window','win-notes')"><img src="icons/apps/notes.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="notes.aboutTitle">About Roman</span><span class="spotlight-result-meta" data-i18n="spotlight.about.meta">Background, principles and tools</span></span></button>
       <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.skills">Skills</span><span class="spotlight-result-meta" data-i18n="spotlight.skills.meta">Design, code and daily stack</span></span></button>
-      <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.contact">Contact</span><span class="spotlight-result-meta">olrom2003@gmail.com</span></span></button>
+      <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.contact">Contact</span><span class="spotlight-result-meta">contact@oleksieienko.com</span></span></button>
       <button class="spotlight-result" type="button" data-search="resume cv download experience pdf" onclick="runSpotlight('window','win-cv')"><img src="icons/document.png" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Resume</span><span class="spotlight-result-meta">Download CV · EN / NL / RU</span></span></button>
       <div class="spotlight-empty" id="spotlight-empty" hidden data-i18n="spotlight.empty">Nothing found. Try “work”, “skills” or “contact”.</div>
     </div>
@@ -1182,9 +1183,9 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 
           <h1 class="ios-intro-title" id="ios-intro-title" data-i18n="mobile.home.title">Hi, I’m Roman</h1>
           <p class="ios-intro-copy" data-i18n="hero.paragraph">I turn complex fintech, crypto, and mobile products into clear interfaces that feel fast, intentional, and human.</p>
-          <a class="ios-email-cta ios-liquid" href="mailto:olrom2003@gmail.com">
+          <a class="ios-email-cta ios-liquid" href="mailto:contact@oleksieienko.com">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="m5.5 7.5 6.5 5 6.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>olrom2003@gmail.com</span>
+            <span>contact@oleksieienko.com</span>
           </a>
         </section>
 
@@ -2126,9 +2127,9 @@ function contactHtml(){return `
     <div class="ios-hero-note">${tr('contact.heroNote')}</div>
   </div>
   <div class="ios-contact">
-    <a href="mailto:olrom2003@gmail.com" class="ml">
+    <a href="mailto:contact@oleksieienko.com" class="ml">
       <div class="ml-ic" style="background:rgba(59,130,246,.14)">✉️</div>
-      <div style="flex:1"><div class="ml-lbl">${tr('contact.email')}</div><div class="ml-val">olrom2003@gmail.com</div></div>
+      <div style="flex:1"><div class="ml-lbl">${tr('contact.email')}</div><div class="ml-val">contact@oleksieienko.com</div></div>
       <div class="ml-arr">›</div>
     </a>
     <div class="ml" aria-label="Location and availability">
@@ -2161,29 +2162,28 @@ const CV_I18N={
     labels:{summary:'Summary',achievements:'Key Achievements',experience:'Experience',skills:'Skills & Tools',education:'Education',languages:'Languages'},
     summary:'UX/UI &amp; Product Designer with 5+ years of experience across fintech, SaaS, and Web3. Skilled in end-to-end product design — from research, user flows, and wireframes to UI, design systems, and marketing assets. Strong expertise in Webflow, Framer, and AI-driven automation workflows, consistently improving efficiency and conversion rates. Based in Ghent, Belgium, with an EU work permit — available for remote, hybrid, or on-site roles.',
     achievements:[
+      'Increased on-site conversion through structured A/B testing and analytics-driven iteration',
+      "Led the migration of YouHodler's marketing website from Webflow (no-code) to a custom-coded stack",
+      'Acted as Design Lead across multiple departments, scaling design ownership from EU-only to worldwide markets',
       'Reduced design production time by 2–3× through AI tools and reusable template systems',
       'Cut Webflow landing page delivery time from 1 day to 4 hours with a systematic design approach',
       'Implemented automation workflows reducing manual team processes by ~60%',
-      'Built a CMS automation bot handling 100+ large item imports, solving platform limitations',
       'Contributed to Telegram Mini Apps reaching 20M+ users',
-      'Designed conversion-optimized pages and dashboards for EU, LATAM, and IT markets'
+      'Designed conversion-optimized pages and dashboards across EU, LATAM, IT, and worldwide markets'
     ],
     experience:[
-      {company:'YouHodler',role:'UX/UI Designer',date:'May 2024 — Present · Remote',bullets:[
+      {company:'YouHodler',role:'UX/UI Designer &amp; Design Lead',date:'May 2024 — Present · Montenegro · Remote',bullets:[
+        'Owned the website design roadmap — ran A/B tests and analyzed analytics to drive measurable conversion growth',
+        'Led migration of the marketing site from Webflow (no-code) to a custom-coded stack, improving performance and flexibility',
+        'Worked as Design Lead across multiple departments, expanding design ownership from EU-only to worldwide markets',
         'Optimized creative production with reusable templates and AI tools, reducing design time by 2–3×',
-        "Developed a Webflow design system for landing pages, cutting delivery time from 1 day to 4 hours",
-        'Implemented Make/Zapier automations for the acquisition team, reducing manual steps by ~60%',
-        'Delivered UX/UI for event pages, dashboards, and multi-market landing pages (EU, LATAM, IT)'
+        "Built Make/Zapier automations and a custom CMS bot for the acquisition team, cutting manual work by ~60% and solving Webflow's import limitations",
+        'Delivered UX/UI for event pages, dashboards, and multi-market landing pages (EU, LATAM, IT, and beyond)'
       ]},
       {company:'Nexa Agency',role:'UX/UI Designer &amp; Product Designer',date:'Jul 2021 — May 2024 · Germany · Remote',bullets:[
         'Worked as a core UX/UI designer in a cross-functional digital product team, delivering full-cycle design from research to developer handoff',
         'Designed Telegram Mini Apps and contributed to an application reaching 20M+ users',
         'Created UX/UI for referral systems, SaaS dashboards, and marketing websites focused on the EU market'
-      ]},
-      {company:'Freelance',role:'UX/UI &amp; Graphic Designer',date:'Jan 2021 — Jun 2021 · Remote',bullets:[
-        'Designed and launched multiple landing pages for small businesses, optimizing for conversions',
-        'Created mobile app interfaces (iOS/Android) with a focus on usability and responsive patterns',
-        'Produced 20+ banner sets and marketing creatives for digital campaigns'
       ]}
     ],
     skills:[
@@ -2191,8 +2191,8 @@ const CV_I18N={
       ['Tools','Figma, Photoshop, Illustrator, Webflow, Framer, Notion, Miro, Trello, Slack'],
       ['AI &amp; Automation','ChatGPT, Cursor, Midjourney, Webflow CMS, Make, Zapier, API Workflows']
     ],
-    education:{inst:'Mariupol State University',date:'Sep 2020 — 2025 (expected)',major:'Faculty of Humanities and Technology — Major: Design'},
-    languages:"Ukrainian — Native · Russian — Native · English — Upper-Intermediate · Dutch — Beginner (learning) · Norwegian — Intermediate"
+    education:{inst:'Mariupol State University',date:'Sep 2021 — 2026 (expected)',major:'Faculty of Humanities and Technology — Major: Design'},
+    languages:['Ukrainian — Native','Russian — Native','English — Upper-Intermediate','Dutch — Beginner (learning)','Norwegian — Intermediate']
   },
   nl:{
     downloadFile:'cv/roman-oleksieienko-cv-nl.html',
@@ -2204,29 +2204,28 @@ const CV_I18N={
     labels:{summary:'Profiel',achievements:'Belangrijkste resultaten',experience:'Werkervaring',skills:'Vaardigheden &amp; tools',education:'Opleiding',languages:'Talen'},
     summary:'UX/UI &amp; Product Designer met 5+ jaar ervaring in fintech, SaaS en Web3. Sterk in end-to-end productontwerp — van onderzoek, user flows en wireframes tot UI, design systems en marketingmateriaal. Ruime expertise in Webflow, Framer en AI-gedreven automatisering, met aantoonbare verbeteringen in efficiëntie en conversie. Woonachtig in Gent, België, met een EU-werkvergunning — beschikbaar voor remote, hybride of on-site functies.',
     achievements:[
+      'Verhoogde de on-site conversie door gestructureerde A/B-tests en data-gedreven iteratie',
+      'Leidde de migratie van de YouHodler-website van Webflow (no-code) naar een custom-gecodeerde stack',
+      'Trad op als Design Lead over meerdere afdelingen, en breidde het designbereik uit van alleen de EU naar wereldwijde markten',
       "Verminderde de productietijd van designs met 2–3× door AI-tools en herbruikbare templatesystemen",
       "Verkortte de levertijd van Webflow-landingspagina's van 1 dag naar 4 uur door een systematische ontwerpaanpak",
       'Implementeerde automatiseringsworkflows die handmatige teamprocessen met ~60% verminderden',
-      "Bouwde een CMS-automatiseringsbot voor 100+ grote item-imports, als oplossing voor platformbeperkingen",
       'Droeg bij aan Telegram Mini Apps met 20M+ gebruikers',
-      "Ontwierp conversiegerichte pagina's en dashboards voor de EU-, LATAM- en IT-markt"
+      "Ontwierp conversiegerichte pagina's en dashboards voor de EU-, LATAM-, IT- en wereldwijde markten"
     ],
     experience:[
-      {company:'YouHodler',role:'UX/UI Designer',date:'Mei 2024 — Heden · Remote',bullets:[
+      {company:'YouHodler',role:'UX/UI Designer &amp; Design Lead',date:'Mei 2024 — Heden · Montenegro · Remote',bullets:[
+        'Verantwoordelijk voor de website-designroadmap — voerde A/B-tests uit en analyseerde data om conversie meetbaar te verhogen',
+        'Leidde de migratie van de website van Webflow (no-code) naar een custom-gecodeerde stack, wat performance en flexibiliteit verbeterde',
+        'Werkte als Design Lead over meerdere afdelingen, en breidde het designbereik uit van alleen de EU naar wereldwijde markten',
         'Optimaliseerde creatieve productie met herbruikbare templates en AI-tools, wat de ontwerptijd met 2–3× verminderde',
-        "Ontwikkelde een Webflow design system voor landingspagina's, waardoor de levertijd daalde van 1 dag naar 4 uur",
-        'Implementeerde Make/Zapier-automatiseringen voor het acquisitieteam, wat handmatige stappen met ~60% verminderde',
-        'Leverde UX/UI voor eventpagina’s, dashboards en multi-market landingspagina’s (EU, LATAM, IT)'
+        'Bouwde Make/Zapier-automatiseringen en een custom CMS-bot voor het acquisitieteam, wat handmatig werk met ~60% verminderde en Webflow’s import-beperkingen oploste',
+        'Leverde UX/UI voor eventpagina’s, dashboards en multi-market landingspagina’s (EU, LATAM, IT en daarbuiten)'
       ]},
       {company:'Nexa Agency',role:'UX/UI Designer &amp; Product Designer',date:'Jul 2021 — Mei 2024 · Duitsland · Remote',bullets:[
         'Werkte als kern-UX/UI-designer in een cross-functioneel digitaal productteam en leverde full-cycle design van onderzoek tot developer handoff',
         'Ontwierp Telegram Mini Apps en droeg bij aan een applicatie met 20M+ gebruikers',
         'Creëerde UX/UI voor referral-systemen, SaaS-dashboards en marketingwebsites gericht op de EU-markt'
-      ]},
-      {company:'Freelance',role:'UX/UI &amp; Grafisch Ontwerper',date:'Jan 2021 — Jun 2021 · Remote',bullets:[
-        "Ontwierp en lanceerde meerdere landingspagina's voor kleine bedrijven, geoptimaliseerd voor conversie",
-        'Creëerde mobiele app-interfaces (iOS/Android) met focus op bruikbaarheid en responsive patronen',
-        'Produceerde 20+ bannersets en marketingmateriaal voor digitale campagnes'
       ]}
     ],
     skills:[
@@ -2234,8 +2233,8 @@ const CV_I18N={
       ['Tools','Figma, Photoshop, Illustrator, Webflow, Framer, Notion, Miro, Trello, Slack'],
       ['AI &amp; Automatisering','ChatGPT, Cursor, Midjourney, Webflow CMS, Make, Zapier, API-workflows']
     ],
-    education:{inst:'Mariupol State University',date:'Sep 2020 — 2025 (verwacht)',major:'Faculteit Humaniora en Technologie — Major: Design'},
-    languages:"Oekraïens — Moedertaal · Russisch — Moedertaal · Engels — Bovengemiddeld (Upper-Intermediate) · Nederlands — Beginner (lerende) · Noors — Gemiddeld (Intermediate)"
+    education:{inst:'Mariupol State University',date:'Sep 2021 — 2026 (verwacht)',major:'Faculteit Humaniora en Technologie — Major: Design'},
+    languages:['Oekraïens — Moedertaal','Russisch — Moedertaal','Engels — Bovengemiddeld (Upper-Intermediate)','Nederlands — Beginner (lerende)','Noors — Gemiddeld (Intermediate)']
   },
   ru:{
     downloadFile:'cv/roman-oleksieienko-cv-ru.html',
@@ -2247,29 +2246,28 @@ const CV_I18N={
     labels:{summary:'Профиль',achievements:'Ключевые достижения',experience:'Опыт работы',skills:'Навыки и инструменты',education:'Образование',languages:'Языки'},
     summary:'UX/UI и продуктовый дизайнер с 5+ годами опыта в финтехе, SaaS и Web3. Владею полным циклом продуктового дизайна — от исследований, пользовательских сценариев и вайрфреймов до UI, дизайн-систем и маркетинговых материалов. Глубокая экспертиза в Webflow, Framer и AI-автоматизации, стабильно повышаю эффективность и конверсию. Живу в Генте, Бельгия, есть разрешение на работу в ЕС — открыт к удалённой, гибридной или офисной работе.',
     achievements:[
+      'Повысил конверсию на сайте благодаря структурированным A/B-тестам и анализу аналитики',
+      'Руководил переносом сайта YouHodler с no-code Webflow на кастомный код',
+      'Работал как Design Lead на несколько отделов, расширив зону ответственности с рынка ЕС до глобальных рынков',
       'Сократил время производства дизайна в 2–3 раза благодаря AI-инструментам и переиспользуемым шаблонам',
       'Сократил срок выпуска Webflow-лендингов с 1 дня до 4 часов за счёт системного подхода к дизайну',
       'Внедрил автоматизацию, сократившую ручные процессы команды примерно на 60%',
-      'Создал CMS-бота для автоматического импорта 100+ крупных позиций, обойдя ограничения платформы',
       'Участвовал в разработке Telegram Mini Apps с охватом 20M+ пользователей',
-      'Проектировал конверсионные страницы и дашборды для рынков ЕС, LATAM и Италии'
+      'Проектировал конверсионные страницы и дашборды для рынков ЕС, LATAM, Италии и по всему миру'
     ],
     experience:[
-      {company:'YouHodler',role:'UX/UI дизайнер',date:'Май 2024 — по настоящее время · Удалённо',bullets:[
+      {company:'YouHodler',role:'UX/UI дизайнер и Design Lead',date:'Май 2024 — по настоящее время · Черногория · Удалённо',bullets:[
+        'Отвечал за roadmap дизайна сайта — проводил A/B-тесты и анализировал аналитику для измеримого роста конверсии',
+        'Руководил переносом маркетингового сайта с no-code Webflow на кастомный код, что улучшило производительность и гибкость',
+        'Работал как Design Lead на несколько отделов, расширив зону ответственности с рынка ЕС до глобальных рынков',
         'Оптимизировал производство креативов с помощью переиспользуемых шаблонов и AI-инструментов, сократив время дизайна в 2–3 раза',
-        'Разработал дизайн-систему Webflow для лендингов, сократив срок выпуска с 1 дня до 4 часов',
-        'Внедрил автоматизацию Make/Zapier для команды acquisition, сократив ручные шаги примерно на 60%',
-        'Делал UX/UI для страниц ивентов, дашбордов и мультирыночных лендингов (ЕС, LATAM, Италия)'
+        'Создал автоматизации Make/Zapier и кастомного CMS-бота для команды acquisition, сократив ручную работу на ~60% и решив ограничения импорта Webflow',
+        'Делал UX/UI для страниц ивентов, дашбордов и мультирыночных лендингов (ЕС, LATAM, Италия и другие регионы)'
       ]},
       {company:'Nexa Agency',role:'UX/UI и продуктовый дизайнер',date:'Июль 2021 — Май 2024 · Германия · Удалённо',bullets:[
         'Работал как основной UX/UI дизайнер в кросс-функциональной продуктовой команде, вёл полный цикл дизайна от исследования до передачи разработчикам',
         'Проектировал Telegram Mini Apps, участвовал в приложении с охватом 20M+ пользователей',
         'Делал UX/UI для реферальных систем, SaaS-дашбордов и маркетинговых сайтов для рынка ЕС'
-      ]},
-      {company:'Фриланс',role:'UX/UI и графический дизайнер',date:'Январь 2021 — Июнь 2021 · Удалённо',bullets:[
-        'Спроектировал и запустил несколько лендингов для малого бизнеса с фокусом на конверсию',
-        'Создавал интерфейсы мобильных приложений (iOS/Android) с упором на удобство и адаптивность',
-        'Подготовил 20+ наборов баннеров и креативов для digital-кампаний'
       ]}
     ],
     skills:[
@@ -2277,8 +2275,8 @@ const CV_I18N={
       ['Инструменты','Figma, Photoshop, Illustrator, Webflow, Framer, Notion, Miro, Trello, Slack'],
       ['AI и автоматизация','ChatGPT, Cursor, Midjourney, Webflow CMS, Make, Zapier, API-интеграции']
     ],
-    education:{inst:'Мариупольский государственный университет',date:'Сен 2020 — 2025 (ожидается)',major:'Факультет гуманитарных наук и технологий — специальность: дизайн'},
-    languages:"Украинский — родной · Русский — родной · Английский — выше среднего (Upper-Intermediate) · Нидерландский — начальный (учу) · Норвежский — средний (Intermediate)"
+    education:{inst:'Мариупольский государственный университет',date:'Сен 2021 — 2026 (ожидается)',major:'Факультет гуманитарных наук и технологий — специальность: дизайн'},
+    languages:['Украинский — родной','Русский — родной','Английский — выше среднего (Upper-Intermediate)','Нидерландский — начальный (учу)','Норвежский — средний (Intermediate)']
   }
 };
 
@@ -2290,7 +2288,7 @@ function cvHeadHTML(lang){
       <div class="cv-role">UX/UI &amp; Product Designer</div>
       <div class="cv-tags">
         <span class="cv-tag">${d.location}</span>
-        <span class="cv-tag"><a href="mailto:olrom2003@gmail.com">olrom2003@gmail.com</a></span>
+        <span class="cv-tag"><a href="mailto:contact@oleksieienko.com">contact@oleksieienko.com</a></span>
         <span class="cv-tag"><a href="https://www.linkedin.com/in/roman-oleksieienko-b03606228/" target="_blank" rel="noopener">LinkedIn</a></span>
         <span class="cv-tag"><a href="https://t.me/olexmar" target="_blank" rel="noopener">Telegram</a></span>
         <span class="cv-tag badge">${d.badge}</span>
@@ -2321,7 +2319,7 @@ function cvBodyHTML(lang){
     <div class="cv-sl">${L.skills}</div>${skills}
     <div class="cv-sl">${L.education}</div>
     <div class="cv-edu-inst">${d.education.inst}</div><div class="cv-edu-date">${d.education.date}</div><div class="cv-edu-major">${d.education.major}</div>
-    <div class="cv-sl">${L.languages}</div><div class="cv-langs">${d.languages}</div>`;
+    <div class="cv-sl">${L.languages}</div><ul class="cv-langs">${d.languages.map(l=>`<li>${l}</li>`).join('')}</ul>`;
 }
 
 function renderCvDesktop(lang){
