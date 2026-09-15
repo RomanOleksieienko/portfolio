@@ -11,6 +11,6 @@
     { "tag": "v1", "new_sqlite_classes": ["CursorRoom"] }
   ],
   "kv_namespaces": [
-    { "binding": "GUESTBOOK", "id": "REPLACE_AFTER_KV_CREATE" }
+    { "binding": "GUESTBOOK", "id": "af460e73023442088952907f1971474b" }
   ]
 }
