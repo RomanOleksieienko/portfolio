@@ -966,6 +966,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <button type="button" class="desk-ic" onclick="openProjectDesktop('warriors')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Warriors Cats</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('cherry')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Cherry</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('arctrade')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">ARC.TRADE</span></button>
+  <button type="button" class="desk-ic" onclick="openWin('win-cv')"><img src="icons/document.png" alt=""><span class="fi-lbl">Resume</span></button>
 </div>
 
 <!-- ══ FINDER WINDOW ══ -->
@@ -1212,8 +1213,6 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <div class="di" role="img" aria-label="Codex" title="Codex"><img class="tech-app" src="icons/tools/codex-dock.png" alt=""><div class="di-tip" data-i18n="dock.codexTip">Codex · product engineering</div></div>
   <div class="di" role="img" aria-label="Adobe Photoshop" title="Adobe Photoshop"><img class="tech-app" src="icons/tools/photoshop.svg" alt=""><div class="di-tip" data-i18n="dock.psTip">Photoshop · image craft</div></div>
   <div class="di" role="img" aria-label="Adobe Illustrator" title="Adobe Illustrator"><img class="tech-app" src="icons/tools/illustrator.svg" alt=""><div class="di-tip" data-i18n="dock.aiTip">Illustrator · vector craft</div></div>
-  <div class="d-sep" aria-hidden="true"></div>
-  <div class="di" onclick="emptyTrash(event)" role="button" tabindex="0" data-i18n-attr="aria-label:dock.trash" aria-label="Trash"><img src="icons/apps/trash-empty.svg" id="trash-ic" alt=""><div class="di-tip" data-i18n="dock.trash">Trash</div></div>
 </div>
 
 <!-- ══ GUESTBOOK WINDOW ══ -->
@@ -1394,7 +1393,7 @@ const I18N={
     'menubar.wifiTitle':'Wi-Fi','menubar.spotlightTitle':'Spotlight Search','menubar.controlCenterTitle':'Control Center',
     'menubar.langTitle':'Language',
     'hero.eyebrow':'Product / UI Designer · Europe','hero.title':"Hi, I'm Roman.",
-    'hero.paragraph':'I turn complex fintech, crypto, and mobile products into clear interfaces that feel fast, intentional, and human.',
+    'hero.paragraph':'I design fintech and crypto products that feel obvious the moment you open them — fast, considered, and free of the clutter this industry usually ships.',
     'hero.viewWork':'View selected work',
     'widgets.appearance.title':'Appearance','widgets.appearance.hint':'Click to switch',
     'widgets.appearance.light':'Light','widgets.appearance.dark':'Dark',
@@ -1462,7 +1461,7 @@ const I18N={
     'menubar.wifiTitle':'Wi-Fi','menubar.spotlightTitle':'Поиск Spotlight','menubar.controlCenterTitle':'Пункт управления',
     'menubar.langTitle':'Язык',
     'hero.eyebrow':'Продуктовый / UI-дизайнер · Европа','hero.title':'Привет, я Роман.',
-    'hero.paragraph':'Я превращаю сложные финтех-, крипто- и мобильные продукты в понятные интерфейсы — быстрые, осмысленные и живые.',
+    'hero.paragraph':'Я делаю финтех- и крипто-продукты, которые ощущаются понятными с первого взгляда — быстрые, продуманные и без лишнего шума, к которому привыкла эта индустрия.',
     'hero.viewWork':'Смотреть работы',
     'widgets.appearance.title':'Оформление','widgets.appearance.hint':'Нажмите, чтобы переключить',
     'widgets.appearance.light':'Светлая','widgets.appearance.dark':'Тёмная',
@@ -1530,7 +1529,7 @@ const I18N={
     'menubar.wifiTitle':'Wifi','menubar.spotlightTitle':'Spotlight-zoekfunctie','menubar.controlCenterTitle':'Bedieningspaneel',
     'menubar.langTitle':'Taal',
     'hero.eyebrow':'Product/UI-designer · Europa','hero.title':'Hoi, ik ben Roman.',
-    'hero.paragraph':'Ik maak van complexe fintech-, crypto- en mobiele producten heldere interfaces die snel, doelgericht en menselijk aanvoelen.',
+    'hero.paragraph':'Ik ontwerp fintech- en cryptoproducten die vanaf het eerste moment vanzelfsprekend aanvoelen — snel, doordacht en zonder de ruis die deze branche gewend is te leveren.',
     'hero.viewWork':'Bekijk mijn werk',
     'widgets.appearance.title':'Weergave','widgets.appearance.hint':'Klik om te wisselen',
     'widgets.appearance.light':'Licht','widgets.appearance.dark':'Donker',
@@ -2502,7 +2501,7 @@ function cvHeadHTML(lang){
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:180px">
-      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}">⬇ ${d.downloadLabel}</a>
+      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" onclick="return downloadCv(event,'${d.downloadFile}','${d.downloadName}')">⬇ ${d.downloadLabel}</a>
       <div class="cv-hint">${d.hint}</div>
     </div>
   </div>`;
@@ -2527,6 +2526,26 @@ function cvBodyHTML(lang){
     <div class="cv-sl">${L.education}</div>
     <div class="cv-edu-inst">${d.education.inst}</div><div class="cv-edu-date">${d.education.date}</div><div class="cv-edu-major">${d.education.major}</div>
     <div class="cv-sl">${L.languages}</div><ul class="cv-langs">${d.languages.map(l=>`<li>${l}</li>`).join('')}</ul>`;
+}
+
+// Some browsers (notably mobile Safari) ignore the plain <a download> attribute
+// for same-origin HTML and just navigate/open it instead of saving a file.
+// Fetching it ourselves and saving via a Blob URL is far more reliable.
+function downloadCv(e,url,filename){
+  e.preventDefault();
+  fetch(url).then(r=>{
+    if(!r.ok)throw new Error('fetch failed');
+    return r.blob();
+  }).then(blob=>{
+    const blobUrl=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=blobUrl;a.download=filename;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(blobUrl),4000);
+  }).catch(()=>{
+    window.open(url,'_blank');
+  });
+  return false;
 }
 
 function renderCvDesktop(lang){
