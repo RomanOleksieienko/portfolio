@@ -436,21 +436,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .presence-dot.is-off{background:rgba(255,255,255,.3)}
 
 /* ── GUESTBOOK ────────────────────────────────────────── */
-.gb-form{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-bottom:.5px solid var(--glass-border-low)}
-.gb-form input,.gb-form textarea{appearance:none;border:.5px solid var(--glass-border);border-radius:9px;background:rgba(0,0,0,.16);color:var(--surface-ink);font:400 13px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;padding:8px 10px;resize:none}
+.gb-form{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-bottom:.5px solid rgba(255,255,255,.1)}
+.gb-form input,.gb-form textarea{appearance:none;border:.5px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(0,0,0,.22);color:rgba(255,255,255,.92);font:400 13px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;padding:8px 10px;resize:none}
+.gb-form input::placeholder,.gb-form textarea::placeholder{color:rgba(255,255,255,.34)}
 .gb-form textarea{min-height:56px}
 .gb-form button{appearance:none;align-self:flex-end;border:0;border-radius:9px;padding:7px 14px;background:#0a84ff;color:#fff;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;cursor:pointer}
 .gb-form button:disabled{opacity:.5;cursor:default}
 .gb-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
 .gb-list{padding:6px 16px 16px}
-.gb-entry{padding:10px 0;border-bottom:.5px solid var(--glass-border-low)}
+.gb-entry{padding:10px 0;border-bottom:.5px solid rgba(255,255,255,.1)}
 .gb-entry:last-child{border-bottom:0}
 .gb-entry-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:3px}
-.gb-entry-name{font-size:12.5px;font-weight:700;color:var(--surface-ink)}
-.gb-entry-time{font-size:10.5px;color:var(--surface-faint)}
-.gb-entry-msg{font-size:13px;line-height:1.5;color:var(--surface-muted);white-space:pre-wrap;word-break:break-word}
-.gb-empty{padding:20px 16px;font-size:12.5px;color:var(--surface-faint);text-align:center}
-.gb-status{padding:0 16px 10px;font-size:11.5px;color:var(--surface-faint)}
+.gb-entry-name{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.9)}
+.gb-entry-time{font-size:10.5px;color:rgba(255,255,255,.34)}
+.gb-entry-msg{font-size:13px;line-height:1.5;color:rgba(255,255,255,.62);white-space:pre-wrap;word-break:break-word}
+.gb-empty{padding:20px 16px;font-size:12.5px;color:rgba(255,255,255,.4);text-align:center}
+.gb-status{padding:0 16px 10px;font-size:11.5px;color:rgba(255,255,255,.4)}
 
 /* ── DOCK ───────────────────────────────────────── */
 #dock{
