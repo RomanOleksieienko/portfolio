@@ -1204,7 +1204,6 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 </div>
 
 <div id="dock">
-  <div class="dock-label" data-i18n="dock.label">Tech stack · Skills</div>
   <div class="di" role="img" aria-label="Figma" title="Figma"><img class="tech-app" src="icons/tools/figma-dock.png" alt=""><div class="di-tip" data-i18n="dock.figmaTip">Figma · product design</div></div>
   <div class="di" role="img" aria-label="Webflow" title="Webflow"><img class="tech-app" src="icons/tools/webflow.png" alt=""><div class="di-tip" data-i18n="dock.webflowTip">Webflow · visual development</div></div>
   <div class="di" role="img" aria-label="Framer" title="Framer"><img class="tech-app" src="icons/tools/framer.png" alt=""><div class="di-tip" data-i18n="dock.framerTip">Framer · websites & prototypes</div></div>
@@ -1321,6 +1320,10 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
             <button type="button" class="ios-row tappable" onclick="openMobileDetail('resume')">
               <img class="ios-row-icon-img" src="icons/document.png" alt="">
               <span class="ios-row-label">Resume</span><span class="ios-chev" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="ios-row tappable" onclick="openMobileDetail('guestbook')">
+              <img class="ios-row-icon-img" src="icons/apps/messages.svg" alt="">
+              <span class="ios-row-label" data-i18n="guestbook.title">Guestbook</span><span class="ios-chev" aria-hidden="true"></span>
             </button>
           </div>
 
@@ -1446,7 +1449,10 @@ const I18N={
     'mobile.prefs.language':'Language','mobile.detail.selectedWork':'Selected work',
     'lock.unlock':'Click to enter','lock.footer':'Portfolio OS · press any key','lock.aria':"Enter Roman's portfolio",
     'languages.nativeCap':'Native','languages.fluentCap':'Fluent','languages.learningCap':'A1 · Learning',
-    'mobile.home.title':"Hi, I'm Roman"
+    'mobile.home.title':"Hi, I'm Roman",
+    'guestbook.title':'Guestbook','guestbook.namePlaceholder':'Your name','guestbook.messagePlaceholder':'Leave a note…',
+    'guestbook.send':'Send','guestbook.sending':'Sending…','guestbook.loading':'Loading…','guestbook.empty':'Be the first to leave a note.',
+    'guestbook.error':"Couldn't load the guestbook.",'guestbook.sendError':"Couldn't send — try again.",'guestbook.spotlightMeta':'Leave a public note'
   },
   ru:{
     'common.work':'Работа','common.about':'Обо мне','common.contact':'Контакты','common.skills':'Навыки',
@@ -1511,7 +1517,10 @@ const I18N={
     'mobile.prefs.language':'Язык','mobile.detail.selectedWork':'Избранная работа',
     'lock.unlock':'Нажмите, чтобы войти','lock.footer':'Portfolio OS · нажмите любую клавишу','lock.aria':'Войти в портфолио Романа',
     'languages.nativeCap':'Родной','languages.fluentCap':'Свободно','languages.learningCap':'A1 · Учу',
-    'mobile.home.title':'Привет, я Роман'
+    'mobile.home.title':'Привет, я Роман',
+    'guestbook.title':'Гостевая книга','guestbook.namePlaceholder':'Твоё имя','guestbook.messagePlaceholder':'Оставь заметку…',
+    'guestbook.send':'Отправить','guestbook.sending':'Отправка…','guestbook.loading':'Загрузка…','guestbook.empty':'Будь первым, кто оставит заметку.',
+    'guestbook.error':'Не удалось загрузить гостевую книгу.','guestbook.sendError':'Не получилось отправить — попробуй ещё раз.','guestbook.spotlightMeta':'Оставить публичную заметку'
   },
   nl:{
     'common.work':'Werk','common.about':'Over mij','common.contact':'Contact','common.skills':'Vaardigheden',
@@ -1576,7 +1585,10 @@ const I18N={
     'mobile.prefs.language':'Taal','mobile.detail.selectedWork':'Uitgelicht werk',
     'lock.unlock':'Klik om te starten','lock.footer':'Portfolio OS · druk op een toets','lock.aria':"Start Romans portfolio",
     'languages.nativeCap':'Moedertaal','languages.fluentCap':'Vloeiend','languages.learningCap':'A1 · Leren',
-    'mobile.home.title':'Hoi, ik ben Roman'
+    'mobile.home.title':'Hoi, ik ben Roman',
+    'guestbook.title':'Gastenboek','guestbook.namePlaceholder':'Je naam','guestbook.messagePlaceholder':'Laat een berichtje achter…',
+    'guestbook.send':'Versturen','guestbook.sending':'Versturen…','guestbook.loading':'Laden…','guestbook.empty':'Wees de eerste die een berichtje achterlaat.',
+    'guestbook.error':'Kon het gastenboek niet laden.','guestbook.sendError':'Versturen mislukt — probeer opnieuw.','guestbook.spotlightMeta':'Laat een openbaar berichtje achter'
   }
 };
 const PROJ_I18N={
@@ -1843,23 +1855,19 @@ function renderYouhodlerCase(mobile=false){
   const capture=([src,title,meta])=>`<figure class="yh-capture"><img src="${src}" alt="YouHodler ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const mobileCapture=index=>mobile?capture(captures[index]):'';
   const desktopScroll=mobile?'':`<figure class="yh-capture yh-scroll-capture"><div class="yh-scroll-stage" role="img" aria-label="Smooth auto-scrolling exact capture of youhodler.com"><img class="yh-scroll-page" src="screens/youhodler/live-fullpage.jpg" alt="" loading="lazy" decoding="async" draggable="false"><div class="yh-scroll-header" aria-hidden="true"></div><div class="yh-scroll-track" aria-hidden="true"><span class="yh-scroll-thumb"></span></div></div><figcaption><strong>youhodler.com — top to bottom</strong><span>26 sec · CSS auto-scroll</span></figcaption></figure>`;
-  const gradientMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-gradient-stage" role="img" aria-label="YouHodler ambient blue gradient animation"><div class="yh-gradient-mover" aria-hidden="true"><span class="yh-gradient-shape yh-gradient-shape-one"></span><span class="yh-gradient-shape yh-gradient-shape-two"></span><span class="yh-gradient-shape yh-gradient-shape-three"></span></div><div class="yh-gradient-copy"><span>Daily Crypto.</span><strong>Swiss Made</strong></div></div><figcaption><strong>Ambient motion system</strong><span>Live-site palette · 30 sec loop</span></figcaption></figure>`;
-  const lottieMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-lottie-stage"><div class="yh-lottie-canvas" data-yh-lottie role="img" aria-label="YouHodler Get Cash crypto logo animation"></div></div><figcaption><strong>Get Cash product storytelling</strong><span>Original YouHodler Lottie</span></figcaption></figure>`;
   const promoMotion=mobile?'':`<figure class="yh-motion"><div class="yh-motion-stage yh-promo-stage" aria-label="YouHodler promotional carousel animation"><div class="yh-promo-track"><section class="yh-promo-slide yh-promo-slide-uma"><img src="animations/youhodler/uma-graphic.svg" alt="" loading="lazy"><div class="yh-promo-slide-copy"><h4>Get your Universal Money Address (UMA) Now</h4><p>UMA enables seamless and secure global payments with instant, cost-effective transactions in both fiat and cryptocurrency.</p><span class="yh-promo-action">Sign up ↗</span></div></section><section class="yh-promo-slide yh-promo-slide-miner"><div class="yh-promo-slide-copy"><h4>Discover <em>Cloud Miner</em></h4><p>Access a simplified way to earn rewards with Cloud Miner, without the complexity of traditional mining operations.</p><span class="yh-promo-action">Learn more ↗</span></div><img src="animations/youhodler/cloud-miner.avif" alt="" loading="lazy"></section></div></div><figcaption><strong>Campaign carousel</strong><span>UMA · Cloud Miner · 750 ms transition</span></figcaption></figure>`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Exact captures from the current product</span><a href="https://www.youhodler.com/" target="_blank" rel="noreferrer">Open YouHodler ↗</a></div>
     ${desktopScroll}
     <section class="yh-story yh-story-intro">
-      <div class="yh-story-kicker">Product Designer · May — October 2024</div><h3>Designing YouHodler’s web and growth experience</h3>
-      <p>I worked across the public website and the creative ecosystem around it. My responsibility covered experience design, visual execution, motion, campaign production, and close collaboration with the teams bringing the work into production.</p>
+      <div class="yh-story-kicker">UX/UI Designer &amp; Design Lead · May 2024 — Present</div><h3>Designing YouHodler’s web and growth experience</h3>
+      <p>I own the website design roadmap end-to-end — experience design, visual execution, motion, campaign production, and close collaboration with the teams bringing the work into production, backed by A/B tests and analytics.</p>
     </section>
-    ${gradientMotion}
     ${mobileCapture(0)}
     <section class="yh-story">
       <h3>Rebuilding the website from the ground up</h3>
-      <p>We completely rethought YouHodler’s website and rebuilt its pages from the foundation. I designed the information hierarchy, responsive layouts, reusable page sections, interaction states, and motion behavior — including Lottie-based product storytelling — then worked with engineering on API-connected modules and implementation details.</p>
+      <p>We completely rethought YouHodler’s website and rebuilt its pages from the foundation, then led the migration of the marketing site from Webflow (no-code) to a custom-coded stack. I designed the information hierarchy, responsive layouts, reusable page sections, and interaction states, then worked with engineering on API-connected modules and implementation details.</p>
     </section>
-    ${lottieMotion}
     ${mobileCapture(1)}
     <section class="yh-story">
       <h3>Creating for social and paid acquisition</h3>
@@ -1871,7 +1879,7 @@ function renderYouhodlerCase(mobile=false){
       <h3>Connecting CRM and the wider product ecosystem</h3>
       <p>I also designed lifecycle and promotional email assets for the CRM team and supported creative needs across YouHodler’s three app products. This connected the website, app communication, social channels, paid campaigns, and retention messaging through one coherent visual direction.</p>
     </section>
-    <div class="yh-case-note">Captured directly from youhodler.com in August 2026. Desktop uses one continuous site capture; mobile uses the original responsive views. No UI elements, colors, layouts, or product copy were reconstructed.</div>
+    <div class="yh-case-note">Captured directly from youhodler.com. Desktop uses one continuous site capture and mobile uses the original responsive views; the campaign carousel is rebuilt from real production assets and copy (UMA, Cloud Miner), not a screen capture.</div>
   </div>`;
 }
 
@@ -2680,6 +2688,19 @@ function openMobileDetail(type,key){
   } else if(type==='resume'){
     title.textContent='Resume';
     detailBody.innerHTML=renderCvMobileHTML(cvLang);
+  } else if(type==='guestbook'){
+    title.textContent=tr('guestbook.title');
+    detailBody.innerHTML=`
+      <form class="gb-form" id="gb-form-m" onsubmit="return submitGuestbook(event,true)">
+        <input type="text" id="gb-name-m" maxlength="40" data-i18n-attr="placeholder:guestbook.namePlaceholder" placeholder="Your name" autocomplete="off" required>
+        <textarea id="gb-message-m" maxlength="300" data-i18n-attr="placeholder:guestbook.messagePlaceholder" placeholder="Leave a note…" required></textarea>
+        <input type="text" id="gb-hp-m" class="gb-hp" tabindex="-1" autocomplete="off">
+        <button type="submit" id="gb-submit-m" data-i18n="guestbook.send">Send</button>
+      </form>
+      <div class="gb-status" id="gb-status-m"></div>
+      <div class="gb-list" id="gb-list-m"><div class="gb-empty" data-i18n="guestbook.loading">Loading…</div></div>`;
+    applyLangStatic();
+    loadGuestbook(true);
   } else if(type==='language'){
     title.textContent=tr('mobile.prefs.language');
     const names={en:'English',ru:'Русский',nl:'Nederlands'};
