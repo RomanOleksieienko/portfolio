@@ -966,6 +966,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <button type="button" class="desk-ic" onclick="openProjectDesktop('warriors')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Warriors Cats</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('cherry')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Cherry</span></button>
   <button type="button" class="desk-ic" onclick="openProjectDesktop('arctrade')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">ARC.TRADE</span></button>
+  <button type="button" class="desk-ic" onclick="openProjectDesktop('motion3d')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">3D &amp; Motion</span></button>
   <button type="button" class="desk-ic" onclick="openWin('win-cv')"><img src="icons/document.png" alt=""><span class="fi-lbl">Resume</span></button>
 </div>
 
@@ -988,6 +989,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
         <div class="sb-row" data-project="warriors" onclick="showProj('warriors',this)"><img src="icons/Folder.svg">Warriors Cats</div>
         <div class="sb-row" data-project="cherry" onclick="showProj('cherry',this)"><img src="icons/Folder.svg">Cherry</div>
         <div class="sb-row" data-project="arctrade" onclick="showProj('arctrade',this)"><img src="icons/Folder.svg">ARC.TRADE</div>
+        <div class="sb-row" data-project="motion3d" onclick="showProj('motion3d',this)"><img src="icons/Folder.svg">3D &amp; Motion</div>
         <div class="sb-label" data-i18n="finder.sb.me">Me</div>
         <div class="sb-row" onclick="toggleWin('win-terminal')"><img src="icons/Terminal.svg"><span data-i18n="common.skills">Skills</span></div>
         <div class="sb-row" onclick="toggleWin('win-notes')"><img src="icons/Notes.svg"><span data-i18n="common.aboutMe">About Me</span></div>
@@ -1195,6 +1197,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <button class="spotlight-result" type="button" data-search="warriors cats telegram game play to earn" onclick="runSpotlight('project','warriors')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Warriors Cats</span><span class="spotlight-result-meta" data-i18n="spotlight.warriors.meta">Telegram game · Play-to-earn UI</span></span></button>
       <button class="spotlight-result" type="button" data-search="cherry telegram token rewards mini app" onclick="runSpotlight('project','cherry')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Cherry</span><span class="spotlight-result-meta" data-i18n="spotlight.cherry.meta">Telegram mini app · Token rewards</span></span></button>
       <button class="spotlight-result" type="button" data-search="arc.trade arctrade crypto trading platform nextjs" onclick="runSpotlight('project','arctrade')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">ARC.TRADE</span><span class="spotlight-result-meta" data-i18n="spotlight.arctrade.meta">Trading platform · Product & front-end</span></span></button>
+      <button class="spotlight-result" type="button" data-search="3d motion blender coin logo neon animation" onclick="runSpotlight('project','motion3d')"><img src="icons/Folder.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">3D &amp; Motion</span><span class="spotlight-result-meta" data-i18n="spotlight.motion3d.meta">Personal practice · Blender</span></span></button>
       <button class="spotlight-result" type="button" data-search="about roman biography notes" onclick="runSpotlight('window','win-notes')"><img src="icons/apps/notes.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="notes.aboutTitle">About Roman</span><span class="spotlight-result-meta" data-i18n="spotlight.about.meta">Background, principles and tools</span></span></button>
       <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.skills">Skills</span><span class="spotlight-result-meta" data-i18n="spotlight.skills.meta">Design, code and daily stack</span></span></button>
       <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.contact">Contact</span><span class="spotlight-result-meta">contact@oleksieienko.com</span></span></button>
@@ -1439,6 +1442,7 @@ const I18N={
     'spotlight.selectedWork.meta':'Open all case studies','spotlight.about.meta':'Background, principles and tools','spotlight.skills.meta':'Design, code and daily stack',
     'spotlight.youhodler.meta':'Fintech · Product design','spotlight.nexa.meta':'12+ products · Lead Product Designer',
     'spotlight.wagmio.meta':'Crypto education · UI/UX','spotlight.arctrade.meta':'Trading platform · Product & front-end',
+    'spotlight.motion3d.meta':'Personal practice · Blender',
     'mobile.home.available':'Available','mobile.home.statYears':'Years','mobile.home.statProducts':'Products','mobile.home.statUsers':'Users',
     'mobile.home.whatIDesign':'What I design','mobile.home.whatIDesignBody':'From discovery and product flows to polished UI, prototypes, design systems, and engineering handoff.',
     'mobile.home.chip.fintech':'Fintech','mobile.home.chip.crypto':'Crypto & Web3','mobile.home.chip.mobile':'Mobile apps',
@@ -1507,6 +1511,7 @@ const I18N={
     'spotlight.selectedWork.meta':'Открыть все кейсы','spotlight.about.meta':'Бэкграунд, принципы и инструменты','spotlight.skills.meta':'Дизайн, код и рабочий стек',
     'spotlight.youhodler.meta':'Финтех · Продуктовый дизайн','spotlight.nexa.meta':'12+ продуктов · Lead Product Designer',
     'spotlight.wagmio.meta':'Крипто-образование · UI/UX','spotlight.arctrade.meta':'Трейдинг-платформа · Продукт и фронтенд',
+    'spotlight.motion3d.meta':'Личная практика · Blender',
     'mobile.home.available':'Открыт','mobile.home.statYears':'Года','mobile.home.statProducts':'Продукта','mobile.home.statUsers':'Пользователя',
     'mobile.home.whatIDesign':'Чем занимаюсь','mobile.home.whatIDesignBody':'От discovery и продуктовых флоу до полированного UI, прототипов, дизайн-систем и передачи в разработку.',
     'mobile.home.chip.fintech':'Финтех','mobile.home.chip.crypto':'Крипто и Web3','mobile.home.chip.mobile':'Мобильные приложения',
@@ -1575,6 +1580,7 @@ const I18N={
     'spotlight.selectedWork.meta':'Bekijk alle cases','spotlight.about.meta':'Achtergrond, principes en tools','spotlight.skills.meta':'Design, code en dagelijkse tools',
     'spotlight.youhodler.meta':'Fintech · Productdesign','spotlight.nexa.meta':'12+ producten · Lead Product Designer',
     'spotlight.wagmio.meta':'Crypto-educatie · UI/UX','spotlight.arctrade.meta':'Tradingplatform · Product & front-end',
+    'spotlight.motion3d.meta':'Persoonlijke praktijk · Blender',
     'mobile.home.available':'Beschikbaar','mobile.home.statYears':'Jaar','mobile.home.statProducts':'Producten','mobile.home.statUsers':'Gebruikers',
     'mobile.home.whatIDesign':'Wat ik ontwerp','mobile.home.whatIDesignBody':'Van discovery en productflows tot verfijnde UI, prototypes, design systems en overdracht naar engineering.',
     'mobile.home.chip.fintech':'Fintech','mobile.home.chip.crypto':'Crypto & Web3','mobile.home.chip.mobile':'Mobiele apps',
@@ -1599,7 +1605,8 @@ const PROJ_I18N={
     coinflip:{sub:'Крипто-кошелёк · iOS-приложение',tags:['Крипто-кошелёк','iOS-приложение','Mobile UX','Финтех']},
     warriors:{sub:'Telegram Mini App · Play-to-Earn игра',tags:['Telegram Mini App','UI игры','Play-to-Earn','Web3']},
     cherry:{sub:'Telegram Mini App · Токен-награды',tags:['Telegram Mini App','Дизайн токена','Геймификация','Web3']},
-    arctrade:{sub:'Крипто-трейдинговая платформа · Next.js',tags:['Next.js','UI трейдинга','i18n и SEO','Дизайн-система']}
+    arctrade:{sub:'Крипто-трейдинговая платформа · Next.js',tags:['Next.js','UI трейдинга','i18n и SEO','Дизайн-система']},
+    motion3d:{sub:'Личная практика · Blender',tags:['3D','Моушн-дизайн','Blender','Личное']}
   },
   nl:{
     youhodler:{sub:'Zwitserse Web3-fintech · Website, Growth & CRM',tags:['Webdesign','Motion','Growth creative','CRM']},
@@ -1608,7 +1615,8 @@ const PROJ_I18N={
     coinflip:{sub:'Cryptowallet · iOS-app',tags:['Cryptowallet','iOS-app','Mobile UX','Fintech']},
     warriors:{sub:'Telegram Mini App · Play-to-earn game',tags:['Telegram Mini App','Game-UI','Play-to-earn','Web3']},
     cherry:{sub:'Telegram Mini App · Tokenbeloningen',tags:['Telegram Mini App','Tokendesign','Gamification','Web3']},
-    arctrade:{sub:'Crypto-tradingplatform · Next.js',tags:['Next.js','Trading-UI','i18n & SEO','Design system']}
+    arctrade:{sub:'Crypto-tradingplatform · Next.js',tags:['Next.js','Trading-UI','i18n & SEO','Design system']},
+    motion3d:{sub:'Persoonlijke praktijk · Blender',tags:['3D','Motion design','Blender','Persoonlijk']}
   }
 };
 function tr(key){return (I18N[LANG]&&I18N[LANG][key])??I18N.en[key]??key}
@@ -1843,6 +1851,15 @@ const P = {
     layout:'case', caseRenderer:'arctrade',
     link:{url:'https://github.com/RomanOleksieienko/arc-trade', label:'View on GitHub ↗', note:'Open-source · architecture-first build'},
     screens:['screens/arctrade/home.png','screens/arctrade/platform.png','screens/arctrade/markets.png','screens/arctrade/buy_btc.png']
+  },
+  motion3d:{
+    emoji:'🌀', bg:'linear-gradient(135deg,#7c3aed,#1a0b2e)',
+    name:'3D & Motion', period:'2026', role:'3D & Motion Design',
+    sub:'Personal Practice · Blender',
+    desc:'Personal 3D and motion design practice in Blender — coin loops, logo animation, and neon crypto-brand motion studies, made outside client work to explore movement, light, and material.',
+    tags:[['3D','to'],['Motion Design','tb'],['Blender','tp'],['Personal','tg']],
+    layout:'case', caseRenderer:'motion3d',
+    screens:[]
   }
 };
 
@@ -1964,18 +1981,6 @@ function renderCoinflipCase(mobile=false){
   const capture=(src,title,meta)=>`<figure class="yh-capture"><img src="${src}" alt="Coinflip ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const gallery=['screens/cf_1.png','screens/cf_3.png','screens/cf_5.png','screens/cf_7.png','screens/cf_8.png']
     .map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const auto=reducedMotion?'':'autoplay ';
-  const clip=(src,title,meta)=>`<figure class="yh-capture"><video ${auto}loop muted playsinline preload="metadata"><source src="${src}" type="video/mp4"></video><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
-  const motion=mobile?'':`
-    <section class="yh-story">
-      <h3>3D &amp; motion, built alongside the UI</h3>
-      <p>Outside the app screens, I model and animate the brand's coin and logo motion in Blender — the same asset the wallet's icon and marketing loops are built from.</p>
-    </section>
-    ${clip('screens/coinflip/3d/coin-loop.mp4','Coin loop','Blender · 2K 60fps')}
-    ${clip('screens/coinflip/3d/logo-wave.mp4','Logo wave','Blender motion study')}
-    ${clip('screens/coinflip/3d/neon-crypto.mp4','Neon crypto','Blender motion study')}
-    ${clip('screens/coinflip/3d/neon-cascade.mp4','Neon cascade','Blender motion study')}`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <section class="yh-story yh-story-intro">
       <div class="yh-story-kicker">Mobile UI Designer · 2024</div><h3>A crypto wallet built around one balance and four actions</h3>
@@ -1990,8 +1995,28 @@ function renderCoinflipCase(mobile=false){
     ${capture('screens/coinflip_ui3.png','Coin detail — ETH','Same template, light theme')}
     <div class="scr-label">More screens</div>
     <div class="screens-phone">${gallery}</div>
-    ${motion}
     <div class="yh-case-note">Orange brand system across asset management, Send/Receive/Swap/Buy flows, identity-verification onboarding, and portfolio tracking.</div>
+  </div>`;
+}
+
+function renderMotion3DCase(mobile=false){
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const auto=reducedMotion?'':'autoplay ';
+  const clip=(src,title,meta)=>`<figure class="yh-capture"><video ${auto}loop muted playsinline preload="metadata"><source src="${src}" type="video/mp4"></video><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
+  return `<div class="yh-case${mobile?' yh-mobile-case':''}">
+    <section class="yh-story yh-story-intro">
+      <div class="yh-story-kicker">3D &amp; Motion Design · 2026</div><h3>Modeling and animating crypto brand motion in Blender</h3>
+      <p>Outside product UI, I model and animate coin, logo, and neon-brand motion loops in Blender — the kind of asset that ends up as an app icon, a marketing loop, or a hero background rather than a screen of its own.</p>
+    </section>
+    ${clip('screens/coinflip/3d/coin-loop.mp4','Coin loop','Blender · 2K 60fps')}
+    <section class="yh-story">
+      <h3>Logo and brand-mark motion studies</h3>
+      <p>Turning a flat logo into something that holds attention for a few seconds — wave, wipe, and reveal studies built to loop cleanly for a hero section or a launch teaser.</p>
+    </section>
+    ${clip('screens/coinflip/3d/logo-wave.mp4','Logo wave','Blender motion study')}
+    ${clip('screens/coinflip/3d/neon-crypto.mp4','Neon crypto','Blender motion study')}
+    ${clip('screens/coinflip/3d/neon-cascade.mp4','Neon cascade','Blender motion study')}
+    <div class="yh-case-note">Personal 3D/motion practice, modeled and rendered in Blender.</div>
   </div>`;
 }
 
@@ -2037,7 +2062,8 @@ function renderCherryCase(mobile=false){
 
 const CASE_RENDERERS={
   youhodler:renderYouhodlerCase, arctrade:renderArcTradeCase, nexa:renderNexaCase,
-  wagmio:renderWagmioCase, coinflip:renderCoinflipCase, warriors:renderWarriorsCase, cherry:renderCherryCase
+  wagmio:renderWagmioCase, coinflip:renderCoinflipCase, warriors:renderWarriorsCase, cherry:renderCherryCase,
+  motion3d:renderMotion3DCase
 };
 
 let yhScrollObserver=null;
@@ -2279,7 +2305,7 @@ document.querySelectorAll('.win').forEach((w,i)=>w.style.zIndex=10+i);
 document.querySelectorAll('.di[role="button"]').forEach(item=>item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();item.click()}}));
 
 // ── MOBILE (iOS Settings-style) ────────────────────────
-const MOBILE_GROUPS={work:['youhodler','nexa'],projects:['arctrade','wagmio','coinflip','warriors','cherry']};
+const MOBILE_GROUPS={work:['youhodler','nexa'],projects:['arctrade','motion3d','wagmio','coinflip','warriors','cherry']};
 
 const SKILLS_DATA=[
   {group:'Design', items:[['Figma',100,'Expert'],['Prototyping',83,'Advanced'],['Design Systems',75,'Advanced'],['UX Research',67,'Solid'],['Motion Design',58,'Solid']]},
@@ -2580,7 +2606,7 @@ function setCvLang(lang){
 renderCvDesktop(cvLang);
 syncCvLangButtons(cvLang);
 
-const MOBILE_MARKS={youhodler:'YH',nexa:'N',wagmio:'W',coinflip:'C',warriors:'WC',cherry:'CH',arctrade:'AT'};
+const MOBILE_MARKS={youhodler:'YH',nexa:'N',wagmio:'W',coinflip:'C',warriors:'WC',cherry:'CH',arctrade:'AT',motion3d:'3D'};
 const MOBILE_SHORT_PERIODS={youhodler:'2024–Now',nexa:'2021–24'};
 
 function mobRow(key,kind='project'){
