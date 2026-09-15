@@ -426,6 +426,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display'
 .cv-langs{margin:0;padding-left:18px}
 .cv-langs li{font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.62);margin-bottom:4px}
 
+/* ── LIVE CURSORS (real-time visitor presence) ──────────── */
+#live-cursors{position:fixed;inset:0;z-index:99998;pointer-events:none;overflow:hidden}
+.live-cursor{position:absolute;top:0;left:0;transform:translate(-2px,-2px);transition:transform .09s linear;will-change:transform}
+.live-cursor svg{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+.live-cursor-tag{margin-left:14px;margin-top:-2px;display:inline-block;padding:2px 7px;border-radius:6px;font:600 10px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:#fff;white-space:nowrap}
+.presence-badge{display:flex;align-items:center;gap:5px;height:30px;padding:0 9px;border-radius:6px;cursor:default;font:600 11px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;color:var(--bar-muted)}
+.presence-dot{width:6px;height:6px;border-radius:50%;background:#30d158;flex-shrink:0}
+.presence-dot.is-off{background:rgba(255,255,255,.3)}
+
+/* ── GUESTBOOK ────────────────────────────────────────── */
+.gb-form{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-bottom:.5px solid var(--glass-border-low)}
+.gb-form input,.gb-form textarea{appearance:none;border:.5px solid var(--glass-border);border-radius:9px;background:rgba(0,0,0,.16);color:var(--surface-ink);font:400 13px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;padding:8px 10px;resize:none}
+.gb-form textarea{min-height:56px}
+.gb-form button{appearance:none;align-self:flex-end;border:0;border-radius:9px;padding:7px 14px;background:#0a84ff;color:#fff;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;cursor:pointer}
+.gb-form button:disabled{opacity:.5;cursor:default}
+.gb-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.gb-list{padding:6px 16px 16px}
+.gb-entry{padding:10px 0;border-bottom:.5px solid var(--glass-border-low)}
+.gb-entry:last-child{border-bottom:0}
+.gb-entry-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:3px}
+.gb-entry-name{font-size:12.5px;font-weight:700;color:var(--surface-ink)}
+.gb-entry-time{font-size:10.5px;color:var(--surface-faint)}
+.gb-entry-msg{font-size:13px;line-height:1.5;color:var(--surface-muted);white-space:pre-wrap;word-break:break-word}
+.gb-empty{padding:20px 16px;font-size:12.5px;color:var(--surface-faint);text-align:center}
+.gb-status{padding:0 16px 10px;font-size:11.5px;color:var(--surface-faint)}
+
 /* ── DOCK ───────────────────────────────────────── */
 #dock{
   position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
@@ -848,6 +874,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   </div>
   <button class="mb-search" type="button" onclick="openSpotlight()" data-i18n-attr="aria-label:menubar.search" aria-label="Search the portfolio"><img src="icons/ui/mbx-spotlight.svg" alt=""><span data-i18n="menubar.search">Search Roman's portfolio</span><kbd>⌘K</kbd></button>
   <div class="mb-r">
+    <div class="presence-badge" id="presence-badge" title="Live visitors on this page"><span class="presence-dot is-off" id="presence-dot"></span><span id="presence-count">·</span></div>
     <div class="mb-lang-wrap">
       <button class="mb-icon mb-lang" id="lang-toggle" type="button" data-i18n-attr="title:menubar.langTitle" title="Language" aria-haspopup="menu" aria-expanded="false" onclick="event.stopPropagation();toggleLangMenu()">EN</button>
       <div class="lang-menu" id="lang-menu" hidden role="menu">
@@ -964,6 +991,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
         <div class="sb-row" onclick="toggleWin('win-notes')"><img src="icons/Notes.svg"><span data-i18n="common.aboutMe">About Me</span></div>
         <div class="sb-row" onclick="toggleWin('win-mail')"><img src="icons/Mail.svg"><span data-i18n="common.contact">Contact</span></div>
         <div class="sb-row" onclick="toggleWin('win-cv')"><img src="icons/document.png">Resume</div>
+        <div class="sb-row" onclick="toggleWin('win-guestbook')"><img src="icons/apps/messages.svg"><span data-i18n="guestbook.title">Guestbook</span></div>
       </div>
       <div class="fc" id="fc"></div>
     </div>
@@ -1169,6 +1197,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
       <button class="spotlight-result" type="button" data-search="skills tools terminal figma code" onclick="runSpotlight('window','win-terminal')"><img src="icons/apps/terminal.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.skills">Skills</span><span class="spotlight-result-meta" data-i18n="spotlight.skills.meta">Design, code and daily stack</span></span></button>
       <button class="spotlight-result" type="button" data-search="contact email work together mail" onclick="runSpotlight('window','win-mail')"><img src="icons/apps/mail.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="common.contact">Contact</span><span class="spotlight-result-meta">contact@oleksieienko.com</span></span></button>
       <button class="spotlight-result" type="button" data-search="resume cv download experience pdf" onclick="runSpotlight('window','win-cv')"><img src="icons/document.png" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name">Resume</span><span class="spotlight-result-meta">Download CV · EN / NL / RU</span></span></button>
+      <button class="spotlight-result" type="button" data-search="guestbook comment leave a note message" onclick="runSpotlight('window','win-guestbook')"><img src="icons/apps/messages.svg" alt=""><span class="spotlight-result-copy"><span class="spotlight-result-name" data-i18n="guestbook.title">Guestbook</span><span class="spotlight-result-meta" data-i18n="guestbook.spotlightMeta">Leave a public note</span></span></button>
       <div class="spotlight-empty" id="spotlight-empty" hidden data-i18n="spotlight.empty">Nothing found. Try “work”, “skills” or “contact”.</div>
     </div>
   </div>
@@ -1186,6 +1215,27 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   <div class="d-sep" aria-hidden="true"></div>
   <div class="di" onclick="emptyTrash(event)" role="button" tabindex="0" data-i18n-attr="aria-label:dock.trash" aria-label="Trash"><img src="icons/apps/trash-empty.svg" id="trash-ic" alt=""><div class="di-tip" data-i18n="dock.trash">Trash</div></div>
 </div>
+
+<!-- ══ GUESTBOOK WINDOW ══ -->
+<div class="win" id="win-guestbook" style="left:130px;top:60px;width:480px;height:560px;display:none">
+  <div class="wh">
+    <div class="tl tl-r" onclick="closeWin('win-guestbook')"></div>
+    <div class="tl tl-y"></div><div class="tl tl-g"></div>
+    <div class="wh-title" data-i18n="guestbook.title">Guestbook</div>
+  </div>
+  <div class="wb scroll" style="height:100%">
+    <form class="gb-form" id="gb-form" onsubmit="return submitGuestbook(event)">
+      <input type="text" id="gb-name" maxlength="40" data-i18n-attr="placeholder:guestbook.namePlaceholder" placeholder="Your name" autocomplete="off" required>
+      <textarea id="gb-message" maxlength="300" data-i18n-attr="placeholder:guestbook.messagePlaceholder" placeholder="Leave a note…" required></textarea>
+      <input type="text" id="gb-hp" class="gb-hp" tabindex="-1" autocomplete="off">
+      <button type="submit" id="gb-submit" data-i18n="guestbook.send">Send</button>
+    </form>
+    <div class="gb-status" id="gb-status"></div>
+    <div class="gb-list" id="gb-list"><div class="gb-empty" data-i18n="guestbook.loading">Loading…</div></div>
+  </div>
+</div>
+
+<div id="live-cursors" aria-hidden="true"></div>
 
 </div>
 
@@ -2677,6 +2727,8 @@ mobileDetail.addEventListener('touchend',e=>{
   mobileSwipeStart=null;
 },{passive:true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileDetail()});
+
+restoreLang();
 </script>
 </body>
 </html>
