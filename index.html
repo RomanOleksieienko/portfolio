@@ -2749,6 +2749,98 @@ mobileDetail.addEventListener('touchend',e=>{
 },{passive:true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileDetail()});
 
+// ── GUESTBOOK (Cloudflare Worker + KV) ──────────────────
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function timeAgo(ts){
+  const s=Math.max(1,Math.floor((Date.now()-ts)/1000));
+  if(s<60)return 'just now';
+  if(s<3600)return Math.floor(s/60)+'m ago';
+  if(s<86400)return Math.floor(s/3600)+'h ago';
+  return Math.floor(s/86400)+'d ago';
+}
+function loadGuestbook(mobile=false){
+  const list=document.getElementById(mobile?'gb-list-m':'gb-list');
+  if(!list)return;
+  fetch(LIVE_API+'/guestbook').then(r=>r.json()).then(entries=>{
+    list.innerHTML=(!entries||!entries.length)
+      ?`<div class="gb-empty" data-i18n="guestbook.empty">Be the first to leave a note.</div>`
+      :entries.map(e=>`<div class="gb-entry"><div class="gb-entry-head"><span class="gb-entry-name">${escapeHtml(e.name)}</span><span class="gb-entry-time">${timeAgo(e.ts)}</span></div><div class="gb-entry-msg">${escapeHtml(e.message)}</div></div>`).join('');
+    applyLangStatic();
+  }).catch(()=>{
+    list.innerHTML=`<div class="gb-empty" data-i18n="guestbook.error">Couldn't load the guestbook.</div>`;
+    applyLangStatic();
+  });
+}
+function submitGuestbook(e,mobile=false){
+  e.preventDefault();
+  const suf=mobile?'-m':'';
+  const nameEl=document.getElementById('gb-name'+suf),msgEl=document.getElementById('gb-message'+suf),hpEl=document.getElementById('gb-hp'+suf);
+  const btn=document.getElementById('gb-submit'+suf),status=document.getElementById('gb-status'+suf);
+  const name=nameEl.value.trim(),message=msgEl.value.trim();
+  if(!name||!message)return false;
+  btn.disabled=true;
+  fetch(LIVE_API+'/guestbook',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,message,hp:hpEl.value})})
+    .then(r=>{if(!r.ok)throw new Error('failed');nameEl.value='';msgEl.value='';status.textContent='';loadGuestbook(mobile)})
+    .catch(()=>{status.textContent=tr('guestbook.sendError')})
+    .finally(()=>{btn.disabled=false});
+  return false;
+}
+
+// ── LIVE CURSORS (Cloudflare Durable Object presence) ───
+const LIVE_API='https://roman-portfolio-live.romanoleksieienko.workers.dev';
+let liveSocket=null;
+const liveCursorEls={};
+function setPresence(online,count){
+  const dot=document.getElementById('presence-dot'),label=document.getElementById('presence-count');
+  if(!dot||!label)return;
+  dot.classList.toggle('is-off',!online);
+  label.textContent=online?String(count??1):'·';
+}
+function renderRemoteCursor(data){
+  const container=document.getElementById('live-cursors');
+  if(!container)return;
+  let el=liveCursorEls[data.id];
+  if(!el){
+    el=document.createElement('div');
+    el.className='live-cursor';
+    el.style.color=data.color;
+    el.innerHTML='<svg width="18" height="24" viewBox="0 0 18 24" fill="none"><path d="M1 1l6.5 20 3-8 8-3L1 1z" fill="currentColor" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="live-cursor-tag" style="background:'+data.color+'">visitor</span>';
+    container.appendChild(el);
+    liveCursorEls[data.id]=el;
+  }
+  el.style.transform=`translate(${data.x*window.innerWidth}px,${data.y*window.innerHeight}px)`;
+}
+function removeRemoteCursor(id){
+  const el=liveCursorEls[id];
+  if(el){el.remove();delete liveCursorEls[id]}
+}
+function connectLiveCursors(){
+  if(window.matchMedia('(max-width:900px)').matches)return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let ws;
+  try{ws=new WebSocket(LIVE_API.replace(/^http/,'ws')+'/ws')}catch(e){return}
+  liveSocket=ws;
+  ws.addEventListener('open',()=>setPresence(true,null));
+  ws.addEventListener('message',evt=>{
+    let data;try{data=JSON.parse(evt.data)}catch(e){return}
+    if(data.type==='count')setPresence(true,data.count);
+    else if(data.type==='move')renderRemoteCursor(data);
+    else if(data.type==='leave')removeRemoteCursor(data.id);
+  });
+  ws.addEventListener('close',()=>{setPresence(false,null);if(liveSocket===ws)setTimeout(connectLiveCursors,5000)});
+  ws.addEventListener('error',()=>{try{ws.close()}catch(e){}});
+  let lastSent=0;
+  document.addEventListener('mousemove',e=>{
+    const now=performance.now();
+    if(now-lastSent<45)return;
+    lastSent=now;
+    if(!liveSocket||liveSocket.readyState!==1)return;
+    liveSocket.send(JSON.stringify({type:'move',x:e.clientX/window.innerWidth,y:e.clientY/window.innerHeight}));
+  },{passive:true});
+}
+
+loadGuestbook();
+connectLiveCursors();
 restoreLang();
 </script>
 </body>

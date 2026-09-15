@@ -1,17 +1,16 @@
 {
-  "name": "roman-portfolio",
+  "name": "roman-portfolio-live",
   "main": "index.js",
   "compatibility_date": "2026-05-15",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": "../client",
-    "binding": "ASSETS"
+  "durable_objects": {
+    "bindings": [
+      { "name": "CURSOR_ROOM", "class_name": "CursorRoom" }
+    ]
   },
-  "no_bundle": true,
-  "rules": [
-    {
-      "type": "ESModule",
-      "globs": ["**/*.js", "**/*.mjs"]
-    }
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["CursorRoom"] }
+  ],
+  "kv_namespaces": [
+    { "binding": "GUESTBOOK", "id": "REPLACE_AFTER_KV_CREATE" }
   ]
 }
