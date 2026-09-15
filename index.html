@@ -1965,6 +1965,18 @@ function renderCoinflipCase(mobile=false){
   const capture=(src,title,meta)=>`<figure class="yh-capture"><img src="${src}" alt="Coinflip ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const gallery=['screens/cf_1.png','screens/cf_3.png','screens/cf_5.png','screens/cf_7.png','screens/cf_8.png']
     .map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const auto=reducedMotion?'':'autoplay ';
+  const clip=(src,title,meta)=>`<figure class="yh-capture"><video ${auto}loop muted playsinline preload="metadata"><source src="${src}" type="video/mp4"></video><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
+  const motion=mobile?'':`
+    <section class="yh-story">
+      <h3>3D &amp; motion, built alongside the UI</h3>
+      <p>Outside the app screens, I model and animate the brand's coin and logo motion in Blender — the same asset the wallet's icon and marketing loops are built from.</p>
+    </section>
+    ${clip('screens/coinflip/3d/coin-loop.mp4','Coin loop','Blender · 2K 60fps')}
+    ${clip('screens/coinflip/3d/logo-wave.mp4','Logo wave','Blender motion study')}
+    ${clip('screens/coinflip/3d/neon-crypto.mp4','Neon crypto','Blender motion study')}
+    ${clip('screens/coinflip/3d/neon-cascade.mp4','Neon cascade','Blender motion study')}`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <section class="yh-story yh-story-intro">
       <div class="yh-story-kicker">Mobile UI Designer · 2024</div><h3>A crypto wallet built around one balance and four actions</h3>
@@ -1979,6 +1991,7 @@ function renderCoinflipCase(mobile=false){
     ${capture('screens/coinflip_ui3.png','Coin detail — ETH','Same template, light theme')}
     <div class="scr-label">More screens</div>
     <div class="screens-phone">${gallery}</div>
+    ${motion}
     <div class="yh-case-note">Orange brand system across asset management, Send/Receive/Swap/Buy flows, identity-verification onboarding, and portfolio tracking.</div>
   </div>`;
 }
