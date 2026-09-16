@@ -981,15 +981,15 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     <div class="finder-body">
       <div class="finder-sb">
         <div class="sb-label" data-i18n="common.work">Work</div>
-        <div class="sb-row active" data-project="youhodler" onclick="showProj('youhodler',this)"><img src="icons/Folder.svg">YouHodler</div>
-        <div class="sb-row" data-project="nexa" onclick="showProj('nexa',this)"><img src="icons/Folder.svg">Nexa Agency</div>
+        <div class="sb-row active" data-project="youhodler" onclick="showProj('youhodler',this);trackEvent('project_open',{key:'youhodler'})"><img src="icons/Folder.svg">YouHodler</div>
+        <div class="sb-row" data-project="nexa" onclick="showProj('nexa',this);trackEvent('project_open',{key:'nexa'})"><img src="icons/Folder.svg">Nexa Agency</div>
         <div class="sb-label" data-i18n="common.projects">Projects</div>
-        <div class="sb-row" data-project="wagmio" onclick="showProj('wagmio',this)"><img src="icons/Folder.svg">Wagmio</div>
-        <div class="sb-row" data-project="coinflip" onclick="showProj('coinflip',this)"><img src="icons/Folder.svg">Coinflip</div>
-        <div class="sb-row" data-project="warriors" onclick="showProj('warriors',this)"><img src="icons/Folder.svg">Warriors Cats</div>
-        <div class="sb-row" data-project="cherry" onclick="showProj('cherry',this)"><img src="icons/Folder.svg">Cherry</div>
-        <div class="sb-row" data-project="arctrade" onclick="showProj('arctrade',this)"><img src="icons/Folder.svg">ARC.TRADE</div>
-        <div class="sb-row" data-project="motion3d" onclick="showProj('motion3d',this)"><img src="icons/Folder.svg">3D &amp; Motion</div>
+        <div class="sb-row" data-project="wagmio" onclick="showProj('wagmio',this);trackEvent('project_open',{key:'wagmio'})"><img src="icons/Folder.svg">Wagmio</div>
+        <div class="sb-row" data-project="coinflip" onclick="showProj('coinflip',this);trackEvent('project_open',{key:'coinflip'})"><img src="icons/Folder.svg">Coinflip</div>
+        <div class="sb-row" data-project="warriors" onclick="showProj('warriors',this);trackEvent('project_open',{key:'warriors'})"><img src="icons/Folder.svg">Warriors Cats</div>
+        <div class="sb-row" data-project="cherry" onclick="showProj('cherry',this);trackEvent('project_open',{key:'cherry'})"><img src="icons/Folder.svg">Cherry</div>
+        <div class="sb-row" data-project="arctrade" onclick="showProj('arctrade',this);trackEvent('project_open',{key:'arctrade'})"><img src="icons/Folder.svg">ARC.TRADE</div>
+        <div class="sb-row" data-project="motion3d" onclick="showProj('motion3d',this);trackEvent('project_open',{key:'motion3d'})"><img src="icons/Folder.svg">3D &amp; Motion</div>
         <div class="sb-label" data-i18n="finder.sb.me">Me</div>
         <div class="sb-row" onclick="toggleWin('win-terminal')"><img src="icons/Terminal.svg"><span data-i18n="common.skills">Skills</span></div>
         <div class="sb-row" onclick="toggleWin('win-notes')"><img src="icons/Notes.svg"><span data-i18n="common.aboutMe">About Me</span></div>
@@ -1698,7 +1698,7 @@ function applyLangDynamic(){
   if(gp) gp.innerHTML=MOBILE_GROUPS.projects.map(k=>mobRow(k)).join('');
   const searchInput=document.getElementById('ios-search-input');
   if(searchInput&&searchInput.value) filterMobile(searchInput.value);
-  if(currentDetail) openMobileDetail(currentDetail.type, currentDetail.key);
+  if(currentDetail) openMobileDetail(currentDetail.type, currentDetail.key, true);
   const lv=document.getElementById('ios-lang-value');
   if(lv) lv.textContent={en:'English',ru:'Русский',nl:'Nederlands'}[LANG];
 }
@@ -1709,7 +1709,7 @@ function setLang(lang,persist=true){
   if(langToggle) langToggle.textContent=lang.toUpperCase();
   applyLangStatic();
   applyLangDynamic();
-  if(persist){try{localStorage.setItem('roman-portfolio-lang',lang)}catch(e){}}
+  if(persist){try{localStorage.setItem('roman-portfolio-lang',lang)}catch(e){}trackEvent('lang_switch',{key:lang})}
 }
 function toggleLangMenu(){
   const menu=document.getElementById('lang-menu'),btn=document.getElementById('lang-toggle');
@@ -2147,6 +2147,7 @@ function openProjectDesktop(key){
   const row=document.querySelector(`.sb-row[data-project="${key}"]`);
   if(row)showProj(key,row);
   openWin('win-finder');
+  trackEvent('project_open',{key});
 }
 
 // ── REMINDERS TOGGLE ──────────────────────────────────
@@ -2294,6 +2295,7 @@ function openWin(id){
       el.style.transition='transform .2s cubic-bezier(.34,1.56,.64,1),opacity .16s';
       el.style.transform='';el.style.opacity='1';
     }));
+    trackEvent('window_open',{key:id});
   } else {front(el);}
 }
 function toggleWin(id){
@@ -2527,7 +2529,7 @@ function cvHeadHTML(lang){
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:180px">
-      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" target="_blank" rel="noopener">⬇ ${d.downloadLabel}</a>
+      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" target="_blank" rel="noopener" onclick="trackEvent('cv_download',{key:'${lang}'})">⬇ ${d.downloadLabel}</a>
       <div class="cv-hint">${d.hint}</div>
     </div>
   </div>`;
@@ -2681,8 +2683,9 @@ function toggleReduceMotion(){
 }
 setReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-function openMobileDetail(type,key){
+function openMobileDetail(type,key,isRefresh){
   currentDetail=(type==='project')?{type,key}:{type};
+  if(!isRefresh) trackEvent(type==='project'?'project_open':'window_open',{key:type==='project'?key:type});
   const mobile=document.getElementById('mobile');
   mobile.scrollTop=0;
   const title=document.getElementById('ios-detail-navtitle');
@@ -2826,8 +2829,20 @@ function submitGuestbook(e,mobile=false){
   return false;
 }
 
-// ── LIVE CURSORS (Cloudflare Durable Object presence) ───
+// ── ANALYTICS (fire-and-forget, never blocks the UI) ────
 const LIVE_API='https://roman-portfolio-live.romanoleksieienko.workers.dev';
+function trackEvent(event,meta){
+  try{
+    const payload=JSON.stringify({event,meta:meta||{},lang:LANG,ref:document.referrer||''});
+    if(navigator.sendBeacon){
+      navigator.sendBeacon(LIVE_API+'/track',new Blob([payload],{type:'application/json'}));
+    }else{
+      fetch(LIVE_API+'/track',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true}).catch(()=>{});
+    }
+  }catch(e){}
+}
+
+// ── LIVE CURSORS (Cloudflare Durable Object presence) ───
 let liveSocket=null;
 const liveCursorEls={};
 function setPresence(online,count){
@@ -2882,6 +2897,7 @@ function connectLiveCursors(){
 loadGuestbook();
 connectLiveCursors();
 restoreLang();
+trackEvent('view',{});
 </script>
 </body>
 </html>
