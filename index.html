@@ -960,14 +960,7 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 <!-- DESKTOP FOLDERS — real macOS folder, NO border-radius -->
 <div class="desktop-icons-label" data-i18n="common.selectedWork" aria-hidden="true">Selected Work</div>
 <div class="desktop-icons" aria-label="Selected work">
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('youhodler')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">YouHodler</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('nexa')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Nexa Agency</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('wagmio')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Wagmio</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('coinflip')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Coinflip</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('warriors')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Warriors Cats</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('cherry')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">Cherry</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('arctrade')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">ARC.TRADE</span></button>
-  <button type="button" class="desk-ic" onclick="openProjectDesktop('motion3d')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl">3D &amp; Motion</span></button>
+  <button type="button" class="desk-ic" onclick="openWin('win-finder')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl" data-i18n="common.work">Work</span></button>
   <button type="button" class="desk-ic" onclick="openWin('win-cv')"><img src="icons/document.png" alt=""><span class="fi-lbl">Resume</span></button>
 </div>
 
@@ -1642,6 +1635,7 @@ function setDesktopTheme(theme,persist=true){
 })();
 function toggleDesktopAppearance(button){
   const next=document.getElementById('desktop').dataset.theme==='dark'?'light':'dark';
+  UISound.toggle();
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rect=button.getBoundingClientRect(),root=document.documentElement;
   root.style.setProperty('--theme-x',`${rect.left+rect.width/2}px`);
@@ -1716,6 +1710,7 @@ function toggleLangMenu(){
   const menu=document.getElementById('lang-menu'),btn=document.getElementById('lang-toggle');
   if(!menu||!btn)return;
   const willOpen=menu.hidden;
+  if(willOpen)UISound.click();
   menu.hidden=!willOpen;
   btn.setAttribute('aria-expanded',String(willOpen));
 }
@@ -1767,6 +1762,7 @@ async function loadDesktopWeather(){
 if(window.matchMedia('(min-width:901px)').matches)loadDesktopWeather();
 function openSpotlight(){
   if(window.matchMedia('(max-width:900px)').matches)return;
+  UISound.open();
   const overlay=document.getElementById('spotlight'),input=document.getElementById('spotlight-input');
   overlay.hidden=false;input.value='';filterSpotlight('');requestAnimationFrame(()=>input.focus());
 }
@@ -2281,8 +2277,40 @@ function emptyTrash(e){
   trashFull=!trashFull;
   ic.src=trashFull?'icons/apps/trash-full.svg':'icons/apps/trash-empty.svg';
 }
+
+// ── UI SOUNDS — tiny synthesized macOS-style clicks/pops (no bundled audio assets, no licensing) ──
+const UISound=(()=>{
+  let ctx=null;
+  function ac(){
+    if(window.matchMedia('(max-width:900px)').matches)return null;
+    if(!ctx){try{ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}
+    if(ctx.state==='suspended')ctx.resume();
+    return ctx;
+  }
+  function tone(freq,dur,{type='sine',sweep,gain=0.05}={}){
+    const c=ac();if(!c)return;
+    const t0=c.currentTime;
+    const osc=c.createOscillator(),g=c.createGain();
+    osc.type=type;osc.frequency.setValueAtTime(freq,t0);
+    if(sweep)osc.frequency.exponentialRampToValueAtTime(sweep,t0+dur);
+    g.gain.setValueAtTime(0,t0);
+    g.gain.linearRampToValueAtTime(gain,t0+0.005);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    osc.connect(g).connect(c.destination);
+    osc.start(t0);osc.stop(t0+dur+0.02);
+  }
+  return{
+    open(){tone(540,0.09,{sweep:920,gain:0.05})},
+    close(){tone(680,0.08,{sweep:360,gain:0.045})},
+    click(){tone(1300,0.04,{gain:0.035})},
+    toggle(){tone(860,0.05,{type:'triangle',gain:0.045})},
+    pop(){tone(700,0.07,{sweep:1050,gain:0.05})}
+  };
+})();
+
 function closeWin(id){
   const el=document.getElementById(id);
+  UISound.close();
   el.style.transition='transform .13s ease-in,opacity .13s';
   el.style.transform='scale(.9)';el.style.opacity='0';
   setTimeout(()=>{el.style.display='none';el.style.transform='';el.style.opacity='';el.style.transition=''},140);
@@ -2290,6 +2318,7 @@ function closeWin(id){
 function openWin(id){
   const el=document.getElementById(id);
   if(el.style.display==='none'||getComputedStyle(el).display==='none'){
+    UISound.open();
     el.style.display='flex';front(el);
     el.style.transform='scale(.92)';el.style.opacity='0';el.style.transition='';
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -2826,7 +2855,7 @@ function submitGuestbook(e,mobile=false){
   if(!name||!message)return false;
   btn.disabled=true;
   fetch(LIVE_API+'/guestbook',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,message,hp:hpEl.value})})
-    .then(r=>{if(!r.ok)throw new Error('failed');nameEl.value='';msgEl.value='';status.textContent='';loadGuestbook(mobile)})
+    .then(r=>{if(!r.ok)throw new Error('failed');UISound.pop();nameEl.value='';msgEl.value='';status.textContent='';loadGuestbook(mobile)})
     .catch(()=>{status.textContent=tr('guestbook.sendError')})
     .finally(()=>{btn.disabled=false});
   return false;
