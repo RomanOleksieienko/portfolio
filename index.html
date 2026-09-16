@@ -2392,7 +2392,7 @@ const CV_I18N={
     location:'Ghent, Belgium',
     badge:'EU Work Permit',
     labels:{summary:'Summary',achievements:'Key Achievements',experience:'Experience',skills:'Skills & Tools',education:'Education',languages:'Languages'},
-    summary:'UX/UI &amp; Product Designer with 5+ years of experience across fintech, SaaS, and Web3. Skilled in end-to-end product design — from research, user flows, and wireframes to UI, design systems, and marketing assets. Strong expertise in Webflow, Framer, and AI-driven automation workflows, consistently improving efficiency and conversion rates. Based in Ghent, Belgium, with an EU work permit — available for remote, hybrid, or on-site roles.',
+    summary:'UX/UI &amp; Product Designer with 5+ years of experience across fintech, SaaS, and Web3. Skilled in end-to-end product design — from research, user flows, and wireframes to UI, design systems, and marketing assets. Strong expertise in Webflow, Framer, and AI-driven automation workflows, consistently improving efficiency and conversion rates. Available for remote, hybrid, or on-site roles.',
     achievements:[
       'Increased on-site conversion through structured A/B testing and analytics-driven iteration',
       "Led the migration of YouHodler's marketing website from Webflow (no-code) to a custom-coded stack",
@@ -2434,7 +2434,7 @@ const CV_I18N={
     location:'Gent, België',
     badge:'EU-werkvergunning',
     labels:{summary:'Profiel',achievements:'Belangrijkste resultaten',experience:'Werkervaring',skills:'Vaardigheden &amp; tools',education:'Opleiding',languages:'Talen'},
-    summary:'UX/UI &amp; Product Designer met 5+ jaar ervaring in fintech, SaaS en Web3. Sterk in end-to-end productontwerp — van onderzoek, user flows en wireframes tot UI, design systems en marketingmateriaal. Ruime expertise in Webflow, Framer en AI-gedreven automatisering, met aantoonbare verbeteringen in efficiëntie en conversie. Woonachtig in Gent, België, met een EU-werkvergunning — beschikbaar voor remote, hybride of on-site functies.',
+    summary:'UX/UI &amp; Product Designer met 5+ jaar ervaring in fintech, SaaS en Web3. Sterk in end-to-end productontwerp — van onderzoek, user flows en wireframes tot UI, design systems en marketingmateriaal. Ruime expertise in Webflow, Framer en AI-gedreven automatisering, met aantoonbare verbeteringen in efficiëntie en conversie. Beschikbaar voor remote, hybride of on-site functies.',
     achievements:[
       'Verhoogde de on-site conversie door gestructureerde A/B-tests en data-gedreven iteratie',
       'Leidde de migratie van de YouHodler-website van Webflow (no-code) naar een custom-gecodeerde stack',
@@ -2476,7 +2476,7 @@ const CV_I18N={
     location:'Гент, Бельгия',
     badge:'Разрешение на работу в ЕС',
     labels:{summary:'Профиль',achievements:'Ключевые достижения',experience:'Опыт работы',skills:'Навыки и инструменты',education:'Образование',languages:'Языки'},
-    summary:'UX/UI и продуктовый дизайнер с 5+ годами опыта в финтехе, SaaS и Web3. Владею полным циклом продуктового дизайна — от исследований, пользовательских сценариев и вайрфреймов до UI, дизайн-систем и маркетинговых материалов. Глубокая экспертиза в Webflow, Framer и AI-автоматизации, стабильно повышаю эффективность и конверсию. Живу в Генте, Бельгия, есть разрешение на работу в ЕС — открыт к удалённой, гибридной или офисной работе.',
+    summary:'UX/UI и продуктовый дизайнер с 5+ годами опыта в финтехе, SaaS и Web3. Владею полным циклом продуктового дизайна — от исследований, пользовательских сценариев и вайрфреймов до UI, дизайн-систем и маркетинговых материалов. Глубокая экспертиза в Webflow, Framer и AI-автоматизации, стабильно повышаю эффективность и конверсию. Открыт к удалённой, гибридной или офисной работе.',
     achievements:[
       'Повысил конверсию на сайте благодаря структурированным A/B-тестам и анализу аналитики',
       'Руководил переносом сайта YouHodler с no-code Webflow на кастомный код',
@@ -2527,7 +2527,7 @@ function cvHeadHTML(lang){
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:180px">
-      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" onclick="return downloadCv(event,'${d.downloadFile}','${d.downloadName}')">⬇ ${d.downloadLabel}</a>
+      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" target="_blank" rel="noopener">⬇ ${d.downloadLabel}</a>
       <div class="cv-hint">${d.hint}</div>
     </div>
   </div>`;
@@ -2554,25 +2554,6 @@ function cvBodyHTML(lang){
     <div class="cv-sl">${L.languages}</div><ul class="cv-langs">${d.languages.map(l=>`<li>${l}</li>`).join('')}</ul>`;
 }
 
-// Some browsers (notably mobile Safari) ignore the plain <a download> attribute
-// for same-origin HTML and just navigate/open it instead of saving a file.
-// Fetching it ourselves and saving via a Blob URL is far more reliable.
-function downloadCv(e,url,filename){
-  e.preventDefault();
-  fetch(url).then(r=>{
-    if(!r.ok)throw new Error('fetch failed');
-    return r.blob();
-  }).then(blob=>{
-    const blobUrl=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=blobUrl;a.download=filename;
-    document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(blobUrl),4000);
-  }).catch(()=>{
-    window.open(url,'_blank');
-  });
-  return false;
-}
 
 function renderCvDesktop(lang){
   const el=document.getElementById('cv-doc');
