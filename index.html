@@ -2387,10 +2387,10 @@ let cvLang=(function(){
 
 const CV_I18N={
   en:{
-    downloadFile:'cv/roman-oleksieienko-cv-en.html',
-    downloadName:'Roman-Oleksieienko-CV-EN.html',
+    downloadFile:'cv/roman-oleksieienko-cv-en.pdf',
+    downloadName:'Roman-Oleksieienko-CV-EN.pdf',
     downloadLabel:'Download',
-    hint:'Plain HTML — ATS-safe. Press ⌘P → Save as PDF if a form needs one.',
+    hint:'PDF · text-based, ATS-safe.',
     location:'Ghent, Belgium',
     badge:'EU Work Permit',
     labels:{summary:'Summary',achievements:'Key Achievements',experience:'Experience',skills:'Skills & Tools',education:'Education',languages:'Languages'},
@@ -2429,10 +2429,10 @@ const CV_I18N={
     languages:['Ukrainian — Native','Russian — Native','English — Upper-Intermediate','Dutch — Beginner (learning)','Norwegian — Intermediate']
   },
   nl:{
-    downloadFile:'cv/roman-oleksieienko-cv-nl.html',
-    downloadName:'Roman-Oleksieienko-CV-NL.html',
+    downloadFile:'cv/roman-oleksieienko-cv-nl.pdf',
+    downloadName:'Roman-Oleksieienko-CV-NL.pdf',
     downloadLabel:'Downloaden',
-    hint:'Platte HTML — ATS-veilig. Druk op ⌘P → Bewaar als PDF indien nodig.',
+    hint:'PDF · op tekst gebaseerd, ATS-veilig.',
     location:'Gent, België',
     badge:'EU-werkvergunning',
     labels:{summary:'Profiel',achievements:'Belangrijkste resultaten',experience:'Werkervaring',skills:'Vaardigheden &amp; tools',education:'Opleiding',languages:'Talen'},
@@ -2471,10 +2471,10 @@ const CV_I18N={
     languages:['Oekraïens — Moedertaal','Russisch — Moedertaal','Engels — Bovengemiddeld (Upper-Intermediate)','Nederlands — Beginner (lerende)','Noors — Gemiddeld (Intermediate)']
   },
   ru:{
-    downloadFile:'cv/roman-oleksieienko-cv-ru.html',
-    downloadName:'Roman-Oleksieienko-CV-RU.html',
+    downloadFile:'cv/roman-oleksieienko-cv-ru.pdf',
+    downloadName:'Roman-Oleksieienko-CV-RU.pdf',
     downloadLabel:'Скачать',
-    hint:'Обычный HTML — совместим с ATS. Нажмите ⌘P → «Сохранить как PDF», если нужен файл.',
+    hint:'PDF · текстовый, совместим с ATS.',
     location:'Гент, Бельгия',
     badge:'Разрешение на работу в ЕС',
     labels:{summary:'Профиль',achievements:'Ключевые достижения',experience:'Опыт работы',skills:'Навыки и инструменты',education:'Образование',languages:'Языки'},
@@ -2529,7 +2529,7 @@ function cvHeadHTML(lang){
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:180px">
-      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" target="_blank" rel="noopener" onclick="trackEvent('cv_download',{key:'${lang}'})">⬇ ${d.downloadLabel}</a>
+      <a class="cv-download" href="${d.downloadFile}" download="${d.downloadName}" onclick="trackEvent('cv_download',{key:'${lang}'})">⬇ ${d.downloadLabel}</a>
       <div class="cv-hint">${d.hint}</div>
     </div>
   </div>`;
