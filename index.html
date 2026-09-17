@@ -1810,7 +1810,7 @@ const P = {
     desc:'Brand identity and product UI for Wagmio — a crypto education platform built around trading signals, bootcamps, and community. Dark, high-energy aesthetic with orange/black palette. Web dashboard, mobile app, and marketing.',
     tags:[['Crypto','to'],['Brand Identity','ty'],['Web App','tb'],['Education','tg']],
     layout:'wide', caseRenderer:'wagmio',
-    screens:['screens/wagmio_brand.png','screens/wagmio_results.png','screens/wagmio_2.png','screens/wagmio_3.png','screens/wagmio_4.png','screens/wagmio_ui.png','screens/wagmio_7.png','screens/wagmio_8.png']
+    screens:['screens/wagmio_brand.png']
   },
   coinflip:{
     emoji:'🪙', bg:'linear-gradient(135deg,#7c2d12,#1c0a00)',
@@ -1950,10 +1950,11 @@ function renderNexaCase(mobile=false){
 
 function renderWagmioCase(mobile=false){
   const capture=(src,title,meta)=>`<figure class="yh-capture"><img src="${src}" alt="Wagmio ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
-  const gallery=['screens/wagmio_2.png','screens/wagmio_3.png','screens/wagmio_4.png','screens/wagmio_7.png','screens/wagmio_8.png']
-    .map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+  const clip=(webm,mp4,poster,title,meta)=>`<figure class="yh-capture"><video ${reducedMotion?'':'autoplay loop '}muted playsinline preload="metadata" poster="${poster}"><source src="${webm}" type="video/webm"><source src="${mp4}" type="video/mp4"></video><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const liveMotion=`<figure class="yh-capture"><video ${reducedMotion?'':'autoplay loop '}muted playsinline preload="metadata" poster="screens/wagmio_live-motion-poster.jpg"><source src="screens/wagmio_live-motion.webm" type="video/webm"><source src="screens/wagmio_live-motion.mp4" type="video/mp4"></video><figcaption><strong>wagmio.webflow.io — top to bottom</strong><span>Screen recording · live marketing site</span></figcaption></figure>`;
+  const liveMotion=clip('screens/wagmio_live-motion.webm','screens/wagmio_live-motion.mp4','screens/wagmio_live-motion-poster.jpg','wagmio.webflow.io — top to bottom','Screen recording · live marketing site');
+  const heroOrbit=clip('screens/wagmio_hero-orbit.webm','screens/wagmio_hero-orbit.mp4','screens/wagmio_hero-orbit-poster.jpg','Hero','Coin icons orbiting the wordmark · idle loop');
+  const clubCards=clip('screens/wagmio_club-cards.webm','screens/wagmio_club-cards.mp4','screens/wagmio_club-cards-poster.jpg','WAGMIO Club','Pinned scroll sequence · cards fan into place');
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Live marketing site on Webflow</span><a href="https://wagmio.webflow.io/" target="_blank" rel="noreferrer">Open Wagmio ↗</a></div>
     ${liveMotion}
@@ -1961,7 +1962,7 @@ function renderWagmioCase(mobile=false){
       <div class="yh-story-kicker">UI/UX Designer · 2024 — 2025</div><h3>Building the brand and product for a crypto education platform</h3>
       <p>Wagmio teaches trading through bootcamps, signals, and a community — a crowded category where most competitors either look like a hedge fund or a meme coin. I designed the brand identity and the product UI together, so the dark, high-energy orange-on-black system read the same whether someone met it in an ad, on the web dashboard, or inside the app.</p>
     </section>
-    ${capture('screens/wagmio_brand.png','Brand mark','Wordmark, orange/black palette, coin motif')}
+    ${heroOrbit}
     <section class="yh-story">
       <h3>A bootcamp that fits in 20 minutes a day</h3>
       <p>The core product is a day-by-day crypto bootcamp — mobile-only, structured as a stacked deck of daily lesson cards (“Passive Income with Crypto”, “Invest in Real Estate with Crypto”...) so a beginner always knows exactly where they are in the course and what's next, without a traditional course-platform UI getting in the way.</p>
@@ -1972,8 +1973,11 @@ function renderWagmioCase(mobile=false){
       <p>Trading-signal results needed to prove the product works at a glance — entry price, current price, and ROI stacked into a single card, with a stray of ghost cards behind it hinting at a longer track record without cluttering the one result someone's actually looking at.</p>
     </section>
     ${capture('screens/wagmio_results.png','Just Results','Trading-signal ROI card')}
-    <div class="scr-label">More screens</div>
-    <div class="screens-wide">${gallery}</div>
+    <section class="yh-story">
+      <h3>A club that rewards graduates for sticking around</h3>
+      <p>Finishing the bootcamp unlocks the Club — a pinned scroll sequence where reward cards fan out one after another as you keep scrolling, turning a plain "you've graduated" moment into something worth lingering on.</p>
+    </section>
+    ${clubCards}
     <div class="yh-case-note">Brand identity, web dashboard, mobile app, and marketing site for Wagmio.</div>
   </div>`;
 }
