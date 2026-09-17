@@ -1953,6 +1953,7 @@ function renderWagmioCase(mobile=false){
   const gallery=['screens/wagmio_2.png','screens/wagmio_3.png','screens/wagmio_4.png','screens/wagmio_7.png','screens/wagmio_8.png']
     .map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
+    <div class="yh-source-bar"><span>Live marketing site on Webflow</span><a href="https://wagmio.webflow.io/" target="_blank" rel="noreferrer">Open Wagmio ↗</a></div>
     <section class="yh-story yh-story-intro">
       <div class="yh-story-kicker">UI/UX Designer · 2024 — 2025</div><h3>Building the brand and product for a crypto education platform</h3>
       <p>Wagmio teaches trading through bootcamps, signals, and a community — a crowded category where most competitors either look like a hedge fund or a meme coin. I designed the brand identity and the product UI together, so the dark, high-energy orange-on-black system read the same whether someone met it in an ad, on the web dashboard, or inside the app.</p>
