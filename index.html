@@ -1952,8 +1952,11 @@ function renderWagmioCase(mobile=false){
   const capture=(src,title,meta)=>`<figure class="yh-capture"><img src="${src}" alt="Wagmio ${title}" loading="lazy"><figcaption><strong>${title}</strong><span>${meta}</span></figcaption></figure>`;
   const gallery=['screens/wagmio_2.png','screens/wagmio_3.png','screens/wagmio_4.png','screens/wagmio_7.png','screens/wagmio_8.png']
     .map(s=>`<img src="${s}" loading="lazy" onerror="this.style.display='none'">`).join('');
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const liveMotion=`<figure class="yh-capture"><video ${reducedMotion?'':'autoplay loop '}muted playsinline preload="metadata" poster="screens/wagmio_live-motion-poster.jpg"><source src="screens/wagmio_live-motion.webm" type="video/webm"><source src="screens/wagmio_live-motion.mp4" type="video/mp4"></video><figcaption><strong>wagmio.webflow.io — top to bottom</strong><span>Screen recording · live marketing site</span></figcaption></figure>`;
   return `<div class="yh-case${mobile?' yh-mobile-case':''}">
     <div class="yh-source-bar"><span>Live marketing site on Webflow</span><a href="https://wagmio.webflow.io/" target="_blank" rel="noreferrer">Open Wagmio ↗</a></div>
+    ${liveMotion}
     <section class="yh-story yh-story-intro">
       <div class="yh-story-kicker">UI/UX Designer · 2024 — 2025</div><h3>Building the brand and product for a crypto education platform</h3>
       <p>Wagmio teaches trading through bootcamps, signals, and a community — a crowded category where most competitors either look like a hedge fund or a meme coin. I designed the brand identity and the product UI together, so the dark, high-energy orange-on-black system read the same whether someone met it in an ad, on the web dashboard, or inside the app.</p>
