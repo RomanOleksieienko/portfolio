@@ -2874,11 +2874,8 @@ const LIVE_API='https://roman-portfolio-live.romanoleksieienko.workers.dev';
 function trackEvent(event,meta){
   try{
     const payload=JSON.stringify({event,meta:meta||{},lang:LANG,ref:document.referrer||''});
-    if(navigator.sendBeacon){
-      navigator.sendBeacon(LIVE_API+'/track',new Blob([payload],{type:'application/json'}));
-    }else{
-      fetch(LIVE_API+'/track',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true}).catch(()=>{});
-    }
+    // sendBeacon always sends credentials, which the worker's CORS rejects — fetch without them.
+    fetch(LIVE_API+'/track',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true,credentials:'omit'}).catch(()=>{});
   }catch(e){}
 }
 
