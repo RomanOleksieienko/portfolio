@@ -104,6 +104,10 @@ async function handleTrack(request, env, origin) {
   } catch (e) {
     return new Response(JSON.stringify({ error: "bad json" }), { status: 400, headers: { ...headers, "Content-Type": "application/json" } });
   }
+  // Dev and automated traffic never reaches the stats.
+  const ua = request.headers.get("User-Agent") || "";
+  if (origin !== "https://oleksieienko.com" && origin !== "https://www.oleksieienko.com") return new Response(JSON.stringify({ ok: true, skipped: "origin" }), { headers: { ...headers, "Content-Type": "application/json" } });
+  if (/HeadlessChrome|Playwright|bot|crawler|spider/i.test(ua)) return new Response(JSON.stringify({ ok: true, skipped: "bot" }), { headers: { ...headers, "Content-Type": "application/json" } });
   const event = String(body.event || "").slice(0, 40);
   if (!event) return new Response(JSON.stringify({ error: "missing event" }), { status: 400, headers: { ...headers, "Content-Type": "application/json" } });
   const meta = body.meta && typeof body.meta === "object" ? body.meta : {};
@@ -127,6 +131,10 @@ async function handleTrack(request, env, origin) {
   if (ref) { counts.referrers = counts.referrers || {}; counts.referrers[ref] = (counts.referrers[ref] || 0) + 1; }
   counts.devices = counts.devices || {};
   counts.devices[device] = (counts.devices[device] || 0) + 1;
+  const day = new Date().toISOString().slice(0, 10);
+  counts.days = counts.days || {};
+  counts.days[day] = counts.days[day] || {};
+  counts.days[day][event] = (counts.days[day][event] || 0) + 1;
   await env.GUESTBOOK.put("stats:counts", JSON.stringify(counts));
 
   const recentRaw = (await env.GUESTBOOK.get("stats:recent")) || "[]";
@@ -161,6 +169,9 @@ async function handleStats(request, env) {
   const maxRef = Math.max(1, ...Object.values(counts.referrers || {}));
 
   const sortEntries = (obj) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1]);
+  const days = Object.entries(counts.days || {}).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 60);
+  const maxDay = Math.max(1, ...days.map(([, e]) => e.view || 0));
+  const daysHtml = days.map(([d, e]) => statsRow(`${d} · ${e.project_open || 0} cases`, e.view || 0, maxDay)).join("");
 
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio Stats</title>
@@ -192,6 +203,8 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,2
   <div class="card"><div class="n">${counts.events?.guestbook_post || 0}</div><div class="l">Guestbook posts</div></div>
 </div>
 
+<h2>Views per day (UTC)</h2>
+${daysHtml || '<div class="empty">No data yet.</div>'}
 <h2>Cases opened</h2>
 ${sortEntries(projectOpens).map(([k, c]) => statsRow(k, c, maxProj)).join("") || '<div class="empty">No data yet.</div>'}
 

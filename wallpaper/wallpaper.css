@@ -1,0 +1,132 @@
+/* ══ LIVE WALLPAPERS ═══════════════════════════════════════
+   ghent  — Ghent skyline, sky follows the real sun and weather there
+   canvas — a designer's Figma canvas
+   classic — the original soft gradient
+   ════════════════════════════════════════════════════════ */
+#wallpaper{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#desktop.has-wall::before{display:none}
+#desktop.has-wall{background:#0b1020}
+#desktop.wall-canvas{background:#f3f3f4}
+#desktop.wall-canvas[data-theme="dark"]{background:#1d1d1f}
+#desktop.wall-canvas::after{opacity:.05}
+
+/* ── Ghent ─────────────────────────────────────── */
+.wp-ghent,.wp-ghent>*{position:absolute;inset:0}
+.wp-sky{transition:background 2s linear}
+.wp-sky::after{content:'';position:absolute;inset:0;background:var(--wp-shade,transparent);transition:background .6s}
+.wp-glow{background:radial-gradient(40% 32% at var(--sun-x,50%) var(--sun-y,60%),var(--glow,transparent),transparent 72%);transition:background 2s linear;mix-blend-mode:screen}
+.wp-stars{opacity:var(--stars,0);transition:opacity 2s linear}
+.wp-sun,.wp-moon{inset:auto;width:clamp(34px,3vw,50px);aspect-ratio:1;border-radius:50%;left:var(--sun-x);top:var(--sun-y);transform:translate(-50%,-50%);transition:left 2s linear,top 2s linear,opacity 1.5s}
+.wp-sun{background:radial-gradient(circle,#fff8e1 0 38%,#ffd88a 62%,rgba(255,200,110,0) 72%);opacity:var(--sun-o,0);filter:blur(.3px)}
+.wp-moon{left:var(--moon-x,62%);top:var(--moon-y,11%);width:clamp(30px,2.8vw,44px);background:#f3f1e7;box-shadow:0 0 30px rgba(243,241,231,.35);opacity:var(--moon-o,0)}
+.wp-moon::after{content:'';position:absolute;inset:-2px -2px -2px 30%;border-radius:50%;background:var(--moon-cut,#0b1230);transform:translateX(18%)}
+.wp-clouds svg{position:absolute;left:0;width:34vw;min-width:360px;height:auto;opacity:var(--cloud-o,.6);filter:blur(1.5px);animation:wpCloud linear infinite;will-change:transform}
+.wp-clouds path,.wp-clouds ellipse{fill:var(--cloud,#fff)}
+@keyframes wpCloud{from{transform:translateX(-40vw)}to{transform:translateX(110vw)}}
+.wp-city{inset:auto 0 var(--water-h) 0;width:100%;height:clamp(150px,21vh,230px)}
+.wp-city svg,.wp-reflect svg{position:absolute;inset:0;width:100%;height:100%}
+/* landmarks sit back in the haze: softer, so the UI on top stays the hero */
+.wp-landmarks{opacity:.72}
+.wp-town,.wp-city .wp-lights,.wp-reflect .wp-lights{top:auto!important;bottom:0;height:8.75vw!important}
+.wp-base{filter:brightness(var(--city-b,1)) saturate(var(--city-s,1)) sepia(var(--city-sep,0)) hue-rotate(var(--city-hue,0deg));transition:filter 2s linear}
+.wp-lights .win{fill:#ffcf80;opacity:var(--lit,0);animation:wpFlicker 14s steps(1) infinite;animation-delay:var(--d)}
+.wp-lights .lamp{fill:#ffcf80;opacity:calc(var(--lit,0) * .35);filter:blur(3px)}
+.wp-lights .lamp-core,.wp-boat .lamp-core{fill:#fff1c4;opacity:var(--lit,0)}
+@keyframes wpFlicker{0%,100%{opacity:var(--lit,0)}46%{opacity:var(--lit,0)}47%{opacity:calc(var(--lit,0) * .15)}63%{opacity:var(--lit,0)}}
+.wp-water{inset:auto 0 0 0;height:var(--water-h);background:linear-gradient(180deg,var(--water-a),var(--water-b));overflow:hidden;transition:background 2s linear}
+.wp-water .wp-reflect{position:absolute;left:0;right:0;top:0;width:100%;height:clamp(150px,21vh,230px);transform:scaleY(-1);transform-origin:top;opacity:.62;filter:blur(1.2px);
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 40%);mask-image:linear-gradient(180deg,#000,transparent 40%);animation:wpWobble 7s ease-in-out infinite alternate}
+@keyframes wpWobble{to{transform:scaleY(-1) scaleX(1.004) translateX(-3px) skewX(.4deg)}}
+.wp-water::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 6px,rgba(255,255,255,.08) 6px 7px);animation:wpShimmer 6s ease-in-out infinite alternate}
+@keyframes wpShimmer{to{transform:translateY(3px)}}
+
+/* moving life */
+.wp-boat,.wp-bike,.wp-birds,.wp-plane,.wp-shoot{position:absolute;inset:auto;will-change:transform}
+.wp-boat{z-index:2;width:clamp(86px,7vw,120px);bottom:56%;left:0;filter:brightness(var(--city-b,1)) saturate(var(--city-s,1));animation:wpBoatR 95s linear infinite}
+.wp-boat svg{display:block;width:100%;animation:wpBob 3.2s ease-in-out infinite alternate}
+.wp-boat.bt2{bottom:30%;width:clamp(72px,6vw,100px);animation:wpBoatL 120s linear infinite;animation-delay:-40s}
+.wp-boat.bt2 svg{transform:scaleX(-1);animation-name:wpBobL}
+@keyframes wpBoatR{from{transform:translateX(-12vw)}to{transform:translateX(112vw)}}
+@keyframes wpBoatL{from{transform:translateX(112vw)}to{transform:translateX(-12vw)}}
+@keyframes wpBob{to{transform:translateY(2px) rotate(.8deg)}}
+@keyframes wpBobL{from{transform:scaleX(-1)}to{transform:scaleX(-1) translateY(2px) rotate(-.8deg)}}
+.wp-bike{z-index:1;width:38px;bottom:calc(var(--water-h) - 1px);left:0;color:var(--sprite,#2b2f3a);animation:wpRideR 34s linear infinite}
+.wp-bike.b2{animation:wpRideL 41s linear infinite;animation-delay:-18s}.wp-bike.b2 svg{transform:scaleX(-1)}
+.wp-bike svg{display:block;width:100%;animation:wpPedal .45s ease-in-out infinite alternate}
+@keyframes wpRideR{from{transform:translateX(-4vw)}to{transform:translateX(104vw)}}
+@keyframes wpRideL{from{transform:translateX(104vw)}to{transform:translateX(-4vw)}}
+@keyframes wpPedal{to{translate:0 -1px}}
+.wp-birds{top:9vh;left:0;width:74px;color:var(--sprite,#2b2f3a);opacity:.75;animation:wpBirds 46s linear infinite;animation-delay:-8s}
+.wp-birds .flap{transform-box:fill-box;transform-origin:center;animation:wpFlap .42s ease-in-out infinite alternate}
+.wp-birds .f2{animation-delay:-.2s}.wp-birds .f3{animation-delay:-.1s}
+@keyframes wpFlap{to{transform:scaleY(-.6)}}
+@keyframes wpBirds{0%{transform:translate(-8vw,0)}50%{transform:translate(50vw,-4vh)}100%{transform:translate(110vw,2vh)}}
+.wp-plane{top:5vh;left:0;width:64px;opacity:.75;animation:wpPlane 80s linear infinite;animation-delay:-20s}
+.wp-plane svg{display:block;width:100%;position:relative;z-index:1}
+.wp-trail{position:absolute;right:88%;top:48%;width:16vw;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45));border-radius:2px}
+@keyframes wpPlane{0%{transform:translate(-20vw,3vh)}45%{transform:translate(120vw,-2vh)}100%{transform:translate(120vw,-2vh)}}
+.wp-shoot{top:12vh;left:20vw;width:140px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);border-radius:2px;opacity:0;transform:rotate(-18deg)}
+#wallpaper.is-night .wp-shoot{animation:wpShoot 13s ease-out infinite}
+@keyframes wpShoot{0%,90%{opacity:0;transform:translate(0,0) rotate(-18deg)}92%{opacity:1}100%{opacity:0;transform:translate(260px,85px) rotate(-18deg)}}
+#wallpaper.is-night .wp-birds,#wallpaper:not(.is-day) .wp-plane{display:none}
+#wallpaper.is-night .wp-plane{display:block;opacity:.5}
+#wallpaper.is-paused *{animation-play-state:paused!important}
+.wp-rain{opacity:.55}
+.wp-tag{inset:auto auto 14px 16px;display:flex;align-items:center;gap:6px;font:600 10px/1.2 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;
+  letter-spacing:.02em;color:rgba(255,255,255,.86);text-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;white-space:nowrap}
+.wp-tag i{width:6px;height:6px;border-radius:50%;background:#30d158;box-shadow:0 0 0 3px rgba(48,209,88,.25)}
+
+/* ── Designer canvas ───────────────────────────── */
+.wp-canvas{position:absolute;inset:-30px;--dot:#cfd0d3;--ink:#1e1e1e;--paper:#fff;--muted:#8a8a8f;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:24px 24px}
+#desktop[data-theme="dark"] .wp-canvas{--dot:#3a3a3d;--ink:#f1f1f3;--paper:#2c2c2e;--muted:#9a9aa0}
+.wpc-layer{position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.wpc{position:absolute;font-family:-apple-system,BlinkMacSystemFont,'Inter','SF Pro Text',sans-serif;color:var(--ink)}
+.wpc-frame{inset:58px 34px 34px 34px;border:1px solid rgba(13,153,255,.55)}
+.wpc-frame-label{position:absolute;left:-1px;top:-18px;font-size:10px;font-weight:600;color:#0d99ff}
+.wpc-swatches{display:flex;flex-direction:column;gap:6px}
+.wpc-swatch{display:flex;align-items:center;gap:7px;font-size:9.5px;font-weight:600;color:var(--muted)}
+.wpc-swatch b{width:26px;height:26px;border-radius:7px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.wpc-type{font-size:96px;font-weight:700;letter-spacing:-4px;line-height:.9}
+.wpc-type small{display:block;margin-top:8px;font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.wpc-sel{position:absolute;inset:-6px;border:1.5px solid #0d99ff}
+.wpc-sel i{position:absolute;width:7px;height:7px;background:#fff;border:1.5px solid #0d99ff}
+.wpc-sel i:nth-child(1){left:-4px;top:-4px}.wpc-sel i:nth-child(2){right:-4px;top:-4px}.wpc-sel i:nth-child(3){left:-4px;bottom:-4px}.wpc-sel i:nth-child(4){right:-4px;bottom:-4px}
+.wpc-size{position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);padding:2px 5px;border-radius:3px;background:#0d99ff;color:#fff;font-size:9.5px;font-weight:600;white-space:nowrap}
+.wpc-btn{padding:13px 22px;border-radius:12px;background:#0d99ff;color:#fff;font-size:13px;font-weight:650}
+.wpc-red{position:absolute;background:#f24822}
+.wpc-red-num{position:absolute;padding:1px 4px;border-radius:3px;background:#f24822;color:#fff;font-size:9px;font-weight:700}
+.wpc-pen path{fill:none;stroke:var(--ink);stroke-width:1.6}
+.wpc-pen .h{stroke:#0d99ff;stroke-width:1}
+.wpc-pen circle{fill:#fff;stroke:#0d99ff;stroke-width:1.4}
+.wpc-pen rect{fill:#0d99ff}
+.wpc-note{width:150px;padding:12px 12px 14px;background:#ffe27a;color:#3b3200;font-size:12px;font-weight:600;line-height:1.35;box-shadow:0 10px 24px rgba(0,0,0,.12);transform:rotate(3deg)}
+.wpc-note small{display:block;margin-top:8px;font-size:9.5px;opacity:.6}
+.wpc-comp{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;color:#9747ff}
+.wpc-comp svg{width:12px;height:12px}
+.wpc-cursor{display:flex;align-items:flex-start;gap:2px}
+.wpc-cursor span{margin-top:14px;padding:2px 6px;border-radius:4px;background:#9747ff;color:#fff;font-size:10px;font-weight:600}
+.wpc-spacing{display:flex;gap:0;align-items:stretch}
+.wpc-spacing div{border-radius:6px;background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.08);width:46px;height:46px}
+.wpc-spacing span{width:16px;background:repeating-linear-gradient(45deg,rgba(242,72,34,.25) 0 2px,transparent 2px 5px);position:relative}
+.wpc-spacing span::after{content:'16';position:absolute;left:50%;top:-14px;transform:translateX(-50%);font-size:8.5px;font-weight:700;color:#f24822}
+
+/* ── Picker (Control Center) ───────────────────── */
+.wp-picker{position:fixed;top:34px;right:12px;z-index:100001;width:300px;padding:12px;border-radius:16px;
+  background:var(--spot-bg,rgba(242,247,250,.85));border:1px solid var(--spot-border,rgba(255,255,255,.8));color:var(--spot-ink,#172234);
+  backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);box-shadow:0 20px 50px rgba(0,0,0,.25);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif}
+.wp-picker[hidden]{display:none}
+.wp-picker h3{margin:0 2px 9px;font-size:11px;font-weight:700;letter-spacing:.02em}
+.wp-picker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wp-opt{appearance:none;border:0;padding:0;background:none;color:inherit;font:inherit;cursor:pointer;text-align:center}
+.wp-opt b{display:block;aspect-ratio:16/10;border-radius:9px;box-shadow:0 0 0 1px rgba(0,0,0,.1);transition:box-shadow .15s}
+.wp-opt span{display:block;margin-top:5px;font-size:10px;font-weight:600}
+.wp-opt[aria-checked="true"] b{box-shadow:0 0 0 2.5px #0a84ff}
+.wp-opt:focus-visible b{box-shadow:0 0 0 2.5px #0a84ff,0 0 0 5px rgba(10,132,255,.3)}
+.wp-thumb-ghent{background:linear-gradient(180deg,#4f7fbd 0%,#f5bf8c 62%,#2d2a3f 62%,#2d2a3f 80%,#4a5578 80%)}
+.wp-thumb-canvas{background:radial-gradient(#c9cacd 1px,transparent 1.2px) 0 0/8px 8px,#f3f3f4;position:relative}
+.wp-thumb-canvas::after{content:'';position:absolute;left:30%;top:30%;width:34%;height:30%;border:1.5px solid #0d99ff;border-radius:2px}
+.wp-thumb-classic{background:linear-gradient(145deg,#95b5d8,#c8d8e5 54%,#dfd2e3)}
+.mb-o-cc{cursor:pointer}
+
+@media(prefers-reduced-motion:reduce){.wp-clouds svg,.wp-water::after,.wp-reflect,.wp-boat,.wp-boat svg,.wp-bike,.wp-bike svg,.wp-birds,.wp-birds .flap,.wp-plane,.wp-shoot,.wp-lights .win{animation:none!important}.wp-plane,.wp-shoot,.wp-birds{display:none}.wp-sky,.wp-sun,.wp-moon,.wpc-layer{transition:none!important}}

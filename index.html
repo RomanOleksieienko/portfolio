@@ -847,7 +847,106 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   #desktop{display:none !important}
   #mobile{display:flex !important}
 }
+
+/* ── DESKTOP CASE CARDS — work is the first thing you see ── */
+.desktop-icons{display:flex!important;align-items:flex-start;gap:18px}
+.desk-cases{display:grid;grid-template-columns:repeat(4,clamp(150px,13vw,196px));gap:clamp(12px,1.4vw,20px)}
+.desk-files{display:flex;flex-direction:column;gap:2px}
+.desk-case{appearance:none;border:0;padding:0;margin:0;font:inherit;text-align:left;color:var(--desk-ink);cursor:pointer;background:transparent;
+  transform:rotate(var(--tilt,0deg));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s;outline:none}
+.desk-case-win{border-radius:12px;overflow:hidden;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 14px 34px rgba(20,32,48,.18),0 2px 6px rgba(20,32,48,.1);
+  backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);transition:box-shadow .35s}
+.desk-case-bar{display:flex;align-items:center;gap:4px;height:20px;padding:0 8px}
+.desk-case-bar i{width:7px;height:7px;border-radius:50%;background:rgba(22,33,50,.18)}
+.desk-case:hover .desk-case-bar i:nth-child(1),.desk-case.is-ghost .desk-case-bar i:nth-child(1){background:#ff5f57}
+.desk-case:hover .desk-case-bar i:nth-child(2),.desk-case.is-ghost .desk-case-bar i:nth-child(2){background:#febc2e}
+.desk-case:hover .desk-case-bar i:nth-child(3),.desk-case.is-ghost .desk-case-bar i:nth-child(3){background:#28c840}
+.desk-case-bar span{margin-left:auto;font-size:8.5px;font-weight:650;letter-spacing:.02em;color:var(--desk-muted)}
+.desk-case-media{position:relative;aspect-ratio:16/10;margin:0 5px 5px;border-radius:8px;overflow:hidden;background:#0d1320}
+.desk-case-media img,.desk-case-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.desk-case-media.is-phone img{object-fit:contain;object-position:center;padding:6px 0;background:radial-gradient(circle at 50% 40%,#3a1a08,#0d0703)}
+.desk-case-name{margin:9px 2px 0;font-size:12px;font-weight:700;letter-spacing:-.1px}
+.desk-case-sub{margin:2px 2px 0;font-size:10px;line-height:1.35;color:var(--desk-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.desk-case:hover,.desk-case:focus-visible,.desk-case.is-ghost{transform:rotate(0deg) translateY(-8px)}
+.desk-case:hover .desk-case-win,.desk-case:focus-visible .desk-case-win,.desk-case.is-ghost .desk-case-win{box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 26px 50px rgba(20,32,48,.26),0 4px 10px rgba(20,32,48,.12)}
+.desk-case:hover .desk-case-media img,.desk-case:hover .desk-case-media video{transform:scale(1.04)}
+.desk-case:focus-visible .desk-case-win{outline:2px solid #0a84ff;outline-offset:2px}
+#desktop[data-theme="dark"] .desk-case-win{background:rgba(40,46,58,.62);border-color:rgba(255,255,255,.16)}
+#desktop[data-theme="dark"] .desk-case-bar i{background:rgba(255,255,255,.2)}
+.desk-case-click{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:2px solid rgba(10,132,255,.85);opacity:0;pointer-events:none}
+.desk-case-click.go{animation:deskClick .7s ease-out}
+@keyframes deskClick{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.5)}}
+
+/* Roman's guide cursor */
+.guide-cursor{position:fixed;left:0;top:0;z-index:99997;pointer-events:none;color:#0a84ff;opacity:0;transition:opacity .3s}
+.guide-cursor.on{opacity:1}
+.guide-cursor svg{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+.guide-cursor .live-cursor-tag{background:#0a84ff}
+.guide-cursor .guide-say{display:block;margin:4px 0 0 14px;padding:5px 9px;border-radius:9px;background:#fff;color:#162132;font:600 11px/1.3 -apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.16);white-space:nowrap;opacity:0;transform:translateY(-3px);transition:opacity .25s,transform .25s}
+.guide-cursor .guide-say.on{opacity:1;transform:none}
+
+@media (max-width:1180px) and (min-width:901px){.desk-cases{grid-template-columns:repeat(4,clamp(124px,14vw,160px))}.desk-files{display:none}}
+@media (max-height:760px) and (min-width:901px){.desk-case-sub{display:none}.desk-files{display:none}}
+@media(prefers-reduced-motion:reduce){.desk-case,.desk-case-win,.desk-case-media img,.desk-case-media video{transition:none!important}.desk-case{transform:none}}
+
+/* ── WEATHER — macOS desktop widget look ── */
+.weather-grid{gap:10px}
+.wx{position:relative;height:162px;border-radius:24px;padding:14px 14px 13px;overflow:hidden;color:#fff;display:flex;flex-direction:column;
+  background:var(--sky);border:1px solid rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 12px 30px rgba(20,32,48,.2);
+  backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);transition:background .8s ease;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif;text-shadow:0 1px 3px rgba(0,0,0,.18)}
+.wx-city{display:flex;align-items:center;gap:5px;font-size:15px;font-weight:700;letter-spacing:-.2px;line-height:1.1;white-space:nowrap}
+.wx-loc{width:10px;height:10px;flex:0 0 10px}
+.wx-temp{font-size:46px;font-weight:200;letter-spacing:-1.2px;line-height:1;margin-top:2px}
+.wx-bottom{margin-top:auto;display:flex;flex-direction:column;gap:1px;font-size:12.5px;font-weight:650;line-height:1.2;letter-spacing:-.1px}
+.wx-icon{display:block;width:18px;height:18px;margin-bottom:4px}.wx-icon svg{width:100%;height:100%;display:block;overflow:visible}
+.wx-cond{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wx-hl{white-space:nowrap}
+.wx[data-sky="clear-day"]{--sky:linear-gradient(180deg,rgba(38,112,204,.92) 0%,rgba(103,164,226,.82) 100%)}
+.wx[data-sky="clear-night"]{--sky:linear-gradient(180deg,rgba(14,26,62,.94) 0%,rgba(52,72,120,.84) 100%)}
+.wx[data-sky="cloudy-day"]{--sky:linear-gradient(180deg,rgba(44,88,140,.9) 0%,rgba(128,156,190,.8) 100%)}
+.wx[data-sky="cloudy-night"]{--sky:linear-gradient(180deg,rgba(30,40,58,.93) 0%,rgba(74,86,106,.84) 100%)}
+.wx[data-sky="rain-day"]{--sky:linear-gradient(180deg,rgba(52,74,100,.92) 0%,rgba(112,132,154,.82) 100%)}
+.wx[data-sky="rain-night"]{--sky:linear-gradient(180deg,rgba(24,32,46,.94) 0%,rgba(60,72,88,.84) 100%)}
+.wx[data-sky="snow-day"]{--sky:linear-gradient(180deg,rgba(106,128,156,.9) 0%,rgba(178,194,212,.82) 100%)}
+.wx[data-sky="snow-night"]{--sky:linear-gradient(180deg,rgba(40,50,66,.93) 0%,rgba(88,100,118,.84) 100%)}
+.wx[data-sky="fog-day"]{--sky:linear-gradient(180deg,rgba(116,128,140,.9) 0%,rgba(172,180,188,.82) 100%)}
+.wx[data-sky="fog-night"]{--sky:linear-gradient(180deg,rgba(50,56,64,.93) 0%,rgba(92,98,106,.84) 100%)}
+.wx[data-sky="storm-day"],.wx[data-sky="storm-night"]{--sky:linear-gradient(180deg,rgba(32,36,58,.94) 0%,rgba(74,78,106,.84) 100%)}
+@media (max-height:760px) and (min-width:901px){.wx{height:134px;padding:11px 12px}.wx-temp{font-size:36px}.wx-icon{width:15px;height:15px;margin-bottom:2px}.wx-bottom{font-size:11px}}
+
+/* ── NOW PLAYING — own widget, 30-second Apple Music previews ── */
+.np{position:relative;border-radius:22px;padding:13px;overflow:hidden;color:#fff;isolation:isolate;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 12px 30px rgba(20,32,48,.22);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif}
+.np-bg{position:absolute;inset:-30%;z-index:-1;background:url("https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/100x100bb.jpg") center/cover;filter:blur(28px) saturate(1.5) brightness(.62);transform:scale(1.1)}
+.np-top{display:flex;gap:11px;align-items:center}
+.np-art{width:64px;height:64px;border-radius:10px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,.35);flex:0 0 64px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.np.is-playing .np-art{transform:scale(1.04)}
+.np-info{min-width:0}
+.np-kicker{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.np-track{margin-top:4px;font-size:15px;font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-artist{font-size:11px;opacity:.72;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-eq{display:inline-flex;align-items:flex-end;gap:2px;height:9px}
+.np-eq i{width:2px;height:3px;border-radius:1px;background:currentColor}
+.np.is-playing .np-eq i{animation:npEq .9s ease-in-out infinite}
+.np.is-playing .np-eq i:nth-child(2){animation-delay:-.3s}.np.is-playing .np-eq i:nth-child(3){animation-delay:-.6s}.np.is-playing .np-eq i:nth-child(4){animation-delay:-.15s}
+@keyframes npEq{0%,100%{height:3px}50%{height:9px}}
+.np-progress{margin:12px 1px 8px;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}
+.np-progress span{display:block;height:100%;width:0;background:#fff;border-radius:2px}
+.np-controls{display:flex;align-items:center;gap:4px}
+.np-btn{appearance:none;border:0;background:transparent;color:#fff;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:background .15s,transform .15s}
+.np-btn:hover{background:rgba(255,255,255,.14)}.np-btn:active{transform:scale(.92)}
+.np-btn svg{width:16px;height:16px}
+.np-play{width:38px;height:38px;background:rgba(255,255,255,.18)}.np-play svg{width:18px;height:18px}
+.np-ico-pause{display:none}.np.is-playing .np-ico-pause{display:block}.np.is-playing .np-ico-play{display:none}
+.np-open{margin-left:auto;font-size:10.5px;font-weight:650;color:#fff;opacity:.8;text-decoration:none;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.12)}
+.np-open:hover{opacity:1;background:rgba(255,255,255,.2)}
+.np-btn:focus-visible,.np-open:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.np-eq i{animation:none!important}.wx{transition:none}}
 </style>
+<link rel="stylesheet" href="wallpaper/wallpaper.css?v=6">
 </head>
 <body>
 <div id="welcome" data-theme="light" data-i18n-attr="aria-label:lock.aria" aria-label="Enter Roman's portfolio">
@@ -919,28 +1018,41 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     </button>
   </div>
   <div class="weather-grid" aria-label="Current weather">
-    <section class="weather-card desk-glass" aria-labelledby="weather-ghent-city">
-      <div class="weather-city" id="weather-ghent-city">Ghent</div>
-      <div class="weather-temp" id="weather-ghent-temp" aria-live="polite">16°</div>
-      <div class="weather-meta"><span class="weather-symbol" id="weather-ghent-symbol" aria-hidden="true">🌙</span><span id="weather-ghent-condition">Mostly clear</span></div>
+    <section class="wx" id="wx-ghent" data-sky="clear-day" aria-labelledby="weather-ghent-city">
+      <div class="wx-city"><span id="weather-ghent-city">Ghent</span><svg class="wx-loc" viewBox="0 0 10 10" aria-hidden="true"><path d="M9.4.6.8 4.3l3.9.9.9 3.9z" fill="currentColor"/></svg></div>
+      <div class="wx-temp" id="weather-ghent-temp" aria-live="polite">–°</div>
+      <div class="wx-bottom">
+        <span class="wx-icon" id="weather-ghent-symbol" aria-hidden="true"></span>
+        <span class="wx-cond" id="weather-ghent-condition">&nbsp;</span>
+        <span class="wx-hl" id="weather-ghent-hl">&nbsp;</span>
+      </div>
     </section>
-    <section class="weather-card desk-glass" aria-labelledby="weather-kyiv-city">
-      <div class="weather-city" id="weather-kyiv-city">Kyiv</div>
-      <div class="weather-temp" id="weather-kyiv-temp" aria-live="polite">21°</div>
-      <div class="weather-meta"><span class="weather-symbol" id="weather-kyiv-symbol" aria-hidden="true">🌙</span><span id="weather-kyiv-condition">Mostly clear</span></div>
+    <section class="wx" id="wx-kyiv" data-sky="clear-day" aria-labelledby="weather-kyiv-city">
+      <div class="wx-city"><span id="weather-kyiv-city">Kyiv</span></div>
+      <div class="wx-temp" id="weather-kyiv-temp" aria-live="polite">–°</div>
+      <div class="wx-bottom">
+        <span class="wx-icon" id="weather-kyiv-symbol" aria-hidden="true"></span>
+        <span class="wx-cond" id="weather-kyiv-condition">&nbsp;</span>
+        <span class="wx-hl" id="weather-kyiv-hl">&nbsp;</span>
+      </div>
     </section>
   </div>
-  <section class="music-widget" aria-label="Apple Music player">
-    <div class="music-embed" id="music-embed">
-      <iframe id="apple-music-player" title="Apple Music: ASTROWORLD by Travis Scott" src="https://embed.music.apple.com/us/album/astroworld/1421658111?theme=auto" height="220" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *;" loading="lazy"></iframe>
-      <div class="music-stopped" id="music-stopped" hidden aria-live="polite">
-        <span class="music-stopped-mark" aria-hidden="true">■</span>
-        <strong data-i18n="widgets.music.stopped">Music stopped</strong>
-        <span data-i18n="widgets.music.reloadHint">Reload the player to listen again</span>
+  <section class="np" id="np" aria-label="Now playing">
+    <div class="np-bg" aria-hidden="true"></div>
+    <div class="np-top">
+      <img class="np-art" src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/300x300bb.jpg" alt="ASTROWORLD album cover" width="64" height="64">
+      <div class="np-info">
+        <div class="np-kicker"><span class="np-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="np-state" data-i18n="widgets.music.onRepeat">On repeat</span></div>
+        <div class="np-track" id="np-track">STARGAZING</div>
+        <div class="np-artist">Travis Scott · ASTROWORLD</div>
       </div>
     </div>
-    <div class="music-controls">
-      <button class="music-stop-button" id="music-stop-button" type="button" onclick="toggleAppleMusic()" aria-label="Stop Apple Music playback" data-stopped="false"><span class="music-control-symbol" aria-hidden="true">■</span><span id="music-control-label">Stop music</span></button>
+    <div class="np-progress" aria-hidden="true"><span id="np-bar"></span></div>
+    <div class="np-controls">
+      <button type="button" class="np-btn" onclick="npStep(-1)" aria-label="Previous track"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg></button>
+      <button type="button" class="np-btn np-play" id="np-play" onclick="npToggle()" aria-label="Play preview"><svg viewBox="0 0 24 24"><path class="np-ico-play" d="M7 4.5v15l13-7.5z" fill="currentColor"/><path class="np-ico-pause" d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/></svg></button>
+      <button type="button" class="np-btn" onclick="npStep(1)" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg></button>
+      <a class="np-open" href="https://music.apple.com/us/album/astroworld/1421658111" target="_blank" rel="noopener" data-i18n="widgets.music.open">Apple Music ↗</a>
     </div>
   </section>
   <section class="languages-widget desk-glass" aria-labelledby="languages-widget-title">
@@ -960,8 +1072,11 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
 <!-- DESKTOP FOLDERS — real macOS folder, NO border-radius -->
 <div class="desktop-icons-label" data-i18n="common.selectedWork" aria-hidden="true">Selected Work</div>
 <div class="desktop-icons" aria-label="Selected work">
-  <button type="button" class="desk-ic" onclick="openWin('win-finder')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl" data-i18n="common.work">Work</span></button>
-  <button type="button" class="desk-ic" onclick="openWin('win-cv')"><img src="icons/document.png" alt=""><span class="fi-lbl">Resume</span></button>
+  <div class="desk-cases" id="desk-cases"></div>
+  <div class="desk-files">
+    <button type="button" class="desk-ic" onclick="openWin('win-finder')"><img src="icons/Folder.svg" alt=""><span class="fi-lbl" data-i18n="common.allWork">All work</span></button>
+    <button type="button" class="desk-ic" onclick="openWin('win-cv')"><img src="icons/document.png" alt=""><span class="fi-lbl">Resume</span></button>
+  </div>
 </div>
 
 <!-- ══ FINDER WINDOW ══ -->
@@ -1369,6 +1484,8 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
     if(wel.classList.contains('gone')) return;
     wel.classList.add('gone');
     wel.setAttribute('aria-hidden','true');
+    try{sessionStorage.setItem('unlocked','1')}catch(e){}
+    setTimeout(()=>{if(typeof playDeskVideos==='function')playDeskVideos();if(typeof runGuideCursor==='function')setTimeout(runGuideCursor,900)},350);
   }
   window.unlockDesktop=toDesktop;
   window.lockDesktop=function(){
@@ -1378,6 +1495,9 @@ html.theme-snapshot #desktop,html.theme-snapshot #desktop *{transition:none!impo
   };
   wel.addEventListener('click', toDesktop);
   window.addEventListener('keydown',e=>{if(!wel.classList.contains('gone') && e.key!=='Tab')toDesktop()});
+  // The lock screen is a greeting, not a gate: it opens by itself.
+  let seen=false;try{seen=sessionStorage.getItem('unlocked')==='1'}catch(e){}
+  setTimeout(toDesktop, seen?150:1900);
 })();
 
 // ── LANGUAGE (EN/RU/NL interface strings) ──────────────
@@ -1385,7 +1505,7 @@ let LANG='en';
 const I18N={
   en:{
     'common.work':'Work','common.about':'About','common.contact':'Contact','common.skills':'Skills',
-    'common.aboutMe':'About Me','common.projects':'Projects','common.screens':'Screens','common.selectedWork':'Selected Work',
+    'common.aboutMe':'About Me','common.projects':'Projects','common.screens':'Screens','common.selectedWork':'Selected Work','widgets.music.onRepeat':'On repeat','widgets.music.playing':'Now playing','widgets.music.play':'Play preview','widgets.music.pause':'Pause','widgets.music.open':'Apple Music ↗','weather.high':'H','weather.low':'L','weather.condition.mostlyCloudy':'Mostly cloudy','common.allWork':'All work','guide.open':'Click any project to open it','guide.hi':'Have a look around 👋',
     'menubar.lockAria':"Lock portfolio",'menubar.search':"Search Roman's portfolio",
     'menubar.wifiTitle':'Wi-Fi','menubar.spotlightTitle':'Spotlight Search','menubar.controlCenterTitle':'Control Center',
     'menubar.langTitle':'Language',
@@ -1454,7 +1574,7 @@ const I18N={
   },
   ru:{
     'common.work':'Работа','common.about':'Обо мне','common.contact':'Контакты','common.skills':'Навыки',
-    'common.aboutMe':'Обо мне','common.projects':'Проекты','common.screens':'Скриншоты','common.selectedWork':'Избранные проекты',
+    'common.aboutMe':'Обо мне','common.projects':'Проекты','common.screens':'Скриншоты','common.selectedWork':'Избранные проекты','widgets.music.onRepeat':'На повторе','widgets.music.playing':'Сейчас играет','widgets.music.play':'Включить превью','widgets.music.pause':'Пауза','widgets.music.open':'Apple Music ↗','weather.high':'Макс.','weather.low':'мин.','weather.condition.mostlyCloudy':'В основном облачно','common.allWork':'Все работы','guide.open':'Кликни на проект, чтобы открыть','guide.hi':'Осматривайся 👋',
     'menubar.lockAria':'Заблокировать портфолио','menubar.search':'Поиск по портфолио Романа',
     'menubar.wifiTitle':'Wi-Fi','menubar.spotlightTitle':'Поиск Spotlight','menubar.controlCenterTitle':'Пункт управления',
     'menubar.langTitle':'Язык',
@@ -1523,7 +1643,7 @@ const I18N={
   },
   nl:{
     'common.work':'Werk','common.about':'Over mij','common.contact':'Contact','common.skills':'Vaardigheden',
-    'common.aboutMe':'Over mij','common.projects':'Projecten','common.screens':'Schermen','common.selectedWork':'Uitgelicht werk',
+    'common.aboutMe':'Over mij','common.projects':'Projecten','common.screens':'Schermen','common.selectedWork':'Uitgelicht werk','widgets.music.onRepeat':'Op repeat','widgets.music.playing':'Speelt nu','widgets.music.play':'Preview afspelen','widgets.music.pause':'Pauze','widgets.music.open':'Apple Music ↗','weather.high':'H','weather.low':'L','weather.condition.mostlyCloudy':'Overwegend bewolkt','common.allWork':'Alle werk','guide.open':'Klik op een project om het te openen','guide.hi':'Kijk gerust rond 👋',
     'menubar.lockAria':'Portfolio vergrendelen','menubar.search':"Zoek in Romans portfolio",
     'menubar.wifiTitle':'Wifi','menubar.spotlightTitle':'Spotlight-zoekfunctie','menubar.controlCenterTitle':'Bedieningspaneel',
     'menubar.langTitle':'Taal',
@@ -1667,15 +1787,10 @@ function applyWeatherLang(){
   Object.keys(desktopWeatherState).forEach(id=>{
     const el=document.getElementById(`weather-${id}-condition`);
     if(el) el.textContent=tr(`weather.condition.${desktopWeatherState[id]}`);
+    if(typeof renderWeatherHL==='function')renderWeatherHL(id);
   });
 }
-function applyMusicLang(){
-  const button=document.getElementById('music-stop-button'),label=document.getElementById('music-control-label');
-  if(!button||!label)return;
-  const stopped=button.dataset.stopped==='true';
-  button.setAttribute('aria-label',tr(stopped?'widgets.music.ariaReload':'widgets.music.ariaStop'));
-  label.textContent=tr(stopped?'widgets.music.reload':'widgets.music.stop');
-}
+function applyMusicLang(){if(typeof npRender==='function')npRender()}
 function applyAppearanceLang(){
   const btn=document.getElementById('appearance-toggle'),desktop=document.getElementById('desktop');
   if(!btn||!desktop)return;
@@ -1686,6 +1801,7 @@ function applyAppearanceLang(){
 }
 function applyLangDynamic(){
   applyWeatherLang();applyMusicLang();applyAppearanceLang();
+  if(typeof renderDeskCases==='function'){renderDeskCases();playDeskVideos()}
   const activeRow=document.querySelector('.sb-row.active[data-project]');
   if(activeRow) showProj(activeRow.dataset.project, activeRow);
   const gw=document.getElementById('ios-group-work'),gp=document.getElementById('ios-group-projects');
@@ -1733,33 +1849,95 @@ const desktopWeatherPlaces=[
   {id:'ghent',latitude:51.0543,longitude:3.7174},
   {id:'kyiv',latitude:50.4501,longitude:30.5234}
 ];
+// Multicolour glyphs in the spirit of SF Symbols (drawn here, no Apple assets).
+const WX_SUN='<circle cx="12" cy="12" r="4.6" fill="#fff"/><g stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7"/></g>';
+const WX_MOON='<path d="M15.5 3.2a8.6 8.6 0 1 0 5.3 13.6A7.2 7.2 0 0 1 15.5 3.2z" fill="#fff"/>';
+const WX_CLOUD='<path d="M7.2 19.5h10.3a4.2 4.2 0 0 0 .6-8.36 6 6 0 0 0-11.45 1.4A3.5 3.5 0 0 0 7.2 19.5z" fill="#fff"/>';
+const WX_ICONS={
+  clear:d=>`<svg viewBox="0 0 24 24">${d?WX_SUN:WX_MOON}</svg>`,
+  mostlyClear:d=>`<svg viewBox="0 0 24 24"><g transform="translate(-3 -4) scale(.8)">${d?WX_SUN:WX_MOON}</g><g transform="translate(3 4) scale(.82)">${WX_CLOUD}</g></svg>`,
+  partlyCloudy:d=>`<svg viewBox="0 0 24 24"><g transform="translate(-3 -4) scale(.8)">${d?WX_SUN:WX_MOON}</g><g transform="translate(2 3) scale(.9)">${WX_CLOUD}</g></svg>`,
+  mostlyCloudy:()=>`<svg viewBox="0 0 24 24">${WX_CLOUD}</svg>`,
+  overcast:()=>`<svg viewBox="0 0 24 24"><g opacity=".7" transform="translate(4 -3) scale(.75)">${WX_CLOUD}</g>${WX_CLOUD}</svg>`,
+  fog:()=>`<svg viewBox="0 0 24 24"><g transform="translate(0 -3)">${WX_CLOUD}</g><g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h16M7 23h10"/></g></svg>`,
+  drizzle:()=>`<svg viewBox="0 0 24 24"><g transform="translate(0 -4)">${WX_CLOUD}</g><g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M8 19l-.6 2M12 19l-.6 2M16 19l-.6 2"/></g></svg>`,
+  rain:()=>`<svg viewBox="0 0 24 24"><g transform="translate(0 -4)">${WX_CLOUD}</g><g stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 18.5l-1.2 3.5M12 18.5l-1.2 3.5M16 18.5l-1.2 3.5"/></g></svg>`,
+  snow:()=>`<svg viewBox="0 0 24 24"><g transform="translate(0 -4)">${WX_CLOUD}</g><g fill="#fff"><circle cx="8" cy="20" r="1.3"/><circle cx="12" cy="22" r="1.3"/><circle cx="16" cy="20" r="1.3"/></g></svg>`,
+  thunderstorm:()=>`<svg viewBox="0 0 24 24"><g transform="translate(0 -4)">${WX_CLOUD}</g><path d="M12.5 16l-3 4.5h2.6l-1.6 3.5 4.5-5.2h-2.7l1.8-2.8z" fill="#fff"/></svg>`,
+  fallback:()=>`<svg viewBox="0 0 24 24">${WX_CLOUD}</svg>`,
+};
 function desktopWeatherPresentation(code,isDay){
-  if(code===0)return{key:'clear',symbol:isDay?'☀️':'🌙'};
-  if(code===1)return{key:'mostlyClear',symbol:isDay?'🌤️':'🌙'};
-  if(code===2)return{key:'partlyCloudy',symbol:isDay?'⛅':'☁️'};
-  if(code===3)return{key:'overcast',symbol:'☁️'};
-  if(code===45||code===48)return{key:'fog',symbol:'🌫️'};
-  if(code>=51&&code<=57)return{key:'drizzle',symbol:'🌦️'};
-  if((code>=61&&code<=67)||(code>=80&&code<=82))return{key:'rain',symbol:'🌧️'};
-  if((code>=71&&code<=77)||(code>=85&&code<=86))return{key:'snow',symbol:'🌨️'};
-  if(code>=95)return{key:'thunderstorm',symbol:'⛈️'};
-  return{key:'fallback',symbol:'☁️'};
+  let key='fallback',sky='cloudy';
+  if(code===0){key='clear';sky='clear'}
+  else if(code===1){key='mostlyClear';sky='clear'}
+  else if(code===2){key='partlyCloudy';sky='cloudy'}
+  else if(code===3){key='mostlyCloudy';sky='cloudy'}
+  else if(code===45||code===48){key='fog';sky='fog'}
+  else if(code>=51&&code<=57){key='drizzle';sky='rain'}
+  else if((code>=61&&code<=67)||(code>=80&&code<=82)){key='rain';sky='rain'}
+  else if((code>=71&&code<=77)||(code>=85&&code<=86)){key='snow';sky='snow'}
+  else if(code>=95){key='thunderstorm';sky='storm'}
+  return{key,sky:`${sky}-${isDay?'day':'night'}`,symbol:(WX_ICONS[key]||WX_ICONS.fallback)(isDay)};
 }
-async function loadDesktopWeather(){
-  await Promise.allSettled(desktopWeatherPlaces.map(async place=>{
-    const url=`https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,weather_code,is_day&timezone=auto`;
-    const response=await fetch(url,{cache:'no-store'});
-    if(!response.ok)throw new Error('Weather unavailable');
-    const data=await response.json(),current=data.current;
-    if(!current||!Number.isFinite(current.temperature_2m))throw new Error('Weather unavailable');
+function paintWeather(place,data){
+    const current=data.current;
     const presentation=desktopWeatherPresentation(current.weather_code,current.is_day===1);
     desktopWeatherState[place.id]=presentation.key;
+    const hi=data.daily?.temperature_2m_max?.[0],lo=data.daily?.temperature_2m_min?.[0];
+    desktopWeatherHL[place.id]=Number.isFinite(hi)?[Math.round(hi),Math.round(lo)]:null;
+    document.getElementById(`wx-${place.id}`).dataset.sky=presentation.sky;
     document.getElementById(`weather-${place.id}-temp`).textContent=`${Math.round(current.temperature_2m)}°`;
     document.getElementById(`weather-${place.id}-condition`).textContent=tr(`weather.condition.${presentation.key}`);
-    document.getElementById(`weather-${place.id}-symbol`).textContent=presentation.symbol;
-  }));
+    document.getElementById(`weather-${place.id}-symbol`).innerHTML=presentation.symbol;
+    renderWeatherHL(place.id);
 }
-if(window.matchMedia('(min-width:901px)').matches)loadDesktopWeather();
+// Last good forecast is cached, so a busy weather API never leaves the widget empty.
+async function loadDesktopWeather(attempt=0){
+  let failed=false;
+  await Promise.allSettled(desktopWeatherPlaces.map(async place=>{
+    const cacheKey=`wx:${place.id}`;
+    if(attempt===0){try{const c=JSON.parse(localStorage.getItem(cacheKey)||'null');if(c)paintWeather(place,c)}catch(e){}}
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min&forecast_days=1&timezone=auto`;
+    let data=null;
+    try{
+      const response=await fetch(url,{cache:'no-store'});
+      if(response.ok){const d=await response.json();if(d.current&&Number.isFinite(d.current.temperature_2m))data=d}
+    }catch(e){}
+    if(!data){try{data=await fetchWttr(place)}catch(e){}}
+    if(data){paintWeather(place,data);try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch(e){}}
+    else failed=true;
+  }));
+  if(failed&&attempt<3)setTimeout(()=>loadDesktopWeather(attempt+1),[8000,30000,90000][attempt]);
+}
+const desktopWeatherHL={};
+// Backup source (wttr.in, CORS-open) mapped into the Open-Meteo shape.
+function wwoToWmo(c){
+  c=+c;
+  if(c===113)return 0;if(c===116)return 2;if(c===119||c===122)return 3;
+  if([143,248,260].includes(c))return 45;
+  if([176,263,266,293,296,353].includes(c))return 51;
+  if([200,386,389,392,395].includes(c))return 95;
+  if([179,182,185,227,230,317,320,323,326,329,332,335,338,350,362,365,368,371,374,377].includes(c))return 71;
+  return 61;
+}
+async function fetchWttr(place){
+  const r=await fetch(`https://wttr.in/${place.latitude},${place.longitude}?format=j1`,{cache:'no-store'});
+  if(!r.ok)throw new Error('wttr');
+  const d=await r.json(),c=d.current_condition?.[0],w=d.weather?.[0];
+  if(!c)throw new Error('wttr');
+  const toMin=t=>{const m=String(t).match(/(\d+):(\d+)\s*(AM|PM)/i);if(!m)return null;let h=+m[1]%12;if(/pm/i.test(m[3]))h+=12;return h*60+ +m[2]};
+  const now=toMin(c.localObsDateTime?.split(' ').slice(1).join(' ')),rise=toMin(w?.astronomy?.[0]?.sunrise),set=toMin(w?.astronomy?.[0]?.sunset);
+  const isDay=(now!=null&&rise!=null&&set!=null)?(now>=rise&&now<set):true;
+  return{current:{temperature_2m:+c.temp_C,weather_code:wwoToWmo(c.weatherCode),is_day:isDay?1:0},daily:{temperature_2m_max:[+w.maxtempC],temperature_2m_min:[+w.mintempC]}};
+}
+function renderWeatherHL(id){
+  const el=document.getElementById(`weather-${id}-hl`),v=desktopWeatherHL[id];
+  if(el&&v)el.textContent=`↓ ${v[1]}°  ↑ ${v[0]}°`;
+}
+if(window.matchMedia('(min-width:901px)').matches){
+  desktopWeatherPlaces.forEach(pl=>{const el=document.getElementById(`weather-${pl.id}-symbol`);if(el&&!el.innerHTML)el.innerHTML=WX_ICONS.partlyCloudy(true)});
+  loadDesktopWeather();
+}
 function openSpotlight(){
   if(window.matchMedia('(max-width:900px)').matches)return;
   UISound.open();
@@ -2155,6 +2333,64 @@ function openProjectDesktop(key){
   trackEvent('project_open',{key});
 }
 
+
+// ── DESKTOP CASE CARDS ────────────────────────────────
+const DESK_CASES=[
+  {key:'youhodler',img:'screens/youhodler/live-hero.png',tilt:-1.6},
+  {key:'arctrade',video:'screens/arctrade/live-motion',poster:'screens/arctrade/live-motion-poster.jpg',tilt:1.1},
+  {key:'wagmio',video:'screens/wagmio_hero-orbit',poster:'screens/wagmio_hero-orbit-poster.jpg',tilt:-.8},
+  {key:'coinflip',img:'screens/coinflip_home.png',phone:true,tilt:1.5},
+];
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)');
+function renderDeskCases(){
+  const box=document.getElementById('desk-cases');if(!box)return;
+  box.innerHTML=DESK_CASES.map(c=>{
+    const p=P[c.key];
+    const media=c.video
+      ?`<video muted loop playsinline preload="none" poster="${c.poster}"><source src="${c.video}.webm" type="video/webm"><source src="${c.video}.mp4" type="video/mp4"></video>`
+      :`<img src="${c.img}" alt="" loading="lazy" decoding="async">`;
+    return `<button type="button" class="desk-case" data-case="${c.key}" style="--tilt:${c.tilt}deg" onclick="openProjectDesktop('${c.key}')" aria-label="${p.name} — ${projSub(c.key)}">
+      <div class="desk-case-win"><div class="desk-case-bar"><i></i><i></i><i></i><span>${(p.period.match(/\d{4}/)||[''])[0]}</span></div>
+      <div class="desk-case-media${c.phone?' is-phone':''}">${media}<span class="desk-case-click"></span></div></div>
+      <div class="desk-case-name">${p.name}</div><div class="desk-case-sub">${projSub(c.key)}</div></button>`;
+  }).join('');
+  if(REDUCED.matches)return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&!document.getElementById('welcome')?.matches(':not(.gone)'))v.play().catch(()=>{});else v.pause()}),{threshold:.2});
+  box.querySelectorAll('video').forEach(v=>{io.observe(v);});
+  window.__deskVideosIO=io;
+}
+renderDeskCases();
+function playDeskVideos(){if(REDUCED.matches)return;document.querySelectorAll('.desk-case video').forEach(v=>v.play().catch(()=>{}))}
+
+// Roman's cursor: once per visit, shows that the cards are clickable — then gets out of the way.
+function runGuideCursor(){
+  if(REDUCED.matches||window.matchMedia('(max-width:900px)').matches)return;
+  try{if(sessionStorage.getItem('guideSeen'))return;sessionStorage.setItem('guideSeen','1')}catch(e){}
+  const cards=[...document.querySelectorAll('.desk-case')];if(cards.length<2)return;
+  const el=document.createElement('div');el.className='guide-cursor';el.setAttribute('aria-hidden','true');
+  el.innerHTML='<svg width="18" height="24" viewBox="0 0 18 24" fill="none"><path d="M1 1l6.5 20 3-8 8-3L1 1z" fill="currentColor" stroke="white" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="live-cursor-tag">Roman</span><span class="guide-say"></span>';
+  document.body.appendChild(el);
+  const say=el.querySelector('.guide-say');
+  let alive=true;const stop=()=>{if(!alive)return;alive=false;el.classList.remove('on');cards.forEach(c=>c.classList.remove('is-ghost'));setTimeout(()=>el.remove(),400)};
+  window.addEventListener('pointerdown',stop,{once:true});
+  const at=(c,dx=.62,dy=.55)=>{const r=c.getBoundingClientRect();return [r.left+r.width*dx,r.top+r.height*dy]};
+  const move=(x,y,ms)=>el.animate([{transform:getComputedStyle(el).transform==='none'?`translate(${x}px,${y}px)`:getComputedStyle(el).transform},{transform:`translate(${x}px,${y}px)`}],{duration:ms,easing:'cubic-bezier(.45,.05,.25,1)',fill:'forwards'}).finished;
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  (async()=>{
+    el.style.transform=`translate(${innerWidth+30}px,${innerHeight*.62}px)`;el.classList.add('on');
+    const [x1,y1]=at(cards[0]);await move(x1,y1,1100);if(!alive)return;
+    cards[0].classList.add('is-ghost');say.textContent=tr('guide.open');say.classList.add('on');
+    const ring=cards[0].querySelector('.desk-case-click');ring.classList.remove('go');void ring.offsetWidth;ring.classList.add('go');UISound.tap?.();
+    await wait(1500);if(!alive)return;
+    cards[0].classList.remove('is-ghost');say.classList.remove('on');
+    const [x2,y2]=at(cards[1]);await move(x2,y2,700);if(!alive)return;cards[1].classList.add('is-ghost');
+    await wait(500);cards[1].classList.remove('is-ghost');
+    const [x3,y3]=at(cards[2]);await move(x3,y3,600);if(!alive)return;cards[2].classList.add('is-ghost');
+    await wait(500);cards[2].classList.remove('is-ghost');
+    say.textContent=tr('guide.hi');say.classList.add('on');await wait(1600);stop();
+  })();
+}
+
 // ── REMINDERS TOGGLE ──────────────────────────────────
 function toggle(item){
   const c=item.querySelector('.rem-circle');
@@ -2214,43 +2450,46 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-// The public Apple Music iframe has no parent-page playback API. Removing its
-// src destroys the embedded player and reliably stops any audio it owns.
-const APPLE_MUSIC_EMBED='https://embed.music.apple.com/us/album/astroworld/1421658111?theme=auto';
-function createAppleMusicPlayer(){
-  const player=document.createElement('iframe');
-  player.id='apple-music-player';
-  player.title='Apple Music: ASTROWORLD by Travis Scott';
-  player.src=APPLE_MUSIC_EMBED;
-  player.height='220';
-  player.setAttribute('frameborder','0');
-  player.setAttribute('sandbox','allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation');
-  player.setAttribute('allow','autoplay *; encrypted-media *;');
-  player.loading='lazy';
-  return player;
+// ── NOW PLAYING — 30-second previews from Apple's public iTunes preview service ──
+const NP_TRACKS=[
+  {name:'STARGAZING',src:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/28/17/72/2817720a-aa3a-56d4-e4ad-0c6d380bfe77/mzaf_5929447614154956053.plus.aac.p.m4a'},
+  {name:'SICKO MODE',src:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d3/91/a1/d391a141-256f-726f-9da1-8aa4e42b3236/mzaf_17761183103753218003.plus.aac.p.m4a'},
+  {name:'BUTTERFLY EFFECT',src:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/29/ae/3e/29ae3e6e-f8e2-2790-97c8-9adb576967dd/mzaf_14764666470308178075.plus.aac.p.m4a'},
+  {name:'YOSEMITE',src:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/98/2f/f1/982ff119-bd13-f3cb-7be4-902949d79c00/mzaf_15618704197018719174.plus.aac.p.m4a'},
+  {name:'CAROUSEL',src:'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c2/e6/43/c2e64301-e3f3-92b4-bbf4-c4e2f4488aca/mzaf_13313409291901184966.plus.aac.p.m4a'},
+];
+let npIndex=0,npAudio=null,npRaf=0;
+function npEl(){return document.getElementById('np')}
+function npRender(){
+  const np=npEl();if(!np)return;
+  document.getElementById('np-track').textContent=NP_TRACKS[npIndex].name;
+  const playing=!!npAudio&&!npAudio.paused;
+  np.classList.toggle('is-playing',playing);
+  document.getElementById('np-state').textContent=tr(playing?'widgets.music.playing':'widgets.music.onRepeat');
+  document.getElementById('np-play').setAttribute('aria-label',tr(playing?'widgets.music.pause':'widgets.music.play'));
 }
-function toggleAppleMusic(){
-  const embed=document.getElementById('music-embed');
-  const stopped=document.getElementById('music-stopped');
-  const button=document.getElementById('music-stop-button');
-  const label=document.getElementById('music-control-label');
-  if(!embed||!stopped||!button||!label)return;
-  const isStopped=button.dataset.stopped==='true';
-  if(isStopped){
-    const player=createAppleMusicPlayer();
-    embed.insertBefore(player,stopped);
-    stopped.hidden=true;
-    button.dataset.stopped='false';
-    button.querySelector('.music-control-symbol').textContent='■';
-  }else{
-    const player=document.getElementById('apple-music-player');
-    if(player){player.src='about:blank';player.remove()}
-    stopped.hidden=false;
-    button.dataset.stopped='true';
-    button.querySelector('.music-control-symbol').textContent='↻';
-  }
-  applyMusicLang();
+function npTick(){
+  const bar=document.getElementById('np-bar');
+  if(npAudio&&bar&&npAudio.duration)bar.style.width=`${(npAudio.currentTime/npAudio.duration)*100}%`;
+  if(npAudio&&!npAudio.paused)npRaf=requestAnimationFrame(npTick);
 }
+function npLoad(i,autoplay){
+  npIndex=(i+NP_TRACKS.length)%NP_TRACKS.length;
+  if(npAudio){npAudio.pause();npAudio.src=''}
+  npAudio=new Audio(NP_TRACKS[npIndex].src);npAudio.volume=.55;npAudio.preload='auto';
+  npAudio.addEventListener('ended',()=>npLoad(npIndex+1,true));
+  npAudio.addEventListener('play',()=>{npRender();cancelAnimationFrame(npRaf);npTick()});
+  npAudio.addEventListener('pause',npRender);
+  document.getElementById('np-bar').style.width='0';
+  if(autoplay)npAudio.play().catch(()=>{});
+  npRender();
+}
+function npToggle(){
+  if(!npAudio){npLoad(npIndex,true);trackEvent('music_play',{key:NP_TRACKS[npIndex].name});return}
+  npAudio.paused?npAudio.play().catch(()=>{}):npAudio.pause();
+}
+function npStep(d){const wasPlaying=npAudio&&!npAudio.paused;npLoad(npIndex+d,wasPlaying||!npAudio)}
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&npAudio)npAudio.pause()});
 
 // ── DOCK MAGNIFY ──────────────────────────────────────
 const dock=document.getElementById('dock');
@@ -2871,9 +3110,15 @@ function submitGuestbook(e,mobile=false){
 
 // ── ANALYTICS (fire-and-forget, never blocks the UI) ────
 const LIVE_API='https://roman-portfolio-live.romanoleksieienko.workers.dev';
+// ?notrack=1 once on your own devices → you're never counted again; ?notrack=0 undoes it.
+(function(){try{const q=new URLSearchParams(location.search);if(q.get('notrack')==='1')localStorage.setItem('notrack','1');if(q.get('notrack')==='0')localStorage.removeItem('notrack')}catch(e){}})();
+const TRACK_OFF=(()=>{try{return location.hostname!=='oleksieienko.com'&&location.hostname!=='www.oleksieienko.com'||localStorage.getItem('notrack')==='1'||navigator.webdriver}catch(e){return false}})();
+// where the visit came from: ?ref=cv / ?ref=linkedin … wins over the browser referrer
+const TRACK_REF=(()=>{try{const q=new URLSearchParams(location.search);const tag=q.get('ref')||q.get('utm_source');if(tag)return 'tag:'+tag.slice(0,40);return document.referrer?new URL(document.referrer).hostname:''}catch(e){return ''}})();
 function trackEvent(event,meta){
+  if(TRACK_OFF)return;
   try{
-    const payload=JSON.stringify({event,meta:meta||{},lang:LANG,ref:document.referrer||''});
+    const payload=JSON.stringify({event,meta:meta||{},lang:LANG,ref:TRACK_REF});
     // sendBeacon always sends credentials, which the worker's CORS rejects — fetch without them.
     fetch(LIVE_API+'/track',{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true,credentials:'omit'}).catch(()=>{});
   }catch(e){}
@@ -2936,5 +3181,6 @@ connectLiveCursors();
 restoreLang();
 trackEvent('view',{});
 </script>
+<script src="wallpaper/wallpaper.js?v=7"></script>
 </body>
 </html>
